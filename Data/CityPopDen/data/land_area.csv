@@ -1,0 +1,453 @@
+City,Country,Area_km
+Chongqing,China,"5,472.80"
+Harbin,China,"2,454.50"
+Ganzhou,China,"3,843.43"
+Nanyang,China,"1,988"
+Changchun,China,"1,855.00"
+Baoding,China,326
+Nanning,China,"6,559"
+Shaoyang,China,436
+Huanggang,China,363.23
+Linyi,China,"2,293.30"
+Hangzhou,China,"8,259.90"
+Beijing,China,16410
+Weifang,China,"2,646.10"
+Hengyang,China,722
+Zhumadian,China,778
+Shijiazhuang,China,"2,257"
+Chengdu,China,"3,679.90"
+Cangzhou,China,206.2
+Tangshan,China,"3,874"
+Zhanjiang,China,"1,720.30"
+Shenyang,China,"3,658.20"
+Yulin,China,"1,237"
+Xingtai,China,114.8
+Heze,China,"1,416"
+New York,United States,"1,223.59"
+Tianjin,China,11970
+Fuzhou,China,"1,768.20"
+Zhoukou,China,141
+Changsha,China,"2,154.10"
+Sao Paulo,Brazil,"7,947"
+Wenzhou,China,"2,900"
+Hefei,China,838.5
+Qingdao,China,"5,171.40"
+Xuzhou,China,"3,037"
+Jining,China,"1,534.20"
+Quanzhou,China,872.4
+Xi'an,China,"5,808.60"
+Shangqiu,China,"1,697"
+Jinan,China,"6,122.40"
+Fuyang,China,"1,844"
+Suzhou,China,"2,944.40"
+Wuhan,China,"1,528"
+Nantong,China,"2,840"
+Zhengzhou,China,"1,284.89"
+Guangzhou,China,"3,843.43"
+Atlanta,United States,347.1
+Chicago,United States,589.82
+Tokyo,Japan,6993
+Nanjing,China,"1,398.69"
+Los Angeles,United States,"1,300"
+Shanghai,China,"14,922.70"
+Moscow,Russia,"6,154"
+Sofia,Bulgaria,"5,723"
+Washington,United States,177
+Changchun,China,537
+Philadelphia,United States,369.62
+Dallas,United States,385.9
+Houston,United States,640.4
+Xi'an,China,"4,903.90"
+Wuxi,China,"4,618"
+Guangzhou,China,4535
+Johannesburg,South Africa,"1,645"
+Foshan,China,3780
+Nagoya,Japan,326.4
+Dallas,United States,3644
+Jakarta,Indonesia,3546
+Buenos Aires,Argentina,3437
+Houston,United States,3355
+Miami,United States,3313
+Detroit,United States,3267
+Bangkok,Thailand,3199
+Kanpur,India,3155
+Osaka,Japan,3020
+Washington,United States,2996
+Zibo,China,"2,989"
+Shaoxing,China,"2,965.10"
+Miami,United States,2891
+Nagoya,Japan,2875
+Paris,France,2853
+Tianjin,China,2813
+Seoul,South Korea,2769
+Guilin,China,"2,753"
+Paris,France,2723
+Huizhou,China,"2,672"
+Essen,Germany,2642
+Kunming,China,"2,622"
+Osaka,Japan,2564
+Mexico City,Mexico,2530
+Lucknow,India,"2,528"
+Seattle,United States,2470
+Donguan,China,2460
+Lanzhou,China,"2,432.90"
+Guiyang,China,"2,403.40"
+Johannesburg,South Africa,2396
+Foshan,China,2391.485
+Xuzhou,China,"3,037"
+Delhi,India,700
+Toronto,Canada,"1,792.99"
+Minneapolis,United States,148.94
+San Juan,Puerto Rico,199.4
+Putian,China,"2,284"
+Adana,Turkey,"2,280"
+Buenos Aires,Argentina,2266
+Pittsburgh,United States,2208
+Ho Chi Minh City,Vietnam,2165
+Kuala Lumpur,Malaysia,2163
+Moscow,Russia,2150
+St. Louis,United States,2147
+Melbourne,Australia,2080
+Tampa Bay,United States,2078
+Mexico City,Mexico,2072
+Phoenix,United States,2069
+Hohhot,China,"2,065.10"
+San Diego,United States,2026
+Rio de Janeiro,Brazil,2020
+Cairo,Egypt,2010
+Shenzhen,China,2000
+Lagos,Nigeria,1966
+Chengdu,China,1935
+Manila,Philippines,1911
+Changzhou,China,"1,872.10"
+Xi'an,China,1826
+Shenzhen,China,1803
+Baltimore,United States,1768
+Dongguan,China,1759
+Qingdao,China,1759
+Cincinnati,United States,1740
+Montreal,Canada,1740
+London,United Kingdom,1738
+Wuhan,China,1722
+Tehran,Iran,1704
+Xiamen,China,"1,700.61"
+Sydney,Australia,1687
+Cleveland,United States,1676
+Riyadh,Saudi Arabia,1673
+Toronto,Canada,1655
+London,UK,1623
+Nanjing,China,1614
+Kuala Lumpur,Malaysia,1606
+Brisbane,Australia,1603
+Chongqing,China,1580
+Rio de Janeiro,Brazil,1580
+Milan,Italy,1554
+Shenyang,China,1551
+Taizhou,China,"1,536"
+Kansas City,United States,1514
+Saint Petersburg,Russia,1510
+Istanbul,Turkey,1471
+Taiyuan,China,"1,460"
+Indianapolis,United States,1432
+Hyderabad,India,1404
+Luoyang,China,"1,402.30"
+Bangalore,India,1401
+Manila,Philippines,1399
+Suzhou,China,1386
+Madrid,Spain,1365
+San Francisco,United States,1365
+Virginia Beach,United States,1364
+Jakarta,Indonesia,1360
+Kolkata,India,1352
+Hangzhou,China,1344
+Providence,United States,1304
+Cairo,Egypt,1295
+Delhi,India,1295
+Denver,United States,1292
+Belo Horizonte,Brazil,1287
+Milwaukee,United States,1261
+Portland,United States,1228
+Hartford,United States,1216
+Bridgeport,United States,1205
+Marseille,France,1204
+Mecca,Saudi Arabia,"1,200"
+Orlando,United States,1174
+Wuhu,China,"1,172.90"
+Istanbul,Turkey,1166
+Santiago,Chile,1147
+Riverside,United States,1136
+Richmond,United States,1131
+Charlotte,United States,1126
+Karachi,Pakistan,1124
+Vancouver,Canada,1120
+Nashville,United States,1116
+Yiwu,China,"1,105.48"
+Riyadh,Saudi Arabia,1101
+Chennai,India,1085
+Barcelona,Spain,1072
+Incheon,South Korea,"1,070"
+Jacksonville,United States,1063
+Bordeaux,France,1057
+San Antonio,United States,1056
+Seoul/Incheon,South Korea,1049
+Dalian,China,1044
+Memphis,United States,1036
+Khartoum,Sudan,1031
+Columbus,United States,1030
+Birmingham,United States,1016
+Louisville,United States,1013
+Bangkok,Thailand,1010
+Luanda,Angola,1005
+Jiaxing,China,986.9
+Berlin,Germany,984
+Frankfurt,Germany,984
+Mumbai,India,976
+Perth,Australia,964
+Dar es Salaam,Tanzania,961
+Sacramento,United States,956
+Lyon,France,954
+Buffalo,United States,950
+Lahore,Pakistan,945
+Madrid,Spain,945
+Jinan,China,932
+Izmir,Turkey,919
+Lima,Peru,891
+Lisbon,Portugal,881
+Knoxville,United States,879
+Belo Horizonte,Brazil,868
+Kuwait City,Kuwait,860
+Edmonton,Canada,850
+Rome,Italy,842
+Kyiv,Ukraine,839
+Dayton,United States,838
+Oklahoma City,United States,835
+Durban,South Africa,829
+Hamburg,Germany,829
+Raleigh,United States,828
+Malaga,Spain,827
+Austin,United States,824
+Guadalajara,Mexico,816
+Cologne,Germany,816
+Copenhagen,Denmark,816
+McAllen,United States,813
+Toulouse,France,808
+Barcelona,Spain,803
+Springfield,United States,800
+Ad Dammam,Saudi Arabia,800
+Akron,United States,797
+Abu Dhabi,UAE,777
+Jeddah,Saudi Arabia,777
+Busan	,South Korea,770
+Busan,South Korea,770
+Rochester,United States,764
+Bahrain,Bahrain,760
+Tucson,United States,755
+Chattanooga,United States,751
+Allentown,United States,750
+Shanghai,China,746
+Barnstable Town,United States,741
+Las Vegas,United States,741
+New Haven,United States,739
+Lagos,Nigeria,738
+Albany,United States,736
+Gurgaon,India,732
+Adelaide,Australia,729
+Baton Rouge,United States,727
+Nice,France,721
+Toulon,France,713
+Brussels,Belgium,712
+Dubai,United Arab Emirates,712
+Harare,Zimbabwe,712
+Budapest,Hungary,702
+Calgary,Canada,702
+Sarasota,United States,700
+Columbia,United States,697
+Baghdad,Iraq,694
+Salvador,Brazil,693.8
+Cape Town,South Africa,686
+Poughkeepsie,United States,686
+Tehran,Iran,686
+Nanchang,China,686
+Athens,Greece,684
+Tulsa,United States,677
+San Jose,United States,674
+Arabia,Saudi,673
+Pretoria,South Africa,673
+Harbin,China,671
+Quebec,Canada,669
+Grand Rapids,United States,667
+Yangon,Myanmar,666
+Winston,United States,651
+Pune,India,650
+Hyderabad,India,650
+Beirut,Lebanon,648
+Curitiba,Brazil,648
+Santiago,Chile,648
+Worcester,United States,648
+Lahore,Pakistan,622
+St Petersburg,Russia,622
+Aguadilla,Puerto Rico,620
+Dhaka,Bangladesh,619
+Augusta,United States,600
+Birmingham,UK,600
+Flint,United States,599
+Charleston,United States,598
+Salt Lake City,United States,598
+Antwerp,Belgium,596
+Baghdad,Iraq,596
+Guadalajara,Mexico,596
+Lima,Peru,596
+Youngstown,United States,591
+Greenville,United States,587
+Omaha,United States,586
+Ankara,Turkey,583
+Brasilia,Brazil,583
+Fortaleza,Brazil,583
+Hyderabad,India,583
+Khartoum,Sudan,583
+Naples,Italy,583
+Porto Alegre,Brazil,583
+Urumqi,China,583
+Albuquerque,United States,580
+Palm Bay,United States,569
+El Paso,United States,568
+Pensacola,United States,568
+Bogotá,Colombia,562
+Manchester,UK,558
+Hickory,United States,546
+Mobile,United States,546
+Baku/Sumqayit,Azerbaijan,544
+Fukuoka,Japan,544
+Katowice,Poland,544
+Kuwait,Kuwait,544
+Harrisburg,United States,540
+Asheville,United States,536
+Bangalore,India,534
+Little Rock,United States,532
+Auckland,New Zealand,531
+Kolkata,India,531
+Rotterdam,Netherlands,531
+Tashkent,Uzbekistan,531
+Toledo,United States,524
+Singapore,Singapore,523
+Bogota,Colombia,518
+Ho Chi Minh City,Vietnam,518
+Karachi,Pakistan,518
+Munich,Germany,518
+Phnom Penh,Cambodia,518
+Stockholm,Sweden,518
+Lancaster,United States,517
+Nizhniy Novgorod,Russia,514.56
+New Orleans,United States,512
+Colorado Springs,United States,511
+Taichung,Taiwan,510
+Avignon,France,508
+Valenciennes,France,507
+Fukuoka,Japan,505
+Nizhni Novgorod,Russia,505
+Ahmadabad,India,505
+Turin,Italy,500
+Cape Coral,United States,497
+Prague,Czechia,496.2
+Campinas,Brazil,492
+Ottawa,Canada,490
+Douai/Lens,France,489
+Mumbai,India,484
+Goiania,Brazil,479
+Helsinki,Finland,479
+Monterey,Mexico,479
+Quito,Ecuador,479
+Singapore,Singapore,479
+Vereeniging,South Africa,479
+Nantes,France,476
+Kinshasa,DR Congo,474
+Lille,France,474
+Kinshasa,Congo,469
+Jaipur,India,467
+Ogden,United States,466
+Shenzhen,China,466
+Warsaw,Poland,466
+Syracuse,United States,465
+Wichita,United States,465
+Surat,India,462.149
+Concord,United States,457
+Oslo,Norway,454
+Accra,Ghana,453
+Shenyang,China,453
+Tel Aviv,Israel,453
+Tianjin,China,453
+Vienna,Austria,453
+Donetsk,Ukraine,451
+Pau,France,450
+Gothenburg,Sweden,447.8
+Winnipeg,Canada,446
+Port St Lucie,United States,438
+Fayetteville,United States,433
+Lumumbashi,Congo,427
+Port Elizabeth,South Africa,427
+Tours,France,421
+Jackson,United States,417
+Chennai,India,414
+Sapporo,Japan,414
+Stuttgart,Germany,414
+Scranton,United States,411
+Huntsville,United States,407
+Durham,United States,406
+Chiang Mai,Thailand,405
+Ahmedabad,India,404
+South Bend,United States,404
+Aachen,Germany,401
+Shreveport,United States,401
+Honolulu,United States,399
+Bethune,France,390
+Bonita Springs,United States,389
+Dalian,China,389
+Porto,Portugal,389
+St. Catharines,Canada,389
+Gold Coast,Australia,383
+Recife,Brazil,376
+Taipei,Taiwan,376
+Canton,United States,372
+Spokane,United States,371
+Leeds,UK,370
+Glasgow,UK,368
+Dublin,Ireland,365
+Belgrade,Serbia,360
+Kharkiv,Ukraine,350
+Ningbo,China,345
+Hanoi,Vietnam,319.56
+Leipzig,Germany,297.4
+Łódź,Poland,293.2
+Alexandria,Egypt,293
+Hong Kong,Hong Kong,290
+Patna,India,250
+Genova,Italy,243
+Surat,India,238
+Boston,United States,232.1
+Bucharest,Romania,226
+Osaka,Japan,225.21
+Amsterdam,Netherlands,219.3
+Nagpur,India,217.65
+Dusseldorf,Germany,217.41
+Seattle,United States,217
+Nuremberg,Germany,186.5
+Catania,Italy,182.9
+Cluj-Napoca,Romania,179.5
+Karlsruhe,Germany,173.5
+Malmo,Sweden,156.9
+Seville,Spain,141.4
+Doha,Qatar,132
+San Francisco,United States,121.4
+Agra,India,121
+Thessaloniki,Greece,111.703
+Kochi,India,94.88
+Panama City,Panama,91.8
+Brescia,Italy,90.3
+Zurich,Switzerland,87.88
+Honolulu,United States,68.4
+Tel Aviv,Israel,52
+Rennes,France,50.39
+Bilbao,Spain,41.6
+Lucerne,Switzerland,37.4
+Geneva,Switzerland,15.93
+Bursa,Turkey,10.82

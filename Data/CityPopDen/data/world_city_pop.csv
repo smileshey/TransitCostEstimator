@@ -1,0 +1,772 @@
+city,country,growthRate
+Tokyo,Japan,-0.0021
+Delhi,India,0.0273
+Shanghai,China,0.0243
+Dhaka,Bangladesh,0.0325
+Sao Paulo,Brazil,0.0085
+Mexico City,Mexico,0.0089
+Cairo,Egypt,0.0199
+Beijing,China,0.0203
+Mumbai,India,0.016
+Osaka,Japan,-0.0024
+Chongqing,China,0.0276
+Karachi,Pakistan,0.0235
+Kinshasa,DR Congo,0.044
+Lagos,Nigeria,0.0363
+Istanbul,Turkey,0.0135
+Buenos Aires,Argentina,0.0078
+Kolkata,India,0.0131
+Manila,Philippines,0.0181
+Guangzhou,China,0.0229
+Tianjin,China,0.0162
+Lahore,Pakistan,0.0323
+Rio de Janeiro,Brazil,0.0069
+Bangalore,India,0.0314
+Shenzhen,China,0.0188
+Moscow,Russia,0.0031
+Chennai,India,0.0237
+Bogota,Colombia,0.0144
+Jakarta,Indonesia,0.0157
+Paris,France,0.0059
+Lima,Peru,0.0145
+Bangkok,Thailand,0.0156
+Hyderabad,India,0.0253
+Seoul,South Korea,0.0012
+Nanjing,China,0.0285
+Chengdu,China,0.0185
+London,United Kingdom,0.0113
+Nagoya,Japan,-0.0002
+Tehran,Iran,0.0126
+Ho Chi Minh City,Vietnam,0.0268
+Luanda,Angola,0.038
+Xi-an Shaanxi,China,0.029
+Wuhan,China,0.0147
+Ahmedabad,India,0.0237
+Kuala Lumpur,Malaysia,0.024
+Hangzhou,China,0.0239
+Suzhou,China,0.0399
+Surat,India,0.0361
+New York City,United States,-0.0348
+Dar es Salaam,Tanzania,0.0501
+Baghdad,Iraq,0.0265
+Hong Kong,Hong Kong,0.0054
+Riyadh,Saudi Arabia,0.0191
+Shenyang,China,0.0203
+Foshan,China,0.0134
+Dongguan,China,0.01
+Pune,India,0.0257
+Santiago,Chile,0.0068
+Haerbin,China,0.0207
+Madrid,Spain,0.0056
+Toronto,Canada,0.0093
+Khartoum,Sudan,0.0299
+Belo Horizonte,Brazil,0.0087
+Johannesburg,South Africa,0.0219
+Singapore,Singapore,0.0068
+Dalian,China,0.0249
+Qingdao,China,0.0207
+Zhengzhou,China,0.0297
+Ji-nan Shandong,China,0.0253
+Barcelona,Spain,0.0051
+Abidjan,Ivory Coast,0.0309
+Yangon,Myanmar,0.0174
+Alexandria,Egypt,0.0191
+Saint Petersburg,Russia,0.0046
+Fukuoka,Japan,-0.0022
+Addis Ababa,Ethiopia,0.0445
+Guadalajara,Mexico,0.015
+Ankara,Turkey,0.0165
+Chittagong,Bangladesh,0.0241
+Nairobi,Kenya,0.0403
+Hanoi,Vietnam,0.0367
+Melbourne,Australia,0.0164
+Sydney,Australia,0.0127
+Monterrey,Mexico,0.0159
+Changsha,China,0.0232
+Cape Town,South Africa,0.0186
+Brasilia,Brazil,0.0144
+Urumqi,China,0.0329
+Jiddah,Saudi Arabia,0.0172
+Kunming,China,0.0223
+Changchun,China,0.0204
+Hefei,China,0.0265
+Kabul,Afghanistan,0.0293
+Shantou,China,0.0186
+Ningbo,China,0.0301
+Yaounde,Cameroon,0.0398
+New Taipei,Taiwan,0.0075
+Tel Aviv,Israel,0.0178
+Shijiazhuang,China,0.0199
+Kano,Nigeria,0.0306
+Rome,Italy,0.0041
+Montreal,Canada,0.0073
+Recife,Brazil,0.0103
+Porto Alegre,Brazil,0.0063
+Jaipur,India,0.0244
+Fortaleza,Brazil,0.0102
+Nanning,China,0.026
+Taiyuan Shanxi,China,0.0207
+Ekurhuleni,South Africa,0.0182
+Medellin,Colombia,0.0085
+Kozhikode,India,0.0428
+Douala,Cameroon,0.0348
+Malappuram,India,0.0505
+Changzhou,China,0.0291
+Salvador,Brazil,0.0098
+Lucknow,India,0.0237
+Xiamen,China,0.0188
+Fuzhou Fujian,China,0.0204
+Nanchang,China,0.0268
+Wenzhou,China,0.0249
+Casablanca,Morocco,0.0137
+Ibadan,Nigeria,0.0315
+Antananarivo,Madagascar,0.0466
+Kampala,Uganda,0.0532
+Abuja,Nigeria,0.0514
+Tangshan Hebei,China,0.0329
+Curitiba,Brazil,0.0112
+Los Angeles,United States,-0.0104
+Kumasi,Ghana,0.038
+Bekasi,Indonesia,0.0296
+Faisalabad,Pakistan,0.0237
+Guiyang,China,0.0243
+Berlin,Germany,0.0009
+Santo Domingo,Dominican Republic,0.0192
+Asuncion,Paraguay,0.0169
+Thrissur,India,0.0391
+Port Harcourt,Nigeria,0.0467
+Busan,South Korea,0.0011
+Wuxi,China,0.0182
+Dakar,Senegal,0.0311
+Campinas,Brazil,0.0113
+Kochi,India,0.0317
+Mashhad,Iran,0.0151
+Puebla,Mexico,0.0152
+Indore,India,0.0291
+Kuwait City,Kuwait,0.0183
+Lanzhou,China,0.022
+Sanaa,Yemen,0.0348
+Kanpur,India,0.0139
+Durban,South Africa,0.009
+Ouagadougou,Burkina Faso,0.0485
+Lusaka,Zambia,0.0458
+Pyongyang,North Korea,0.008
+Milan,Italy,0.0017
+Athens,Greece,0.0002
+Guayaquil,Ecuador,0.0162
+Guatemala City,Guatemala,0.0193
+Izmir,Turkey,0.0106
+Nagpur,India,0.0185
+Surabaya,Indonesia,0.013
+Depok,Indonesia,0.0337
+Kiev,Ukraine,0.0022
+Zhongshan,China,0.0124
+Coimbatore,India,0.0254
+Dubai,United Arab Emirates,0.0146
+Handan,China,0.03
+Lisbon,Portugal,0.0048
+Port-au-Prince,Haiti,0.0248
+Huaian,China,0.035
+Caracas,Venezuela,0.0052
+Shizuoka,Japan,0.0007
+Bamako,Mali,0.0399
+Weifang,China,0.0293
+Algiers,Algeria,0.0168
+Mbuji-Mayi,DR Congo,0.0458
+Thiruvananthapuram,India,0.0351
+Cali,Colombia,0.0095
+Incheon,South Korea,0.0051
+Goiania,Brazil,0.017
+Pretoria,South Africa,0.0286
+Lubumbashi,DR Congo,0.0433
+Shaoxing,China,0.0306
+Manchester,United Kingdom,0.0074
+Zibo,China,0.0176
+Yantai,China,0.028
+Huizhou,China,0.0277
+Taipei,Taiwan,0.0043
+Bandung,Indonesia,0.0136
+Sapporo,Japan,-0.0011
+Birmingham,United Kingdom,0.0074
+Accra,Ghana,0.021
+Vancouver,Canada,0.0097
+Brazzaville,Republic of the Congo,0.0333
+Toluca de Lerdo,Mexico,0.0197
+Mogadishu,Somalia,0.0453
+Chicago,United States,-0.0165
+Tashkent,Uzbekistan,0.0115
+Luoyang,China,0.0271
+Damascus,Syria,0.0328
+Patna,India,0.02
+Bhopal,India,0.0237
+Tangerang,Indonesia,0.0236
+Brisbane,Australia,0.0131
+Nantong,China,0.0283
+Tunis,Tunisia,0.0148
+San Juan,Puerto Rico,-0.0012
+Medan,Indonesia,0.0154
+Baku,Azerbaijan,0.013
+Beirut,Lebanon,-0.0049
+Gujranwala,Pakistan,0.0267
+Peshawar,Pakistan,0.0296
+Belem,Brazil,0.01
+Hohhot,China,0.0296
+Rawalpindi,Pakistan,0.0214
+Manaus,Brazil,0.0149
+Maracaibo,Venezuela,0.015
+Agra,India,0.0232
+Barranquilla,Colombia,0.0106
+Kannur,India,0.0261
+Liuzhou,China,0.025
+Sendai,Japan,0.001
+Baotou,China,0.0209
+Visakhapatnam,India,0.0233
+Vadodara,India,0.0206
+Taoyuan,Taiwan,0.0098
+Xuzhou,China,0.0208
+Phnom Penh,Cambodia,0.0315
+Houston,United States,-0.0051
+Tijuana,Mexico,0.0175
+Esfahan,Iran,0.0176
+Nashik,India,0.0262
+Amman,Jordan,0.0103
+Vijayawada,India,0.0287
+Aleppo,Syria,0.05
+Daegu,South Korea,-0.0016
+Naples,Italy,-0.0004
+Putian,China,0.0396
+Grande Vitoria,Brazil,0.0135
+Multan,Pakistan,0.0231
+Mecca,Saudi Arabia,0.0167
+Havana,Cuba,0.0015
+Yangzhou,China,0.0218
+Wuhu Anhui,China,0.0384
+Brussels,Belgium,0.0059
+Perth,Australia,0.0121
+Conakry,Guinea,0.0305
+Baoding,China,0.0211
+Kollam,India,0.0398
+Taizhou Zhejiang,China,0.0261
+Bursa,Turkey,0.0154
+Linyi Shandong,China,0.0224
+Hiroshima,Japan,-0.0023
+Minsk,Belarus,0.0042
+Rajkot,India,0.0274
+Haikou,China,0.0212
+Daqing,China,0.0235
+Yancheng Jiangsu,China,0.0217
+Almaty,Kazakhstan,0.0149
+Lianyungang,China,0.0273
+Valencia,Venezuela,0.0123
+Lome,Togo,0.0291
+Panama City,Panama,0.0201
+Semarang,Indonesia,0.0193
+Vienna,Austria,0.0078
+Hyderabad,Pakistan,0.0217
+Rabat,Morocco,0.0142
+Quito,Ecuador,0.0149
+Ludhiana,India,0.0179
+Davao City,Philippines,0.0218
+Baixada Santista,Brazil,0.0093
+La Paz,Bolivia,0.0146
+West Yorkshire,United Kingdom,0.0071
+Benin City,Nigeria,0.0345
+Leon de los Aldamas,Mexico,0.0135
+Zhuhai,China,0.023
+Datong,China,0.0228
+Quanzhou,China,0.0305
+Can Tho,Vietnam,0.0441
+Matola,Mozambique,0.0309
+Adana,Turkey,0.0118
+Madurai,India,0.0197
+Sharjah,United Arab Emirates,0.0253
+Santa Cruz,Bolivia,0.02
+Palembang,Indonesia,0.0186
+Raipur,India,0.032
+Gaziantep,Turkey,0.0176
+Turin,Italy,0.0019
+Meerut,India,0.0202
+Warsaw,Poland,0.0017
+Mosul,Iraq,0.0316
+Cixi,China,0.0324
+Hamburg,Germany,-0.0004
+La Laguna,Mexico,0.0293
+Budapest,Hungary,0.0016
+Bucharest,Romania,-0.005
+Montevideo,Uruguay,0.004
+Jiangmen,China,0.0163
+Lyon,France,0.0078
+Varanasi,India,0.0187
+Batam,Indonesia,0.0375
+Xiangyang,China,0.0171
+Shiraz,Iran,0.0132
+Yinchuan,China,0.0262
+Yichang,China,0.0308
+Stockholm,Sweden,0.0125
+Srinagar,India,0.0231
+Glasgow,United Kingdom,0.0054
+Jamshedpur,India,0.0202
+Novosibirsk,Russia,0.0051
+Anshan,China,0.0134
+Aurangabad,India,0.0255
+Qinhuangdao,China,0.0282
+Monrovia,Liberia,0.0342
+Tiruppur,India,0.0356
+Auckland,New Zealand,0.0126
+Makassar,Indonesia,0.0189
+Ulaanbaatar,Mongolia,0.0171
+Jilin,China,0.0144
+Xining,China,0.0251
+Suqian,China,0.0433
+Kananga,DR Congo,0.0449
+Hengyang,China,0.0265
+Tabriz,Iran,0.0102
+Phoenix,AZ,0.0082
+Muscat,Oman,0.0171
+Anyang,China,0.0357
+Calgary,Canada,0.0175
+Qiqihaer,China,0.0164
+Marseille,France,0.0045
+Onitsha,Nigeria,0.0456
+Cordoba,Argentina,0.0086
+Rosario,Argentina,0.0126
+Karaj,Iran,0.0043
+N-Djamena,Chad,0.039
+Jodhpur,India,0.0249
+Ciudad Juarez,Mexico,0.0138
+Harare,Zimbabwe,0.0131
+Daejon,South Korea,0.0026
+Munich,Germany,0.0066
+Medina,Saudi Arabia,0.0176
+Kathmandu,Nepal,0.0328
+Jining Shandong,China,0.0169
+Tegucigalpa,Honduras,0.0271
+Abu Dhabi,United Arab Emirates,0.0176
+Gaoxiong,Taiwan,0.0038
+Ranchi,India,0.0242
+Edmonton,Canada,0.0168
+Zhangjiakou,China,0.0221
+Natal,Brazil,0.0157
+Mandalay,Myanmar,0.0208
+Gwangju,South Korea,0.002
+Philadelphia,United States,-0.0155
+Yekaterinburg,Russia,0.0043
+Grande Sao Luis,Brazil,0.0083
+Jabalpur,India,0.0177
+Kota,India,0.0289
+Huainan,China,0.0173
+Asansol,India,0.0181
+Chaozhou,China,0.0161
+Nouakchott,Mauritania,0.0422
+Yiwu,China,0.0324
+San Antonio,United States,0.0095
+Gwalior,India,0.0229
+Allahabad,India,0.018
+San Jose,Costa Rica,0.0143
+Ganzhou,China,0.0384
+Chon Buri,Thailand,0.0129
+Amritsar,India,0.0187
+Basra,Iraq,0.0244
+Taizhou Jiangsu,China,0.0227
+Homs,Syria,0.0328
+Mombasa,Kenya,0.037
+Niamey,Niger,0.0385
+Ottawa,Canada,0.0102
+Zurich,Switzerland,0.0084
+Weihai,China,0.0284
+Jiaxing,China,0.0372
+Kisangani,DR Congo,0.0418
+Hai Phong,Vietnam,0.0296
+Joao Pessoa,Brazil,0.0099
+Kharkiv,Ukraine,-0.0016
+Taian Shandong,China,0.0187
+Queretaro,Mexico,0.0174
+Belgrade,Serbia,0.0021
+Konya,Turkey,0.0178
+Cochabamba,Bolivia,0.0229
+Kaifeng,China,0.0288
+Rizhao,China,0.0282
+Dhanbad,India,0.0162
+Bucaramanga,Colombia,0.0117
+Copenhagen,Denmark,0.0079
+Dongying,China,0.0247
+Liuan,China,0.0424
+Nanchong,China,0.0283
+Zunyi,China,0.0231
+San Diego,United States,-0.0027
+Liuyang,China,0.0478
+Zhanjiang,China,0.0209
+Taizhong,Taiwan,0.0108
+Adelaide,Australia,0.0083
+Suweon,South Korea,0.0114
+Maceio,Brazil,0.0096
+Samut Prakan,Thailand,0.0129
+Qom,Iran,0.0156
+Shiyan,China,0.0271
+Mianyang Sichuan,China,0.0191
+Bareilly,India,0.024
+Joinville,Brazil,0.0107
+Antalya,Turkey,0.0215
+Helsinki,Finland,0.0075
+Pointe-Noire,Republic of the Congo,0.0323
+Ad-Dammam,Saudi Arabia,0.0189
+Uyo,Nigeria,0.0511
+Porto,Portugal,0.0033
+Prague,Czechia,0.004
+Yingkou,China,0.0269
+Tengzhou,China,0.0324
+Tanger,Morocco,0.0289
+Aligarh,India,0.0264
+Mwanza,Tanzania,0.0524
+Suzhou,China,0.0345
+Freetown,Sierra Leone,0.0291
+Fushun Liaoning,China,0.0076
+Maoming,China,0.025
+Pekan Baru,Indonesia,0.0253
+Moradabad,India,0.0273
+Port Elizabeth,South Africa,0.012
+Florianopolis,Brazil,0.0133
+Ahvaz,Iran,0.0125
+Kazan,Russia,0.0042
+Astana,Kazakhstan,0.0299
+Fes,Morocco,0.0179
+Mysore,India,0.0215
+Sofia,Bulgaria,0.001
+Jieyang,China,0.0341
+Ruian,China,0.0286
+Lilongwe,Malawi,0.0442
+San Luis Potosi,Mexico,0.0151
+Dublin,Ireland,0.0113
+Durg-Bhilainagar,India,0.0173
+Baoji,China,0.0252
+Dallas,United States,-0.0113
+Jinhua,China,0.0346
+Bhubaneswar,India,0.0258
+Pingdingshan Henan,China,0.0253
+Zhuzhou,China,0.0186
+Barquisimeto,Venezuela,0.0109
+Puning,China,0.0247
+Abomey-Calavi,Benin,0.054
+Chifeng,China,0.0232
+Nizhniy Novgorod,Russia,-0.0013
+Zhenjiang Jiangsu,China,0.0207
+Bukavu,DR Congo,0.0491
+Kigali,Rwanda,0.0325
+Maracay,Venezuela,0.0109
+Chelyabinsk,Russia,0.003
+Nnewi,Nigeria,0.0532
+Huaibei,China,0.0252
+Islamabad,Pakistan,0.0287
+Bogor,Indonesia,0.0202
+Liupanshui,China,0.0399
+Mendoza,Argentina,0.014
+Nanyang Henan,China,0.0223
+Xiangtan Hunan,China,0.0221
+Tiruchirappalli,India,0.0175
+Da Nang,Vietnam,0.0271
+Merida,Mexico,0.0162
+Benxi,China,0.0171
+Jinzhou,China,0.0196
+Chandigarh,India,0.0197
+Tasikmalaya,Indonesia,0.042
+Chiang Mai,Thailand,0.0129
+Pizhou,China,0.0383
+Bujumbura,Burundi,0.0593
+Binzhou,China,0.0313
+Luohe,China,0.0423
+Guilin,China,0.0181
+Quetta,Pakistan,0.0265
+Aba,Nigeria,0.0336
+Kaduna,Nigeria,0.0253
+Tripoli,Libya,0.0063
+Xiongan,China,0.0585
+Hubli-Dharwad,India,0.0197
+Omsk,Russia,-0.0003
+Mexicali,Mexico,0.0163
+Guwahati,India,0.0186
+Bazhong,China,0.0504
+Haifa,Israel,0.009
+Amsterdam,Netherlands,0.007
+Saharanpur,India,0.0333
+Salem,India,0.0206
+Yueqing,China,0.0302
+Krasnoyarsk,Russia,0.0069
+Maputo,Mozambique,0.0209
+Bandar Lampung,Indonesia,0.021
+Aguascalientes,Mexico,0.0159
+Samara,Russia,-0.0016
+Shimkent,Kazakhstan,0.026
+Ufa,Russia,0.0021
+Cologne,Germany,0.0059
+Xinxiang,China,0.0181
+Rostov-on-Don,Russia,0.0007
+Yongin,South Korea,0.0133
+Zaozhuang,China,0.0147
+Wenling,China,0.0272
+Bobo-Dioulasso,Burkina Faso,0.0506
+Hargeysa,Somalia,0.0443
+Siliguri,India,0.0314
+Cuernavaca,Mexico,0.0148
+Fuyang,China,0.0249
+Panjin,China,0.0204
+Jalandhar,India,0.0208
+Chihuahua,Mexico,0.0181
+San Salvador,El Salvador,0.0048
+Ma'anshan,China,0.0274
+Bien Hoa,Vietnam,0.0301
+Shangrao,China,0.0234
+Goyang,South Korea,0.0095
+Bishkek,Kyrgyzstan,0.0208
+Zhaoqing,China,0.0238
+Samarinda,Indonesia,0.0271
+Fuzhou Jiangxi,China,0.0324
+Diyarbakir,Turkey,0.0166
+Yerevan,Armenia,0.0026
+Managua,Nicaragua,0.0105
+Ikorodu,Nigeria,0.0501
+Jingzhou Hubei,China,0.0167
+Cartagena,Colombia,0.008
+Leshan,China,0.0299
+Johor Bahru,Malaysia,0.0196
+Oslo,Norway,0.0139
+Chenzhou,China,0.037
+Kermanshah,Iran,0.0171
+Tbilisi,Georgia,0.0018
+Perm,Russia,0.0027
+Voronezh,Russia,0.0034
+Dezhou,China,0.0284
+Aden,Yemen,0.0333
+Lille,France,0.0053
+Yichun Jiangxi,China,0.0478
+Sekondi Takoradi,Ghana,0.0416
+Tshikapa,DR Congo,0.0523
+Kirkuk,Iraq,0.022
+Asmara,Eritrea,0.0365
+Solapur,India,0.0146
+Mersin,Turkey,0.0159
+Huzhou,China,0.0245
+Xuchang,China,0.0292
+Toulouse,France,0.0107
+Changshu,China,0.0367
+Antwerp,Belgium,0.0044
+Aracaju,Brazil,0.0139
+Nyala,Sudan,0.0441
+Changwon,South Korea,0.0002
+Denpasar,Indonesia,0.0216
+Teresina,Brazil,0.0091
+Marrakech,Morocco,0.0161
+Yueyang,China,0.0139
+Tampico,Mexico,0.0149
+Qujing,China,0.0301
+Saltillo,Mexico,0.0163
+Padang,Indonesia,0.0183
+Warangal,India,0.024
+Blantyre-Limbe,Malawi,0.0362
+Ilorin,Nigeria,0.03
+San Miguel de Tucuman,Argentina,0.0129
+Cebu City,Philippines,0.0161
+Xintai,China,0.0278
+Cancun,Mexico,0.0245
+Guiping,China,0.0406
+Acapulco de Juarez,Mexico,0.0135
+Rotterdam,Netherlands,0.0033
+Kayseri,Turkey,0.0129
+Valparaiso,Chile,0.0081
+Odesa,Ukraine,-0.0003
+Songkhla,Thailand,0.0129
+Krasnodar,Russia,0.0122
+Nonthaburi,Thailand,0.0129
+Seongnam,South Korea,-0.0001
+Taiz,Yemen,0.0362
+Deyang,China,0.0284
+Liling,China,0.0424
+Oran,Algeria,0.0148
+West Rand,South Africa,0.0139
+Jiangyin,China,0.0312
+San Jose,United States,-0.0271
+Baishan,China,0.0365
+Campo Grande,Brazil,0.0102
+Londrina,Brazil,0.0125
+Bahawalpur,Pakistan,0.0281
+Malang,Indonesia,0.0138
+Guntur,India,0.0241
+Dandong,China,0.0158
+Liverpool,United Kingdom,0.006
+Hermosillo,Mexico,0.0171
+La Plata,Argentina,0.0109
+Bergamo,Italy,0.0068
+Ulsan,South Korea,0.0013
+Concepcion,Chile,0.0108
+Changzhi,China,0.0234
+Columbus,United States,0.0007
+Bhiwandi,India,0.019
+Bogra,Bangladesh,0.0482
+Cabinda,Angola,0.0497
+Umuahia,Nigeria,0.0506
+Trujillo,Peru,0.0145
+Tyumen,Russia,0.0189
+Ashgabat,Turkmenistan,0.0215
+Liaoyang,China,0.0174
+Changde,China,0.025
+Puducherry,India,0.0239
+Tuxtla Gutierrez,Mexico,0.0182
+Erbil,Iraq,0.0214
+Shangqiu,China,0.0252
+Firozabad,India,0.0278
+Soshanguve,South Africa,0.0151
+Culiacan,Mexico,0.0183
+Donetsk,Ukraine,-0.0064
+Xingtai,China,0.021
+Charlotte,United States,0.0034
+Huangshi,China,0.019
+Fuxin,China,0.0152
+Kuerle,China,0.0418
+Hufuf-Mubarraz,Saudi Arabia,0.014
+Quzhou,China,0.0419
+Indianapolis,IN,-0.006
+Cherthala,India,0.0401
+Libreville,Gabon,0.0151
+Tainan,Taiwan,0.0072
+Yibin,China,0.0199
+Xinghua,China,0.0268
+Yongzhou,China,0.0296
+Banghazi,Libya,0.0135
+Luzhou,China,0.0147
+Ipoh,Malaysia,0.0177
+Xinyang,China,0.0225
+Yangquan,China,0.0225
+Palermo,Italy,0
+Xiaogan,China,0.0256
+Enugu,Nigeria,0.0327
+Maiduguri,Nigeria,0.0273
+Quebec City,Canada,0.0077
+Huaihua,China,0.035
+Winnipeg,Canada,0.0098
+Lokoja,Nigeria,0.0611
+Saratov,Russia,-0.0013
+Valencia,Spain,0.0017
+Tianshui,China,0.028
+Orumiyeh,Iran,0.0163
+Zhuji,China,0.0228
+Eskisehir,Turkey,0.019
+Bozhou,China,0.0341
+Bucheon,South Korea,-0.0011
+Heze,China,0.0141
+Kunshan,China,0.0345
+Barcelona-Puerto La Cruz,Venezuela,0.0128
+Newcastle upon Tyne,United Kingdom,0.0061
+Haicheng,China,0.0163
+Huludao,China,0.0191
+Kottayam,India,0.0491
+Bikaner,India,0.0204
+Jincheng,China,0.0332
+Nellore,India,0.0272
+Thessaloniki,Greece,0.0009
+Bologna,Italy,0.0032
+Gebze,Turkey,0.026
+Liaocheng,China,0.0216
+Sorocaba,Brazil,0.0107
+Bunia,DR Congo,0.0579
+Taixing,China,0.0258
+Xalapa,Mexico,0.0148
+Benguela,Angola,0.042
+Langfang,China,0.0275
+Nottingham,United Kingdom,0.0079
+Zhumadian,China,0.0354
+Cagayan de Oro City,Philippines,0.0215
+Dasmarinas,Philippines,0.0234
+Nakhon Ratchasima,Thailand,0.0119
+Sulaimaniya,Iraq,0.0276
+Zanzibar,Tanzania,0.0439
+Ar-Rayyan,Qatar,0.0244
+Gaomi,China,0.033
+Niigata,Japan,-0.0025
+Meishan,China,0.0299
+Jiaozuo,China,0.0138
+Frankfurt,Germany,0.0066
+Hanchuan,China,0.0327
+Vereeniging,South Africa,0.0099
+Amravati,India,0.0187
+Anqiu,China,0.0444
+Muzaffarnagar,India,0.0314
+Danyang,China,0.0292
+Gorakhpur,India,0.015
+Kayamkulam,India,0.0382
+Shaoguan,China,0.0116
+Malanje,Angola,0.0531
+Hamilton,Canada,0.0068
+Anqing,China,0.0225
+Bur Sa'id,Egypt,0.0185
+Gaza,Palestine,0.0292
+Linhai,China,0.0281
+Cuttack,India,0.0165
+Erduosi-Ordoss,China,0.0284
+Oshogbo,Nigeria,0.029
+Ibb,Yemen,0.0547
+Banjarmasin,Indonesia,0.018
+Krakow,Poland,-0.0002
+Zigong,China,0.0146
+Yan'an,China,0.0371
+Belgaum,India,0.0199
+Qingyuan,China,0.0151
+Ansan,South Korea,0.0027
+Zaria,Nigeria,0.0223
+Malegaon,India,0.0225
+Kitwe,Zambia,0.0374
+Shaoyang,China,0.0211
+Merca,Somalia,0.0445
+Dengzhou,China,0.0362
+Maturin,Venezuela,0.0259
+Yanji,China,0.0268
+Tongliao,China,0.0236
+Yuncheng,China,0.034
+Sialkot,Pakistan,0.0229
+Tongling,China,0.0246
+Tirupati,India,0.0324
+Wuzhou,China,0.0242
+Yuxi,China,0.0373
+Suining Sichuan,China,0.0224
+Bahrain,Bahrain,0.0085
+Sao Paulo,Brazil,0.009
+Montreal,Canada,0.0065
+Geneva,Switzerland,0.01
+Zurich,Switzerland,0.0085
+Lucerne,Switzerland,0.015
+Fuzhou,China,0.02
+Xi'an,China,0.022
+Xuzhou,China,0.022
+Harbin,China,0.027
+Taizhou,China,0.028
+Taiyuan,China,0.0214
+Jinan,China,0.025
+Urumqi,China,0.04
+Wuhu,China,0.025
+San Francisco,United States,0.0028
+Washington,United States,0.015
+Boston,United States,0.004
+Miami,United States,0.015
+Seattle,United States,0.012
+Los Angeles,United States,0.004
+Honolulu,United States,0.01
+Prague,Czechia,0.002
+Nuremberg,Germany,0.0119
+Dusseldorf,Germany,0.003
+Leipzig,Germany,0.008
+Karlsruhe,Germany,0.006
+Malaga,Spain,0.005
+Seville,Spain,0.0014
+Bilbao,Spain,-0.005
+Rennes,France,0.012
+Gurgaon,India,0.04285
+Ahmadabad,India,0.028
+Genova,Italy,-0.003
+Catania,Italy,0.0018
+Brescia,Italy,0.008
+Łódź,Poland,-0.005
+Doha,Qatar,0.025
+Cluj-Napoca,Romania,0.0015
+Ad Dammam,Saudi Arabia,0.02
+Jeddah,Saudi Arabia,0.02
+Gothenburg,Sweden,0.01
+Malmo,Sweden,0.01
+Kyiv,Ukraine,0.002
