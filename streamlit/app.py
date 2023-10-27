@@ -13,7 +13,7 @@ from IPython.core.display import display, HTML
 
 
 ### Importing Data
-with open('../pickles/df_engineered.pkl', 'rb') as f:
+with open('pickles/df_engineered.pkl', 'rb') as f:
     df_engineered = pickle.load(f)
 with open('../pickles/df_user.pkl', 'rb') as f:
     df_user = pickle.load(f)
