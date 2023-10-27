@@ -15,22 +15,24 @@ from IPython.core.display import display, HTML
 ### Importing Data
 with open('pickles/df_engineered.pkl', 'rb') as f:
     df_engineered = pickle.load(f)
-with open('../pickles/df_user.pkl', 'rb') as f:
+with open('pickles/df_user.pkl', 'rb') as f:
     df_user = pickle.load(f)
-with open('../pickles/df_cleaned.pkl', 'rb') as f:
+with open('pickles/df_cleaned.pkl', 'rb') as f:
     df_cleaned = pickle.load(f)
-with open('../pickles/df_streamlit.pkl', 'rb') as f:
+with open('pickles/df_streamlit.pkl', 'rb') as f:
     df_streamlit = pickle.load(f)
-with open('../pickles/df_plot_melted.pkl', 'rb') as f:
+with open('pickles/df_plot_melted.pkl', 'rb') as f:
     df_plot_melted = pickle.load(f)
-with open('../pickles/predictions.pkl', 'rb') as f:
+with open('pickles/predictions.pkl', 'rb') as f:
     predictions = pickle.load(f)
-with open('../pickles/combined_metrics.pkl', 'rb') as f:
+with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
+# with open('../pickles/combined_metrics.pkl', 'rb') as f:
+#     combined_metrics = pickle.load(f)
 #
 @st.cache_data 
 def load_model():
-    return load('../models/finalized_user_model')
+    return load('models/finalized_user_model')
 model = load_model()
 ###
 
