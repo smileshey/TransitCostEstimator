@@ -27,7 +27,7 @@ with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
 
 ### Importing Model
-@st.cache_resource
+# @st.cache_resource
 def streamlit_model(model_path):
     return load_model(model_path)
 
