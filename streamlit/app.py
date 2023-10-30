@@ -1,17 +1,17 @@
 ### importing libraries
+import pandas as pd
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
 from joblib import load, dump
-import pandas as pd
 import numpy as np
 import matplotlib as plt
 import pickle
 from IPython.display import display, HTML
 
 
-### Importing Data & Model
+### Importing Data
 with open('pickles/df_engineered.pkl', 'rb') as f:
     df_engineered = pickle.load(f)
 with open('pickles/df_user.pkl', 'rb') as f:
@@ -27,10 +27,14 @@ with open('pickles/predictions.pkl', 'rb') as f:
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
 
+### Importing Model
 @st.cache_resource()
 def load_model():
-    return load('models/finalized_user_model')
+    return pickle.load(open('models/finalized_user_model.pkl', 'rb'))
 model = load_model()
+print(type(model))
+
+
 ###
 
 menu = st.sidebar.radio(
