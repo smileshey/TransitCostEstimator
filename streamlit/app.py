@@ -28,10 +28,11 @@ with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
 
 ### Importing Model
-@st.cache_resource
-def load_model():
-    return pickle.load(open('models/finalized_user_model.pkl', 'rb'))
-model = load_model()
+# @st.cache_resource
+# def load_model():
+#     return 
+model = pickle.load(open('models/finalized_user_model.pkl', 'rb'))
+# model = load_model()
 
 # ###
 
