@@ -31,7 +31,7 @@ with open('pickles/combined_metrics.pkl', 'rb') as f:
 def streamlit_model(model_path):
     return load_model(model_path)
 
-model = load_model('models/finalized_user_model')
+model = load_model('streamlit/finalized_user_model')
 ###
 
 menu = st.sidebar.radio(
