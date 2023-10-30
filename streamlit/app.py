@@ -9,7 +9,7 @@ import matplotlib as plt
 import pickle
 from IPython.display import display, HTML
 
-
+st.write('model no good')
 ### Importing Data
 with open('pickles/df_engineered.pkl', 'rb') as f:
     df_engineered = pickle.load(f)
