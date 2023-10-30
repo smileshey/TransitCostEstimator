@@ -8,8 +8,7 @@ import pandas as pd
 import numpy as np
 import matplotlib as plt
 import pickle
-
-from IPython.core.display import display, HTML
+from IPython.display import display, HTML
 
 
 ### Importing Data & Model
@@ -28,7 +27,7 @@ with open('pickles/predictions.pkl', 'rb') as f:
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
 
-@st.cache_data 
+@st.cache_resource()
 def load_model():
     return load('models/finalized_user_model')
 model = load_model()
