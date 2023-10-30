@@ -1,6 +1,7 @@
 ### importing libraries
 import pandas as pd
 import streamlit as st
+import pycaret
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
@@ -26,6 +27,8 @@ with open('pickles/predictions.pkl', 'rb') as f:
     predictions = pickle.load(f)
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
+
+pycaret.__version__
 
 ### Importing Model
 # @st.cache_resource
