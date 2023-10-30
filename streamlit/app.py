@@ -12,7 +12,7 @@ import pickle
 from IPython.core.display import display, HTML
 
 
-### Importing Data
+### Importing Data & Model
 with open('pickles/df_engineered.pkl', 'rb') as f:
     df_engineered = pickle.load(f)
 with open('pickles/df_user.pkl', 'rb') as f:
@@ -27,9 +27,7 @@ with open('pickles/predictions.pkl', 'rb') as f:
     predictions = pickle.load(f)
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
-# with open('../pickles/combined_metrics.pkl', 'rb') as f:
-#     combined_metrics = pickle.load(f)
-#
+
 @st.cache_data 
 def load_model():
     return load('models/finalized_user_model')
@@ -42,7 +40,7 @@ menu = st.sidebar.radio(
 )
 
 if menu == 'Introduction':
-    with open('../pickles/df_engineered.pkl', 'rb') as f:
+    with open('pickles/df_engineered.pkl', 'rb') as f:
         df_engineered = pickle.load(f)
     st.title('Transit Cost Estimator')
     st.write('__________')
@@ -436,7 +434,7 @@ elif menu == 'The Data & Model':
     But which features are the most important for the model?
     ''')
 
-    with open("../plots/importances_top10.html", "r") as f:
+    with open("plots/importances_top10.html", "r") as f:
         html_str = f.read()
     st.components.v1.html(html_str, width=650, height=400)
 
@@ -859,12 +857,6 @@ elif menu == 'Evaluating the Model':
 
 
 elif menu == 'Modelling':
-    ### Loading the model
-    # @st.cache_data 
-    # def load_model():
-    #     return load('../pickles/finalized_user_model.pkl')
-    # model = load_model()
-
     ### Existing Features
     cont_feats = ['length','tunnel','elevated','at_grade','duration']
     cat_feats =  [
