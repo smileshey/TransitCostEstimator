@@ -4,7 +4,6 @@ import streamlit as st
 from pycaret.regression import *
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
-from joblib import load, dump
 import numpy as np
 import matplotlib as plt
 import pickle
