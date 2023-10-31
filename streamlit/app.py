@@ -27,7 +27,7 @@ with open('pickles/predictions.pkl', 'rb') as f:
     predictions = pickle.load(f)
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
-with open('models/finalized_user_model.pkl', 'rb') as f:
+with open('pickles/finalized_user_model.pkl', 'rb') as f:
     finalized_user_model = pickle.load(f)
 
 ### Importing Model
