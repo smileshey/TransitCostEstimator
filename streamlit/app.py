@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 from pycaret.regression import *
 import plotly.graph_objects as go
+import plotly.express as px
 import plotly.figure_factory as ff
 import numpy as np
 import matplotlib as plt
@@ -26,12 +27,12 @@ with open('pickles/predictions.pkl', 'rb') as f:
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
 
-### Importing Model
+# ### Importing Model
 # @st.cache_resource
 # def streamlit_model(model_path):
 #     return load_model(model_path)
 # model = streamlit_model('finalized_user_model')
-model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
+# model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
 
 
 ###
@@ -1172,26 +1173,26 @@ elif menu == 'Modelling':
     ### Predictions Button
     col1, col2, col3 = st.sidebar.columns([1,2,1])
 
-# Put the button in the center column
-    if col2.button('Make Prediction'):
-        model_feature_order = df_user.drop(columns = ['cost_real_2021']).columns
-        data_for_prediction = [input_values[key] for key in model_feature_order]
+# # Put the button in the center column
+#     if col2.button('Make Prediction'):
+#         model_feature_order = df_user.drop(columns = ['cost_real_2021']).columns
+#         data_for_prediction = [input_values[key] for key in model_feature_order]
 
-        # Convert the list to a DataFrame
-        df_for_prediction = pd.DataFrame([data_for_prediction], columns=model_feature_order)
+#         # Convert the list to a DataFrame
+#         df_for_prediction = pd.DataFrame([data_for_prediction], columns=model_feature_order)
 
-        # Make predictions
-        prediction = model.predict(df_for_prediction)
+#         # Make predictions
+#         prediction = model.predict(df_for_prediction)
 
-        # Format the prediction output
-        predicted_value = prediction[0]
-        if predicted_value >= 1000:  # Greater than or equal to 1 billion
-            display_value = f"{predicted_value/1000:.2f}B USD"
-        else:
-            display_value = f"{predicted_value:.2f} Million USD"
+#         # Format the prediction output
+#         predicted_value = prediction[0]
+#         if predicted_value >= 1000:  # Greater than or equal to 1 billion
+#             display_value = f"{predicted_value/1000:.2f}B USD"
+#         else:
+#             display_value = f"{predicted_value:.2f} Million USD"
 
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 35px;'>Predicted Cost</div>", unsafe_allow_html=True)
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
+#         st.sidebar.markdown(f"<div style='text-align: center; font-size: 35px;'>Predicted Cost</div>", unsafe_allow_html=True)
+#         st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
 
 
 ## NEXT STEP IS TO REDO THE VISUALIZATIONS PORTION OF THE JUPYTER NOTEBOOK
