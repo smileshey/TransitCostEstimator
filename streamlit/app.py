@@ -29,7 +29,7 @@ with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
 # with open('pickles/finalized_user_model.pkl', 'rb') as f:
 #     finalized_user_model = pickle.load(f)
-finalized_user_model = load('finalized_user_model.joblib')
+model = load('finalized_user_model.joblib')
 
 ### Importing Model
 # def streamlit_model():
