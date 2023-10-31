@@ -28,11 +28,11 @@ with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
 
 ### Importing Model
-@st.cache_resource
-def streamlit_model():
-    model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
-    return model
-model = streamlit_model()
+# @st.cache_resource
+# def streamlit_model():
+#     model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
+#     return model
+# model = streamlit_model()
 # model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
 
 
