@@ -8,6 +8,7 @@ import plotly.figure_factory as ff
 import numpy as np
 import matplotlib as plt
 import pickle
+import requests
 from IPython.display import display, HTML
 
 
@@ -34,7 +35,14 @@ with open('pickles/combined_metrics.pkl', 'rb') as f:
 #     return model
 # model = streamlit_model()
 # model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
+def streamlit_model():
+    # Replace with your GitHub model's raw URL
+    url = 'https://github.com/smileshey/TransitCostEstimator/blob/b1d4769408a06d108a09ecdcf72b6d89114678ec/models/finalized_user_model.pkl'
+    response = requests.get(url)
+    model = pickle.loads(response.content)
+    return model
 
+model = streamlit_model()
 
 ###
 

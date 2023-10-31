@@ -10,3 +10,4 @@ ipython ==8.16.1
 pycaret == 3.1.0
 catboost == 1.2.2
 lightgbm == 4.1.0
+requests == 2.31.0
