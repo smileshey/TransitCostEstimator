@@ -27,7 +27,7 @@ with open('pickles/predictions.pkl', 'rb') as f:
     predictions = pickle.load(f)
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
-with open('pickles/finalized_user_model.pkl', 'rb') as f:
+with open('models/finalized_user_model.pkl', 'rb') as f:
     finalized_user_model = pickle.load(f)
 
 ### Importing Model
@@ -45,7 +45,8 @@ with open('pickles/finalized_user_model.pkl', 'rb') as f:
 # url = 'https://raw.githubusercontent.com/smileshey/TransitCostEstimator/master/models/finalized_user_model.pkl'
 # response = requests.get(url)
 # model = pickle.loads(response.content)
-###
+model =finalized_user_model
+##
 
 menu = st.sidebar.radio(
     'Choose a Page',
