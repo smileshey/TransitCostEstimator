@@ -27,11 +27,12 @@ with open('pickles/predictions.pkl', 'rb') as f:
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
 
-# ### Importing Model
-# @st.cache_resource
-# def streamlit_model(model_path):
-#     return load_model(model_path)
-# model = streamlit_model('finalized_user_model')
+### Importing Model
+@st.cache_resource
+def streamlit_model():
+    model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
+    return model
+model = streamlit_model()
 # model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
 
 
@@ -505,9 +506,9 @@ elif menu == 'The Data & Model':
     st.write('_________')
     st.subheader('Model Validity')
     st.write('''
-    The model accuracy described above demonstrates the model's accuracy on all of the data. What about if we looked at different segments of the data to determine where the model excels and where it struggles? 
-    
-    On the next sheet I'll describe the predictions made by the model, demonstrating the model's effectiveness on various segments of the data, and illustrating that it fulfills several important assumptions.
+    The model performance described above demonstrates the model's accuracy on all of the data but it does not confirm if the model's predictions 
+    should be trusted. On the next sheet I'll describe the predictions made by the model, demonstrating the model's effectiveness on various segments of the data, 
+    and illustrating that it fulfills several important assumptions.
     ''')
 
 elif menu == 'Evaluating the Model':
@@ -1173,26 +1174,26 @@ elif menu == 'Modelling':
     ### Predictions Button
     col1, col2, col3 = st.sidebar.columns([1,2,1])
 
-# # Put the button in the center column
-#     if col2.button('Make Prediction'):
-#         model_feature_order = df_user.drop(columns = ['cost_real_2021']).columns
-#         data_for_prediction = [input_values[key] for key in model_feature_order]
+# Put the button in the center column
+    if col2.button('Make Prediction'):
+        model_feature_order = df_user.drop(columns = ['cost_real_2021']).columns
+        data_for_prediction = [input_values[key] for key in model_feature_order]
 
-#         # Convert the list to a DataFrame
-#         df_for_prediction = pd.DataFrame([data_for_prediction], columns=model_feature_order)
+        # Convert the list to a DataFrame
+        df_for_prediction = pd.DataFrame([data_for_prediction], columns=model_feature_order)
 
-#         # Make predictions
-#         prediction = model.predict(df_for_prediction)
+        # Make predictions
+        prediction = model.predict(df_for_prediction)
 
-#         # Format the prediction output
-#         predicted_value = prediction[0]
-#         if predicted_value >= 1000:  # Greater than or equal to 1 billion
-#             display_value = f"{predicted_value/1000:.2f}B USD"
-#         else:
-#             display_value = f"{predicted_value:.2f} Million USD"
+        # Format the prediction output
+        predicted_value = prediction[0]
+        if predicted_value >= 1000:  # Greater than or equal to 1 billion
+            display_value = f"{predicted_value/1000:.2f}B USD"
+        else:
+            display_value = f"{predicted_value:.2f} Million USD"
 
-#         st.sidebar.markdown(f"<div style='text-align: center; font-size: 35px;'>Predicted Cost</div>", unsafe_allow_html=True)
-#         st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
+        st.sidebar.markdown(f"<div style='text-align: center; font-size: 35px;'>Predicted Cost</div>", unsafe_allow_html=True)
+        st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
 
 
 ## NEXT STEP IS TO REDO THE VISUALIZATIONS PORTION OF THE JUPYTER NOTEBOOK
