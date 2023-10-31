@@ -29,15 +29,15 @@ with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
 
 ### Importing Model
-# @st.cache_resource
 # def streamlit_model():
 #     model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
 #     return model
 # model = streamlit_model()
 # model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
+@st.cache_resource
 def streamlit_model():
     # Replace with your GitHub model's raw URL
-    url = 'https://github.com/smileshey/TransitCostEstimator/blob/b1d4769408a06d108a09ecdcf72b6d89114678ec/models/finalized_user_model.pkl'
+    url = 'https://raw.githubusercontent.com/smileshey/TransitCostEstimator/master/models/finalized_user_model.pkl'
     response = requests.get(url)
     model = pickle.loads(response.content)
     return model
