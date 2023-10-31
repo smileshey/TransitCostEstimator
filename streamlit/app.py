@@ -45,7 +45,7 @@ with open('models/finalized_user_model.pkl', 'rb') as f:
 # url = 'https://raw.githubusercontent.com/smileshey/TransitCostEstimator/master/models/finalized_user_model.pkl'
 # response = requests.get(url)
 # model = pickle.loads(response.content)
-model =finalized_user_model
+# model =finalized_user_model
 ##
 
 menu = st.sidebar.radio(
