@@ -28,9 +28,8 @@ with open('pickles/combined_metrics.pkl', 'rb') as f:
 
 ### Importing Model
 # @st.cache_resource
-def streamlit_model(model_path):
-    return load_model(model_path)
-
+# def streamlit_model(model_path):
+#     return load_model(model_path)
 model = load_model('streamlit/finalized_user_model')
 ###
 
