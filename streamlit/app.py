@@ -10,7 +10,7 @@ import matplotlib as plt
 import pickle
 import requests
 from IPython.display import display, HTML
-
+from joblib import load
 
 ### Importing Data
 with open('pickles/df_engineered.pkl', 'rb') as f:
@@ -27,8 +27,9 @@ with open('pickles/predictions.pkl', 'rb') as f:
     predictions = pickle.load(f)
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
-with open('pickles/finalized_user_model.pkl', 'rb') as f:
-    finalized_user_model = pickle.load(f)
+# with open('pickles/finalized_user_model.pkl', 'rb') as f:
+#     finalized_user_model = pickle.load(f)
+finalized_user_model = load('finalized_user_model.joblib')
 
 ### Importing Model
 # def streamlit_model():
