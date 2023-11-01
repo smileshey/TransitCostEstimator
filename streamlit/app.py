@@ -31,7 +31,7 @@ with open('pickles/combined_metrics.pkl', 'rb') as f:
 # with open('models/finalized_user_model.pkl', 'rb') as f:
 #     finalized_user_model = pickle.load(f)
 
-model = load_model('models/finalized_user_model.joblib')
+model = load_model('models/finalized_user_model')
 
 #### WHERE I LEFT OFF
 # currently re-running the sheet 10 to see if I mistakenly saved the pycaret model incorrectly
