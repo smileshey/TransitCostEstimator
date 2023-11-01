@@ -15,20 +15,18 @@ import pickle
 from IPython.display import display, HTML
 
 ### Importing Data
-with open('pickles/df_engineered.pkl', 'rb') as f:
-    df_engineered = pickle.load(f)
-with open('pickles/df_user.pkl', 'rb') as f:
-    df_user = pickle.load(f)
-with open('pickles/df_cleaned.pkl', 'rb') as f:
-    df_cleaned = pickle.load(f)
-with open('pickles/df_streamlit.pkl', 'rb') as f:
-    df_streamlit = pickle.load(f)
-with open('pickles/df_plot_melted.pkl', 'rb') as f:
-    df_plot_melted = pickle.load(f)
-with open('pickles/predictions.pkl', 'rb') as f:
-    predictions = pickle.load(f)
-with open('pickles/combined_metrics.pkl', 'rb') as f:
-    combined_metrics = pickle.load(f)
+@st.cache_data()
+def load_data(file_name):
+    with open(file_name, 'rb') as f:
+        return pickle.load(f)
+
+df_engineered = load_data('pickles/df_engineered.pkl')
+df_user = load_data('pickles/df_user.pkl')
+df_cleaned = load_data('pickles/df_cleaned.pkl')
+df_streamlit = load_data('pickles/df_streamlit.pkl')
+df_plot_melted = load_data('pickles/df_plot_melted.pkl')
+predictions = load_data('pickles/predictions.pkl')
+combined_metrics = load_data('pickles/combined_metrics.pkl')
 
 ### Importing Model
 @st.cache_resource()
@@ -54,7 +52,7 @@ if menu == 'Introduction':
     there is an ongoing and concerted effort to improve multi-modal transit and build better transit systems that supplement, or replace, the predominantly car-oriented infrastructure. 
     Often these transit system improvements are subject to scrutiny, as urban rail projects require an extensive up-front investment of public money.  
     Within many transit agencies, financial constraints exist, and officials are often hesitant to allocate significant public funds for long-term projects. This hesitancy is intensified by the potential for unexpected expenses that could jeopardize an entire project. 
-    There's a pressing need for a transparent tool that offers accurate cost assessments for urban rail projects. 
+    There's a pressing need for a transparent tool that provides accurate cost assessments for urban rail projects that doesn't rely on the participation of government officials.
     
     By equipping our community members, local officials, and advocates with realistic cost projections tailored to individual communities, we can optimize the allocation of public funds and bridge the gap between political action and community need.
     ''')
@@ -62,21 +60,24 @@ if menu == 'Introduction':
 
     st.subheader('Project Purpose')
     st.write(''' 
-    The objective of this analysis is to analyze global data for Metro system construction costs and create a predictive model for future project costs. The analysis will generate two primary outputs:
+    The objective of this analysis was to analyze existing data pertaining to the construction costs of train lines and create a predictive model that can estimate the total project cost. The analysis generated two primary outputs:
 
     1. A specialized model intended for professionals, such as engineers, familiar with particular locales.
-    2. A general-use model, designed for anyone keen on gauging transit project expenses.
+    2. A general-use model, designed for anyone who is curious about the costs of expanding transit access.
     
-    The purpose of the general use model is to democratize transit cost analysis, allowing residents to understand and vouch for their community's needs without relying solely on official estimates.
+    The purpose of the general use model is to democratize transit cost analysis, allowing residents to understand and vouch for their community's needs without awaiting official estimates.
     ''')
 
     st.write('__________')
     st.subheader('Conclusion & Recommendations')
+    st.caption('Conclusion')
     st.write('''     
-    The finalized user model achieves both goals set at the outset of this analysis as it is both 1) relatively accurate and 2) easily understandable. 
-    The accuracy achieved by the model with a mean absolute error of 543.95M USD and an R-squared of .896 is sufficient for the purposes of creating a 
-    user focused model that can estimate the potential cost for a project in a given area. Additionally, both models generalize well to new data
-     and didn't show a tendency to overfit as was expected to occur due to the size of the dataset. 
+    Both models created in this analysis are sufficiently accurate and easily understandable, which fulfills the goals set above.
+    The accuracy achieved by the user model, with a mean absolute error of 543.95M USD and an R-squared of .896, is sufficient for the purposes of creating a 
+    user focused model that can estimate the potential cost for a project in a given area. 
+    
+    Additionally, both models generalize well to new data
+    and didn't show a tendency to overfit as was expected to occur due to the size of the dataset. This model, while accurate, would improve given additional data and would need further analysis before it should be deployed in a production environment that influences financial decisions.
     ''')
 
     st.caption('Recommendations')
@@ -96,7 +97,7 @@ if menu == 'Introduction':
         - In my attempts to engineer features from the existing data, it's possible that there are other combinations of engineered features that could have yielded better insight for the model. My attempts with feature engineering were not exhaustive.
         - I wasn't able to find a proxy that correlated strongly enough with land aquisition prices. I believe this is an important component that would help the model generalize better with fewer features.
         - Level of Service is also not represented in the dataset, as I wasn't able to reliably determine how often each train would run. This is an important aspect as it dictates many downstream design decisions that cost resources to implement. 
-        - Some features generated in the feature engineering process could be improved and would benefit from an accuracy check. If I were to revisit this analysis, I would look to find more trustworthy sources for several of the engineered features, as some features pertaining to socioeconomic factors were crowdsourced datasets.
+        - Some features generated in the feature engineering process could be improved and would benefit from an accuracy check. If I were to revisit this analysis, I would look to find more trustworthy sources for several of the engineered features, as some features pertaining to socioeconomic factors were from crowdsourced datasets.
 
     4) Future Inflation Rates
         - One aspect of the data that is lacking is that the inflation rate for a future project is capped at 1. For instance, a project that takes place today will have an inflation rate of 1 and a project that takes place a year from now is also given an inflation rate of 1, even though there will be some inflation over the course of that year.
@@ -132,7 +133,7 @@ if menu == 'Introduction':
     st.write('__________')
     st.subheader('Who am I?')
     st.write('''
-    I'm a civil engineer (PE) that has an interest in data. I've spent my career designing and managing projects for a large public works agency in California, which often oversaw projects from the cradle to the grave. My experience in the industry lends itself to this sort of analysis as I'm familiar with the design, planning, and construction of large scale, long term public goods. 
+    I'm a civil engineer (PE) that has an interest in data. I've spent my career designing and managing projects for a large public works agency in California, which often oversaw projects from the cradle to the grave. My experience in the industry lends itself to this sort of analysis as I'm familiar with the design, planning, and construction of large-scale, long-term public goods. 
     ''')
     st.write('__________')
 
@@ -144,7 +145,7 @@ if menu == 'Introduction':
     3. Evaluating the Model
     4. Modelling
 
-    The next two sections describe, in some brevity, the reasoning behind each step of the model. These sections are important for understanding what the model is good at and what could be improved.
+    The next two sections describe, in some brevity, the reasoning behind each step of the model development. These sections are important for understanding what the model is good at and what could be improved.
 
     The last section is your opportunity to use the model to create predictions for an existing or a mythological transit network you decide to dream up.
 
