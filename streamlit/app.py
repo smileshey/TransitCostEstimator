@@ -821,24 +821,27 @@ elif menu == 'Evaluating the Model':
     ''')
 
     ### City Size
-    def reverse_one_hot(row):
+    def reverse_one_hot(row, prefix):
         for col in row.index:
-            if col.startswith("city_size") and row[col] == 1:
+            if col.startswith(prefix) and row[col] == 1:
                 return col.split('_')[-1]
-    predictions_socio['city_size'] = predictions_socio.apply(reverse_one_hot, axis=1)    
 
-    fig = px.scatter(predictions_socio,color = 'city_size', x='prediction_label', y='Standardized_Residuals', 
-                title="Residuals vs. Predictions by City Population",marginal_y="histogram")
+    predictions_socio['city_size'] = predictions_socio.apply(lambda row: reverse_one_hot(row, "city_size"), axis=1)
+
+    fig = px.scatter(
+        predictions_socio,
+        color='city_size',
+        x='prediction_label',
+        y='Standardized_Residuals', 
+        title="Residuals vs. Predictions by City Population",
+        marginal_y="histogram")
     st.plotly_chart(fig, use_container_width=True)
 
     st.write('''
     Lastly, the soil type parameter standardized residuals provide a similar result as the two previous plots.
     ''')
-    def reverse_one_hot(row):
-        for col in row.index:
-            if col.startswith("soil_type") and row[col] == 1:
-                return col.split('_')[-1]
-    predictions_socio['soil_type'] = predictions_socio.apply(reverse_one_hot, axis=1)    
+
+    predictions_socio['soil_type'] = predictions_socio.apply(lambda row: reverse_one_hot(row, "soil_type"), axis=1)
 
     fig = px.scatter(predictions_socio,color = 'soil_type', x='prediction_label', y='Standardized_Residuals', 
                 title="Residuals vs. Predictions by Soil Type",marginal_y="histogram")
