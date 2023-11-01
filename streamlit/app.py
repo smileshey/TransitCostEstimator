@@ -27,27 +27,22 @@ with open('pickles/predictions.pkl', 'rb') as f:
     predictions = pickle.load(f)
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
-with open('pickles/finalized_user_model.pkl', 'rb') as f:
-    finalized_user_model = pickle.load(f)
+# with open('models/finalized_user_model.pkl', 'rb') as f:
+#     finalized_user_model = pickle.load(f)
 
-model = finalized_user_model
-### Importing Model
+model = load(open('models/finalized_user_model.joblib', 'rb'))
+
+#### WHERE I LEFT OFF
+# currently re-running the sheet 10 to see if I mistakenly saved the pycaret model incorrectly
+# blended user tuned doesn't result in the same error, but produces a numpy error
+# This process is to prevent the model from caching
+
+
+# ## Importing Model
 # def streamlit_model():
-#     model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
+#     model = pickle.load(open('models/finalized_user_model.pkl', 'rb'))
 #     return model
 # model = streamlit_model()
-# model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
-# @st.cache_resource
-# def streamlit_model():
-#     url = 'https://raw.githubusercontent.com/smileshey/TransitCostEstimator/master/models/finalized_user_model.pkl'
-#     response = requests.get(url)
-#     model = pickle.loads(response.content)
-#     return model
-# url = 'https://raw.githubusercontent.com/smileshey/TransitCostEstimator/master/models/finalized_user_model.pkl'
-# response = requests.get(url)
-# model = pickle.loads(response.content)
-# model =finalized_user_model
-##
 
 menu = st.sidebar.radio(
     'Choose a Page',
