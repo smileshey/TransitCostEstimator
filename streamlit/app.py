@@ -2,6 +2,7 @@
 import pandas as pd
 import streamlit as st
 from pycaret.regression import *
+from pycaret.regression import  load_model
 import plotly.graph_objects as go
 import plotly.express as px
 import plotly.figure_factory as ff
@@ -10,7 +11,7 @@ import matplotlib as plt
 import pickle
 import requests
 from IPython.display import display, HTML
-from joblib import load
+# from joblib import load
 
 ### Importing Data
 with open('pickles/df_engineered.pkl', 'rb') as f:
@@ -30,7 +31,7 @@ with open('pickles/combined_metrics.pkl', 'rb') as f:
 # with open('models/finalized_user_model.pkl', 'rb') as f:
 #     finalized_user_model = pickle.load(f)
 
-model = load(open('models/finalized_user_model.joblib', 'rb'))
+model = load_model('models/finalized_user_model.joblib')
 
 #### WHERE I LEFT OFF
 # currently re-running the sheet 10 to see if I mistakenly saved the pycaret model incorrectly
@@ -38,11 +39,7 @@ model = load(open('models/finalized_user_model.joblib', 'rb'))
 # This process is to prevent the model from caching
 
 
-# ## Importing Model
-# def streamlit_model():
-#     model = pickle.load(open('models/finalized_user_model.pkl', 'rb'))
-#     return model
-# model = streamlit_model()
+
 
 menu = st.sidebar.radio(
     'Choose a Page',
