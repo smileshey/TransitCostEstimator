@@ -28,10 +28,12 @@ with open('pickles/predictions.pkl', 'rb') as f:
     predictions = pickle.load(f)
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
-# with open('models/finalized_user_model.pkl', 'rb') as f:
-#     finalized_user_model = pickle.load(f)
 
-model = load_model('models/finalized_user_model')
+@st.cache_resource()
+def get_model():
+    return load_model('models/finalized_user_model')
+
+model = get_model()
 
 #### WHERE I LEFT OFF
 # currently re-running the sheet 10 to see if I mistakenly saved the pycaret model incorrectly
