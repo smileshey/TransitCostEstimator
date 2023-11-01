@@ -1,3 +1,6 @@
+#### To run this app on your machine locally, type:
+#### 'streamlit run streamlit/app.py' in the terminal
+
 ### importing libraries
 import pandas as pd
 import streamlit as st
@@ -9,9 +12,7 @@ import plotly.figure_factory as ff
 import numpy as np
 import matplotlib as plt
 import pickle
-import requests
 from IPython.display import display, HTML
-# from joblib import load
 
 ### Importing Data
 with open('pickles/df_engineered.pkl', 'rb') as f:
@@ -33,6 +34,7 @@ with open('pickles/combined_metrics.pkl', 'rb') as f:
 @st.cache_resource()
 def get_model():
     return load_model('models/finalized_user_model')
+
 model = get_model()
 
 menu = st.sidebar.radio(
@@ -48,8 +50,13 @@ if menu == 'Introduction':
 
     st.subheader('Project Introduction')
     st.write('''
-    Efficient public transit systems play a pivotal role in enhancing mobility, reducing carbon footprints, and fostering sustainable city growth. In many American cities, there is an ongoing and concerted effort to improve multi-modal transit and build better transit systems that supplement, or replace, the predominantly car-oriented infrastructure. Often these transit system improvements are subject to scrutiny, as urban rail projects require an extensive up-front investment of public money.  Within many transit agencies, financial constraints exist, and officials are often hesitant to allocate significant public funds for long-term projects. This hesitancy is intensified by the potential for unexpected expenses that could jeopardize an entire project. 
-    There's a pressing need for a transparent tool that offers accurate cost assessments for urban rail projects. By equipping our community members, local officials, and advocates with realistic cost projections tailored to individual communities, we can optimize the allocation of public funds and bridge the gap between political action and community need.
+    Efficient public transit systems play a pivotal role in enhancing mobility, reducing carbon footprints, and fostering sustainable city growth. In many American cities, 
+    there is an ongoing and concerted effort to improve multi-modal transit and build better transit systems that supplement, or replace, the predominantly car-oriented infrastructure. 
+    Often these transit system improvements are subject to scrutiny, as urban rail projects require an extensive up-front investment of public money.  
+    Within many transit agencies, financial constraints exist, and officials are often hesitant to allocate significant public funds for long-term projects. This hesitancy is intensified by the potential for unexpected expenses that could jeopardize an entire project. 
+    There's a pressing need for a transparent tool that offers accurate cost assessments for urban rail projects. 
+    
+    By equipping our community members, local officials, and advocates with realistic cost projections tailored to individual communities, we can optimize the allocation of public funds and bridge the gap between political action and community need.
     ''')
     st.write('__________')
 
@@ -125,7 +132,7 @@ if menu == 'Introduction':
     st.write('__________')
     st.subheader('Who am I?')
     st.write('''
-    I'm a Civil Engineer (PE) that has an interest in data. I've spent my career designing and managing projects for a large public works agency in California, which often oversaw projects from the cradle to the grave. My experience in the industry lends itself to this sort of analysis as I'm familiar with the design, planning, and construction of large scale, long term public utilities. 
+    I'm a civil engineer (PE) that has an interest in data. I've spent my career designing and managing projects for a large public works agency in California, which often oversaw projects from the cradle to the grave. My experience in the industry lends itself to this sort of analysis as I'm familiar with the design, planning, and construction of large scale, long term public goods. 
     ''')
     st.write('__________')
 
@@ -462,7 +469,7 @@ elif menu == 'The Data & Model':
     )
     fig.update_traces(marker=dict(line=dict(width=.15)))
     st.plotly_chart(fig,use_container_width=True)
-#####end plot#######.
+    #####end plot#######.
     st.write('''
     Each point on the above plot indicates how much the output of the 
     model changed when the underlying data for each feature was altered. By adjusting each value for each feature, we can construct an array of values that
@@ -943,14 +950,16 @@ elif menu == 'Modelling':
     'anglo?': ['yes', 'no']}
 
     ### Creating the user interface
-    st.header('Using the Model')
+    st.header('Generating Your Own Predictions')
     st.write('---------------------------')
 
     st.write('''
     Within this section, you\'ll have the opportunity to generate a cost estimate for a project in your city. 
     Remember, these predictions are not exact but should give you a good estimate of how expensive the project should be. 
-    Often times, the model may struggle with notable exceptions, unique projects, projects planned for farther into the future. 
-    The prediction does not include the cost of rolling stock or costs associated with financing a project (loan fees, interest)
+    Often times the model may struggle with notable exceptions, unique projects, projects planned for farther into the future, and project subject to significant delays. 
+    The prediction you'll generate does not include the cost of rolling stock (the train cars) or costs associated with financing a project (loan fees, interest).
+
+    The prediction you generate should be within +- 500M USD and represent a good estimate of the cost to build your chosen project.
     ''')
     st.write('---------------------------')
 
@@ -961,7 +970,7 @@ elif menu == 'Modelling':
         'elevated': (0, 25),
         'at_grade': (0, 25),
         'stations': (0,25),
-        'duration': (1, 25)
+        'duration': (0, 25)
     }
     cont_input_values = {}
     cat_input_values = {}
@@ -1103,7 +1112,9 @@ elif menu == 'Modelling':
         components.append(f"<span style='color:orange;'>{input_values['at_grade']} km</span> of at-grade length")
 
     # Format the components list with appropriate conjunctions
-    if len(components) == 1:
+    if len(components) == 0:
+        component_str = ' '
+    elif len(components) == 1:
         component_str = components[0]
     elif len(components) == 2:
         component_str = f"{components[0]} and {components[1]}"
@@ -1165,7 +1176,6 @@ elif menu == 'Modelling':
     # Join the lines with line breaks to form a multi-line markdown string
     markdown_content = "<br>".join(markdown_lines)
     
-
     # Display the markdown content in the sidebar
     st.sidebar.markdown(markdown_content, unsafe_allow_html=True)
     ### Predictions Button
@@ -1191,8 +1201,4 @@ elif menu == 'Modelling':
 
         st.sidebar.markdown(f"<div style='text-align: center; font-size: 35px;'>Predicted Cost</div>", unsafe_allow_html=True)
         st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
-
-
-## NEXT STEP IS TO REDO THE VISUALIZATIONS PORTION OF THE JUPYTER NOTEBOOK
-    ## INSTEAD OF USING IM SHOW, USE PLOTLY SAVE AS HTML AND DISPLAY
-    ## add a mask feature to the df_user to determine accuracy at different lengths of track
+        ### END CODE
