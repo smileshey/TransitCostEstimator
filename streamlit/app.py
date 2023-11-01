@@ -27,10 +27,10 @@ with open('pickles/predictions.pkl', 'rb') as f:
     predictions = pickle.load(f)
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
-# with open('pickles/finalized_user_model.pkl', 'rb') as f:
-#     finalized_user_model = pickle.load(f)
-# model = load('models/finalized_user_model.joblib')
+with open('pickles/finalized_user_model.pkl', 'rb') as f:
+    finalized_user_model = pickle.load(f)
 
+model = finalized_user_model
 ### Importing Model
 # def streamlit_model():
 #     model = pickle.load(open('streamlit/finalized_user_model.pkl', 'rb'))
