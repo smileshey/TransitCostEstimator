@@ -29,19 +29,11 @@ with open('pickles/predictions.pkl', 'rb') as f:
 with open('pickles/combined_metrics.pkl', 'rb') as f:
     combined_metrics = pickle.load(f)
 
+### Importing Model
 @st.cache_resource()
 def get_model():
     return load_model('models/finalized_user_model')
-
 model = get_model()
-
-#### WHERE I LEFT OFF
-# currently re-running the sheet 10 to see if I mistakenly saved the pycaret model incorrectly
-# blended user tuned doesn't result in the same error, but produces a numpy error
-# This process is to prevent the model from caching
-
-
-
 
 menu = st.sidebar.radio(
     'Choose a Page',
