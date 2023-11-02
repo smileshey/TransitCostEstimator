@@ -35,6 +35,16 @@ def get_model():
 
 model = get_model()
 
+### Next Steps
+### 1) Go through each section of the analysis and clean Jupyter notebook; Make github final
+### 1a) Provide final data dictionary that includes engineered features
+### 2) Write the Readme
+### 3) Change App title?
+### 4) Identify reddit communities to post results in/ post on social media
+### 5) Adjust map on data tab that uses a earth background rather than transparent
+
+
+### Start of streamlit app
 menu = st.sidebar.radio(
     'Choose a Page',
     ('Introduction', 'The Data & Model', 'Evaluating the Model','Modelling')
@@ -181,17 +191,25 @@ elif menu == 'The Data & Model':
     st.subheader('The Data')
 
     fig = px.scatter_geo(df_engineered, lat='lat', lon='lng', color="country",
-                     hover_name="country",
-                     projection="natural earth")
+                        hover_name="country",
+                        projection="natural earth")
+
+    fig.update_geos(
+        resolution=110,
+        showcoastlines=True, coastlinecolor="Purple",
+        showland=True, landcolor="lightgreen",
+        showocean=True, oceancolor="LightBlue",
+        showlakes=False, lakecolor="Blue",
+        showrivers=False, rivercolor="Blue"
+    )
     fig.update_layout(
-        # plot_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
-        geo_bgcolor='rgba(0,0,0,0)'
+        geo_bgcolor='rgba(0,0,0,0)',
+        showlegend=False
     )
     fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
-    fig.update_layout(showlegend=False)
     st.plotly_chart(fig,use_container_width=True)
-
 
     st.write('''
     On the map above, there are a thousand different projects within 54 different countries spanning from 1965 to 2026. Each project is physically unique and required a different level of engineering, diplomacy, coordination, and foresight to make happen. 
