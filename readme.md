@@ -1,9 +1,5 @@
-<!-- #region -->
 # Estimating Construction Costs for Passenger Rail Using ML
-
-<!-- ![](https://media.giphy.com/media/BAkCBmej8d7NpeCoH0/giphy.gif) -->
-<img src="https://media.giphy.com/media/BAkCBmej8d7NpeCoH0/giphy.gif" width="600" height="30" alt="Alt Text" style="object-fit: cover;">
-
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjFodzd4aHY1aG1saG5tdWhyZDFubGFuZ2N0M2l1ZjIybGNkdG16NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/mAOxwWpvrHrv2YJ6xV/source.gif" width="600" height="40" alt="Alt Text" style="object-fit: cover;">
 
 ## Problem Statement
 
@@ -31,7 +27,7 @@ This model, which is demoed below, is deployed and [available for anyone to use 
 
 ![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3Z6N250OWk4NHlyZWk3MmY0eTA5bDFudzFxaGRnMThldHdkenU3cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nWZYYOectRB9Sgf1dN/giphy.gif)
 
-<!-- #endregion -->
+
 
 ## The Data
 
