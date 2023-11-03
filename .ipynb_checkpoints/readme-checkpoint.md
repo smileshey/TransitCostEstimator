@@ -25,7 +25,9 @@ The accuracy achieved by the model with a mean absolute error of 480.95M USD and
 
 This model, which is demoed below, is deployed and [available for anyone to use at](https://buildmoretrains.streamlit.app/)
 
-![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3Z6N250OWk4NHlyZWk3MmY0eTA5bDFudzFxaGRnMThldHdkenU3cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nWZYYOectRB9Sgf1dN/giphy.gif)
+<p align="center">
+  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3Z6N250OWk4NHlyZWk3MmY0eTA5bDFudzFxaGRnMThldHdkenU3cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nWZYYOectRB9Sgf1dN/giphy.gif">
+</p>
 
 
 
