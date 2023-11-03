@@ -22,9 +22,9 @@ The finalized user model achieves both goals set at the outset of this analysis 
 
 The accuracy achieved by the model with a mean absolute error of 480.95M USD and an R-squared of .896 is sufficient for the purposes of creating a user focused model that can estimate the potential cost for a project in a given area. Addtionally, the model is far more accurate for projects that have a length of less than 25km, which are more commonly constructed. 
 
-This model is deployed and [available for anyone to use at](https://buildmoretrains.streamlit.app/)
+This model, which is demoed below, is deployed and [available for anyone to use at](https://buildmoretrains.streamlit.app/)
 
-<iframe width="560" height="315" src="https://giphy.com/gifs/nWZYYOectRB9Sgf1dN" frameborder="0" allowfullscreen></iframe>
+![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3Z6N250OWk4NHlyZWk3MmY0eTA5bDFudzFxaGRnMThldHdkenU3cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nWZYYOectRB9Sgf1dN/giphy.gif)
 
 
 
