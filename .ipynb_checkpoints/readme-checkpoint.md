@@ -1,4 +1,5 @@
 # Estimating Construction Costs for Passenger Rail Using ML
+![](https://media.giphy.com/media/BAkCBmej8d7NpeCoH0/giphy.gif)
 
 ## Problem Statement
 
