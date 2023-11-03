@@ -1,0 +1,12 @@
+2023-11-03 10:05:01,858:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2023-11-03 10:05:01,858:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2023-11-03 10:05:01,858:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2023-11-03 10:05:01,858:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2023-11-03 10:05:01,898:INFO:Initializing load_model()
+2023-11-03 10:05:01,898:INFO:load_model(model_name=models/blended_user_tuned, platform=None, authentication=None, verbose=True)
+2023-11-03 10:05:18,015:INFO:Initializing load_model()
+2023-11-03 10:05:18,015:INFO:load_model(model_name=models/blended_user_tuned, platform=None, authentication=None, verbose=True)
