@@ -15,21 +15,6 @@ The objective of this analysis was to analyze existing data pertaining to the co
 
 By doing so, I hope to contribute to the creation of more efficient, timely, and cost-effective transit projects that better serve the needs of urban populations globally. There are several important metrics to track and within this sheet I will outline the data that will be used in the analysis.
 
-## Results
-
-The purpose of this analysis was to evaluate available data pertaining to the construction of Metro systems around the world and to produce a model that can estimate the cost for future Metro projects, given some data about the project. The resulting model is an successful first iteration towards achieving this goal.
-
-The finalized user model achieves both goals set at the outset of this analysis as it is both 1) relatively accurate and 2) easily understandable.
-
-The accuracy achieved by the model with a mean absolute error of 480.95M USD and an R-squared of .896 is sufficient for the purposes of creating a user focused model that can estimate the potential cost for a project in a given area. Addtionally, the model is far more accurate for projects that have a length of less than 25km, which are more commonly constructed. 
-
-This model, which is demoed below, is deployed and [available for anyone to use at](https://buildmoretrains.streamlit.app/)
-
-<p align="center">
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3Z6N250OWk4NHlyZWk3MmY0eTA5bDFudzFxaGRnMThldHdkenU3cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nWZYYOectRB9Sgf1dN/giphy.gif">
-</p>
-
-
 
 ## The Data
 
@@ -75,6 +60,58 @@ The Transit Project data includes several important features that will be used i
 | Source2                     | -               | Additional source or reference for the data.                                                  |
 | Reference                   | -               | Any additional reference information related to the transit project.                         |
 
+
+## Results
+
+The purpose of this analysis was to evaluate available data pertaining to the construction of Metro systems around the world and to produce a model that can estimate the cost for future Metro projects, given some data about the project. The resulting model is an successful first iteration towards achieving this goal.
+
+The finalized user model achieves both goals set at the outset of this analysis as it is both 1) relatively accurate and 2) easily understandable.
+
+The accuracy achieved by the model with a mean absolute error of 480.95M USD and an R-squared of .896 is sufficient for the purposes of creating a user focused model that can estimate the potential cost for a project in a given area. Addtionally, the model is far more accurate for projects that have a length of less than 25km, which are more commonly constructed. 
+
+This model, which is demoed below, is deployed and [available for anyone to use at](https://buildmoretrains.streamlit.app/)
+
+<p align="center">
+  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3Z6N250OWk4NHlyZWk3MmY0eTA5bDFudzFxaGRnMThldHdkenU3cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nWZYYOectRB9Sgf1dN/giphy.gif">
+</p>
+
+
+
+### Using the Model
+
+The basis for the model shown above is to provide users with a quick and simple(r) way to create a cost estimate. Instead of needing to input specific values for a city's population or exact figures for poverty rates in a specific region, the deployed model requires generalized descriptions of the area that are easier to input without needing to do significant research.
+
+The features used in this user model are described below:
+
+| Feature               | Description                                         |
+|-----------------------|-----------------------------------------------------|
+| length                | Total length of the rail line (kilometers) |
+| tunnel                | Length of track that is tunneled (km)         |
+| elevated              | Length of track that is elevated (km)        |
+| at_grade              | Length of track that is at ground level (km)        |
+| stations              | Number of stations along the route                  |
+| anglo?                | Is the area predominantly Anglo-Saxon? (yes/no)                             |
+| cost_real_2021        | Estimated cost for construction in 2021             |
+| duration              | Time taken for construction (years)       |
+| region                | Geographical region (e.g., North America, Asia)     |
+| sub_region            | Subdivision within the main region                  |
+| soil_type             | Type of soil the rail is built on                   |
+| gauge_width           | Width between the two rails (e.g., standard, narrow, monorail) |
+| city_size             | Population of the city       |
+| train_type            | Type of train (subway, tram, monorail)                |
+| country_income_class  | Income classification of the country                |
+| elevation_class       | Altitude classification                             |
+| precipitation_type    | Normal Expected precipitation in the region          |
+| temperature_category  | Normal expected climate                           |
+| affordability         | Relative affordability of the project               |
+| union_prevalence      | Presence and influence of worker unions             |
+| poverty_rate          | Percentage of population below the poverty line     |
+| city_density_type     | Population density classification of the city       |
+| country_density_type  | Population density classification of the country    |
+
+By inputting the features described above into the model deployed on Streamlit, a cost estimate will be provided by the model. This cost estimate is in 2021 USD and provides you with a rough idea for how expensive it would be to build the described project in the described city.
+
+
 ### Resources
 
 Within the analysis I've summarized above, I relied heavily on several external sources. Each source I list below was invaluable and I'm gratful for their contributions to the world.
@@ -87,3 +124,7 @@ Within the analysis I've summarized above, I relied heavily on several external 
 6. [Plotly](https://plotly.com/python/)
 7. [OpenMeteo](https://open-meteo.com/)
 8. [Streamlit](https://www.gradio.app/)
+
+```python
+
+```
