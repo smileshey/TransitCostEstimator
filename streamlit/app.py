@@ -34,16 +34,16 @@ def get_model():
     return load_model('models/finalized_user_model')
 
 model = get_model()
-
 ### Next Steps
-### 1) Go through each section of the analysis and clean Jupyter notebook; Make github final
+##XXX 1) Go through each section of the analysis and clean Jupyter notebook; Make github final
 ### 1a) Provide final data dictionary that includes engineered features
 ### 2) Write the Readme
 ### 3) Change App title?
 ### 4) Identify reddit communities to post results in/ post on social media
-### 5) Adjust map on data tab that uses a earth background rather than transparent
-
-
+###XXX 5) Adjust map on data tab that uses a earth background rather than transparent
+###   -> Dots on Japan don't show up very well on the green background. May occur elsewehere. Figure out if you can make the green transparent.
+### 6) Generate an error band given a length of track. It would be nice to be
+###    able to list the error under the predicted project cost
 ### Start of streamlit app
 menu = st.sidebar.radio(
     'Choose a Page',
@@ -526,6 +526,104 @@ elif menu == 'The Data & Model':
     Within this summary, we've been working with the user-friendly model. While both models are similarly accurate, the user model is simpler to use, as it replaces many of the integer oriented features with a descriptor. 
     Both models predict the cost of a transit project within roughly 500M USD and achieve an R-squared value of ~.9.
     ''')
+
+    ##### ERROR BAND PLOT###########
+    predictions['error'] = predictions['cost_real_2021'] - predictions['prediction_label']
+    # Create bins
+    bin_size = 11 
+    bins = np.arange(0, predictions['length'].max() + bin_size, bin_size)
+    predictions['length_bin'] = pd.cut(predictions['length'], bins, labels=bins[:-1] + bin_size/2, right=False)
+
+    # Group by bins and calculate mean error and standard deviation for each bin
+    bin_means = predictions.groupby('length_bin')['error'].mean()
+    bin_stds = predictions.groupby('length_bin')['error'].std()
+    bin_counts = predictions.groupby('length_bin').size()
+
+    fig = go.Figure([
+        go.Scatter(
+            name='Mean Error',
+            x=bin_means.index,  # Binned train line lengths
+            y=bin_means.values,
+            mode='lines',
+            line=dict(color='rgb(31, 119, 180)'),
+            ),
+            go.Scatter(
+                name='Upper Bound',
+                x=bin_means.index,
+                y=bin_means.values + bin_stds.values,
+                mode='lines',
+                marker=dict(color="#444"),
+                line=dict(width=0),
+                showlegend=False
+            ),
+            go.Scatter(
+                name='Lower Bound',
+                x=bin_means.index,
+                y=bin_means.values - bin_stds.values,
+                marker=dict(color="#444"),
+                line=dict(width=0),
+                mode='lines',
+                fillcolor='rgba(68, 68, 68, 0.3)',
+                fill='tonexty',
+                showlegend=False
+            )
+        ])
+    fig.add_trace(
+    go.Bar(
+        x=bin_counts.index,
+        y=bin_counts.values,
+        name='Count',
+        marker_color='rgba(255, 182, 193, 0.1)',  # You can change this color as per your preference
+        yaxis='y2'
+    )
+    )
+
+    fig.update_layout(
+        xaxis_title='Train Line Length (km)',
+        yaxis_title='Prediction Error ($)',
+        yaxis2=dict(
+                overlaying='y', 
+                side='right',
+                position=1, # Adjust as needed
+                range=[0, max(bin_counts.values)/.3],  # Adjust range to half the maximum count or as desired
+                showticklabels=False  # To hide the tick labels of y2 axis
+            ),
+        title='Prediction Error by Train Line Length',
+        hovermode="x"
+    )
+
+    # Add a horizontal line at y=0
+    fig.add_shape(
+        type='line',
+        line=dict(dash='dash'),
+        x0=min(bin_means.index),
+        x1=max(bin_means.index),
+        y0=0,
+        y1=0
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+    ##### END ERROR BAND PLOT###########
+    st.write('''
+    The error band plot above shows how the model's predictions change as the length of the line increases. From the 800+ datapoints in the dataset, we set aside ~140 datapoints to use as a measuring stick for the model.
+    These datapoints are represented in the above plot and show the mean error (blue) as a function of the total length. 
+    
+    We can see that the blue line stays relatively consistent until the length of the project reaches about 20km. After which, two things occur:
+
+    1) The number of datapoints (predidictions) gets smaller. Meaning that a single outlier can unduly affect the average.
+    2) The prediction error begins to deviate away from 0, indicating that the model, on average, produces less accurate predictions.
+        
+    With additional data, it's likely that the mean error would be more uniform accross all track lengths, however it is also expected that larger projects are prone to more cost overruns.  Additional data would also likely help reduce the magnitude of the variance (dark grey band) which indicates the distribution of errors at each length.
+    
+    For the purposes of this tool, the 25km point is important as projects between 0-25km have a mean prediction error less than 50M USD. 
+    ''')
+
+
+
+
+
+
+
     st.write('_________')
     st.subheader('Model Validity')
     st.write('''
