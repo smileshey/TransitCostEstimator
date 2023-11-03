@@ -124,7 +124,3 @@ Within the analysis I've summarized above, I relied heavily on several external 
 6. [Plotly](https://plotly.com/python/)
 7. [OpenMeteo](https://open-meteo.com/)
 8. [Streamlit](https://www.gradio.app/)
-
-```python
-
-```
