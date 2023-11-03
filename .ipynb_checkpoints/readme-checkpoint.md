@@ -2,7 +2,7 @@
 # Estimating Construction Costs for Passenger Rail Using ML
 
 <!-- ![](https://media.giphy.com/media/BAkCBmej8d7NpeCoH0/giphy.gif) -->
-<img src="https://media.giphy.com/media/BAkCBmej8d7NpeCoH0/giphy.gif" width="1000" height="80" alt="Alt Text" style="object-fit: cover;">
+<img src="https://media.giphy.com/media/BAkCBmej8d7NpeCoH0/giphy.gif" width="800" height="10" alt="Alt Text" style="object-fit: cover;">
 
 
 ## Problem Statement
