@@ -34,7 +34,6 @@ def get_model():
     return load_model('models/finalized_user_model')
 
 model = get_model()
-df_user.columns
 ### Next Steps
 ##XXX 1) Go through each section of the analysis and clean Jupyter notebook; Make github final
 ### 1a) Provide final data dictionary that includes engineered features
