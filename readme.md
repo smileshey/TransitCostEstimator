@@ -1,10 +1,10 @@
+<!-- #region -->
 # Estimating Construction Costs for Passenger Rail Using ML
 
-<video width="1000" height="240" controls>
-  <source src="https://media.giphy.com/media/BAkCBmej8d7NpeCoH0/giphy.gif" type="image/gif">
-</video>
-<!-- ![](https://media.giphy.com/media/BAkCBmej8d7NpeCoH0/giphy.gif)
- -->
+<!-- ![](https://media.giphy.com/media/BAkCBmej8d7NpeCoH0/giphy.gif) -->
+<img src="https://media.giphy.com/media/BAkCBmej8d7NpeCoH0/giphy.gif" width="1000" height="80" alt="Alt Text" style="object-fit: cover;">
+
+
 ## Problem Statement
 
 Efficient public transit systems play a pivotal role in enhancing mobility, reducing carbon footprints, and fostering sustainable city growth. In many American cities, there is an ongoing and concerted effort to improve multi-modal transit and build better transit systems that supplement, or replace, the predominantly car-oriented infrastructure. Often these transit system improvements are subject to scrutiny, as urban rail projects require an extensive up-front investment of public money.
@@ -31,7 +31,7 @@ This model, which is demoed below, is deployed and [available for anyone to use 
 
 ![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3Z6N250OWk4NHlyZWk3MmY0eTA5bDFudzFxaGRnMThldHdkenU3cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nWZYYOectRB9Sgf1dN/giphy.gif)
 
-
+<!-- #endregion -->
 
 ## The Data
 
