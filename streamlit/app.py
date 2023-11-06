@@ -168,14 +168,19 @@ elif menu == 'The Data & Model':
     st.write('This app uses a machine learning model that was trained on the data provided by The Transit Project. To learn more about the data, please go to their [webpage](https://transitcosts.com/about/).')
     st.subheader('Why are Transit Projects so Difficult to price?')
     st.write('''
-    Let's imagine you're a baker that specializes in cakes. You're accustomed to baking and selling cakes and so you generally know what each component of the cake will cost. If the cake is X layers, you know that flour, salt, eggs, and butter is going to cost Y. But one day, someone comes in and asks you to bake a cake that's significantly larger than all your other cakes. So large that you don't even know if it would fit in your oven or maybe not even in your bakery.
+    Let's imagine you're a baker that specializes in cakes. You're accustomed to baking and selling cakes and so you generally know what each component of the cake will cost. If the cake is X layers, you know that flour, salt, eggs, and butter is going to cost Y. But one day, someone comes in and asks you to bake a cake that's significantly larger than all your other cakes. 
+    So large that you don't even know if it would fit in your oven or maybe not even in your bakery.
 
     How do you figure out how much to charge for that cake? 
     
     If you would generally use 2 eggs per cake and this goliath of a cake would require 2,000 eggs, do you charge 1000x as much?
     and then you might realize that your nearby store doesn't even sell eggs in that quantity and that you'd probably need to buy a whole new bakery just to facilitate this order.
 
-    and then what if the Mayor gets wind of this cake and requests that you apply for a permit to bake cakes this large and asks that maybe a portion of the cake be baked underground...The analogy eventually breaks down, but I think the point has been made.
+    Then, what if, the city gets wind of this cake and requests that you apply for a permit to bake cakes this large? So you go and fill out the requisite forms, but part of the permitting process requires you to hold public meetings for this cake, requiring you to take into account the needs of everyone within a mile radius of your bakery. Each of these individuals may levy slightly different requests and add additional layers of complexity which restrict how you can bake and deliver the cake. 
+    
+    Before you've even started baking the cake, you've had to hire a bevy of specialized teams that address each element of concern and you still haven't asked the client what color of frosting they'd like.
+    
+    The analogy eventually breaks down, but I think the point has been made.
     
     When your local transit agency proproses a new train in your area, there's more to it than going to Home Depot and buying the necessary supplies to build the train. Each transit agency around the world has different constraints that factor into the total cost of a transit project. Different countries have different expertise, different access to materials, different ideologies, and different existing regulations.
     It's in these details that we realize why it's so difficult to correctly estimate the cost of large scale transit projects.
@@ -473,8 +478,10 @@ elif menu == 'The Data & Model':
     In contrast, SHAP values provide a detailed decomposition of feature effects, quantifying both magnitude and direction of each feature's contribution for individual predictions.
     ''')
     ##### SHAP plot #####
-    df_plot_melted['abs_avg'] = np.mean(abs(df_plot_melted['SHAP']))
-    df_plot_melted = df_plot_melted.sort_values(by="abs_avg", ascending=False)
+    df_plot_melted['shap_abs'] = df_plot_melted['SHAP'].abs()
+    max_abs_values_by_feature = df_plot_melted.groupby('Feature')['shap_abs'].max().reset_index(name='max_shap_abs')
+    df_plot_melted = df_plot_melted.merge(max_abs_values_by_feature, on='Feature')
+    df_plot_melted = df_plot_melted.sort_values(by='max_shap_abs', ascending=True)
     fig = px.scatter(df_plot_melted, x='SHAP', y='Feature', color='SHAP', size='difference', 
                     color_continuous_scale='viridis', height=500, width=800)
 
@@ -1073,13 +1080,24 @@ elif menu == 'Modelling':
     st.header('Generating Your Own Predictions')
     st.write('---------------------------')
 
-    st.write('''
-    Within this section, you\'ll have the opportunity to generate a cost estimate for a project in your city. 
+    subset_predictions = predictions[(predictions['length'] >= 0) & (predictions['length'] <= 25)]
+    subset_predictions['absolute_error'] = (subset_predictions['cost_real_2021'] - subset_predictions['prediction_label']).abs()
+    subset_mae = subset_predictions['absolute_error'].mean()    
+    formatted_subset_mae = "{:.0f}".format(subset_mae)
+
+    subset_predictions['error'] = subset_predictions['cost_real_2021'] - subset_predictions['prediction_label']
+    subset_mean_error = subset_predictions['error'].mean()
+    formatted_subset_mean_error = "{:.1f}".format(subset_mean_error)
+
+    st.write(f'''
+    Within this section, you'll have the opportunity to generate a cost estimate for a project in your city. 
     Remember, these predictions are not exact but should give you a good estimate of how expensive the project should be. 
-    Often times the model may struggle with notable exceptions, unique projects, projects planned for farther into the future, and project subject to significant delays. 
+    Oftentimes the model may struggle with notable exceptions, unique projects, projects planned for farther into the future, and projects subject to significant delays. 
     The prediction you'll generate does not include the cost of rolling stock (the train cars) or costs associated with financing a project (loan fees, interest).
 
-    The prediction you generate should be within +- 500M USD and represent a good estimate of the cost to build your chosen project.
+    The overall Mean Absolute Error (MAE) of the model is +- 470M USD (all lengths).
+
+    For projects within the range of 0-25km in length, __the expected MAE is +- {formatted_subset_mae}M USD with a mean expected error of {formatted_subset_mean_error}M USD__.
     ''')
     st.write('---------------------------')
 
@@ -1090,7 +1108,7 @@ elif menu == 'Modelling':
         'elevated': (0, 25),
         'at_grade': (0, 25),
         'stations': (0,25),
-        'duration': (0, 25)
+        'duration': (1, 25)
     }
     cont_input_values = {}
     cat_input_values = {}
