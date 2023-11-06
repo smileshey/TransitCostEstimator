@@ -1151,7 +1151,7 @@ elif menu == 'Modelling':
             del feature_categories['train_type']
 
         cols = st.columns(2)
-        cont_input_values['duration'] = cols[0].slider('How Long will the Project take to Build?', min_value=0, max_value=25, format="%d Years")
+        cont_input_values['duration'] = cols[0].slider('How Long will the Project take to Build?', min_value=1, max_value=25, format="%d Years")
         cont_input_values['stations'] = cols[1].slider('How Many Stations Will be Built?', min_value=0, max_value=25, format="%d stations")
         st.write('---------------------------')
 
