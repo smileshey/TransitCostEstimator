@@ -124,3 +124,13 @@ Within the analysis I've summarized above, I relied heavily on several external 
 6. [Plotly](https://plotly.com/python/)
 7. [OpenMeteo](https://open-meteo.com/)
 8. [Streamlit](https://www.gradio.app/)
+
+
+### Open List of Potential Improvements
+
+After submitting this project to various subreddits for input, several potentially improvements have become apparent. I'll keep a running tally of those issues below: 
+1. More data. 1000 data points isn't enough to provide reliable results.
+2. Stations are weighted equally for subways and trams, even though a tram station is less complex to  build.
+3. Adjust inflation rates to 2023, or dynamically adjust them to a year set by the user.
+4. PPP rates and inflation rates often vary considerably over the course of a project, need to devise a way to find a weighted average of both rates to prevent skewed results.
+
