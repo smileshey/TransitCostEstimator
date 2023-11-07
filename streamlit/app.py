@@ -1350,7 +1350,7 @@ elif menu == 'Modelling':
         st.sidebar.markdown(f"<div style='text-align: center; font-size: 12px;'>±${formatted_subset_mae}M USD (2021)</div>", unsafe_allow_html=True)
         st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px;'>   </div>", unsafe_allow_html=True)
 
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px; color: white;'> To build this project today</div>", unsafe_allow_html=True)
+        st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px;'> To build this project today</div>", unsafe_allow_html=True)
 
 
         ### END CODE
