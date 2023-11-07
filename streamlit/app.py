@@ -132,8 +132,6 @@ if menu == 'Introduction':
     st.write('''
     This app uses a machine learning model that was trained on the data provided by The Transit Project. 
     To learn more about the data, please go to their [webpage](https://transitcosts.com/about/) or view my [github repo](https://github.com/smileshey/TransitCostEstimator) to learn more about how the model was trained.
-    
-    You can find more of my work on [my webpage](http://ryanvirg.in/) and get in touch with me there.
 
     In addition to The Transit Project, I used several resources to construct this analysis:
 
@@ -149,7 +147,9 @@ if menu == 'Introduction':
     st.write('__________')
     st.subheader('Who am I?')
     st.write('''
-    I'm a civil engineer (PE) that has an interest in data. I've spent my career designing and managing projects for a large public works agency in California, which often oversaw projects from the cradle to the grave. My experience in the industry lends itself to this sort of analysis as I'm familiar with the design, planning, and construction of large-scale, long-term public goods. 
+    I'm a civil engineer (P.E.) that has an interest in data. You can find more of my work on [my webpage](http://ryanvirg.in/) and get in touch with me there.
+
+    I've spent my career designing and managing projects for a large public works agency in California, which often oversaw projects from the cradle to the grave. My experience in the industry lends itself to this sort of analysis as I'm familiar with the design, planning, and construction of large-scale, long-term public goods. 
     ''')
     st.write('__________')
 
@@ -233,6 +233,11 @@ elif menu == 'The Data & Model':
     The dataset, orginally compiled by [The Transit Project](https://transitcosts.com/about/), combines these collective similarities into a structured table that looks like this: 
     
     ''')
+    df_cleaned['start_year'] = df_cleaned['start_year'].astype('str')
+    df_cleaned['end_year'] = df_cleaned['end_year'].astype('str')
+    df_cleaned['start_year'] = df_cleaned['start_year'].str.replace(',', '', regex=False)
+    df_cleaned['end_year'] = df_cleaned['end_year'].str.replace(',', '', regex=False)
+
     st.dataframe(df_cleaned)
     st.write('''
     The above dataset summarizes the components of a train line on each row. It tells us where and when the project started, when it ended, how long it is and whether the track is above or below us. 
@@ -309,13 +314,16 @@ elif menu == 'The Data & Model':
     Even within such a small country,like Hong Kong (Which has a land area roughly the size of 2 Londons or 1 Rhode Islands), there's going to be some variation in site conditions.
     
     Sometimes a project may plan to dig through dirt, but find a big boulder in the way (Delays, change orders). Other times, they might discover unexpected underground water sources or unstable soil conditions, which can complicate the construction process.
-    In urban areas like Hong Kong, there's also the challenge of building around existing infrastructure, like water mains, sewage systems, electrical grids, and even older (sometimes forgotten) transit lines (variations in density). 
+    In urban areas like Hong Kong, there's also the challenge of building around existing infrastructure, like water mains, sewage systems, electrical grids, and even older (sometimes forgotten) unused public utilities. 
+    
     There's the consideration of the socio-economic impact too. Areas with more businesses or residences may require more complex relocation or compensation efforts (variations in land costs).
     And let's not forget about the regulatory landscape; depending on the specific location and nature of the project, different permits, reviews, and environmental impact assessments might be necessary. 
-    Each of these variables can introduce delays, require specialized expertise, or increase the resources needed. 
+    Each of these variables can introduce delays, require specialized labor, or otherwise increase the resources needed. 
     
-    Using the base dataset, this task becomes more difficult. We know, and have shown, that cost of a project is at least somewhat related the length of the line, but beyond that what else could we show? This is where we'll need to find ways to expand the dataset. 
-    By using the existing data to create new data, we might be able to find new patterns in the data. Within the full analysis that I linked in the introduction, this is called 'Feature Engineering' and 'Feature Engineering' is the process of creating new features (or columns) in the dataset by means of applying domain knowledge.
+    Using the base dataset, this task becomes more difficult. We know, and have shown, that cost of a project is at least somewhat related the length of the line, but beyond that what else could we show? 
+    
+    This is where we'll need to find ways to expand the dataset. 
+    By using the existing data to create new data, we might be able to find new patterns. Within the full analysis that I linked in the introduction, this is called 'Feature Engineering' and 'Feature Engineering' is the process of creating new features (or columns) in the dataset by means of applying domain knowledge.
 
     In the section below, I'll describe a few of the features that were engineered and plot a few of these variations to see what impact they have on total project cost.
     ''')
@@ -627,14 +635,7 @@ elif menu == 'The Data & Model':
     2) The prediction error begins to deviate away from 0, indicating that the model, on average, produces less accurate predictions.
         
     With additional data, it's likely that the mean error would be more uniform accross all track lengths, however it is also expected that larger projects are prone to more cost overruns.  Additional data would also likely help reduce the magnitude of the variance (dark grey band) which indicates the distribution of errors at each length.
-    
-    For the purposes of this tool, the 25km point is important as projects between 0-25km have a mean prediction error less than 50M USD. 
-    ''')
-
-
-
-
-
+        ''')
 
 
     st.write('_________')
