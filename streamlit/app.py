@@ -34,6 +34,9 @@ def get_model():
     return load_model('models/finalized_user_model')
 
 model = get_model()
+
+
+
 ### Next Steps
 ##XXX 1) Go through each section of the analysis and clean Jupyter notebook; Make github final
 ### 1a) Provide final data dictionary that includes engineered features
@@ -45,6 +48,9 @@ model = get_model()
 ### 6) Generate an error band given a length of track. It would be nice to be
 ###    able to list the error under the predicted project cost
 ### Start of streamlit app
+
+
+
 menu = st.sidebar.radio(
     'Choose a Page',
     ('Introduction', 'The Data & Model', 'Evaluating the Model','Modelling')
@@ -1080,24 +1086,19 @@ elif menu == 'Modelling':
     st.header('Generating Your Own Predictions')
     st.write('---------------------------')
 
-    subset_predictions = predictions[(predictions['length'] >= 0) & (predictions['length'] <= 25)]
+    subset_predictions = predictions[(predictions['length'] >= 0) & (predictions['length'] <= 20)]
     subset_predictions['absolute_error'] = (subset_predictions['cost_real_2021'] - subset_predictions['prediction_label']).abs()
     subset_mae = subset_predictions['absolute_error'].mean()    
     formatted_subset_mae = "{:.0f}".format(subset_mae)
 
-    subset_predictions['error'] = subset_predictions['cost_real_2021'] - subset_predictions['prediction_label']
-    subset_mean_error = subset_predictions['error'].mean()
-    formatted_subset_mean_error = "{:.1f}".format(subset_mean_error)
+    # subset_predictions['error'] = subset_predictions['cost_real_2021'] - subset_predictions['prediction_label']
+    # subset_mean_error = abs(subset_predictions['error']).mean()
+    # formatted_subset_mean_error = "{:.1f}".format(subset_mean_error)
 
     st.write(f'''
-    Within this section, you'll have the opportunity to generate a cost estimate for a project in your city. 
-    Remember, these predictions are not exact but should give you a good estimate of how expensive the project should be. 
-    Oftentimes the model may struggle with notable exceptions, unique projects, projects planned for farther into the future, and projects subject to significant delays. 
-    The prediction you'll generate does not include the cost of rolling stock (the train cars) or costs associated with financing a project (loan fees, interest).
+    In this section, you can estimate the construction cost for your own project. While not exact, the predictions offer a reasonable approximation. Keep in mind, the model might not fully account for exceptionally unique projects, projects set to take place far into the future, and it does not cover rolling stock or financial costs like loans or interest.
 
-    The overall Mean Absolute Error (MAE) of the model is +- 470M USD (all lengths).
-
-    For projects within the range of 0-25km in length, __the expected MAE is +- {formatted_subset_mae}M USD with a mean expected error of {formatted_subset_mean_error}M USD__.
+    The model’s Mean Absolute Error (MAE) is ±$470M USD across all lengths. A more precise error adjusted for your project's length will appear beneath the predicted value in the sidebar
     ''')
     st.write('---------------------------')
 
@@ -1326,9 +1327,15 @@ elif menu == 'Modelling':
 
         # Convert the list to a DataFrame
         df_for_prediction = pd.DataFrame([data_for_prediction], columns=model_feature_order)
-
         # Make predictions
         prediction = model.predict(df_for_prediction)
+        # Calculate Error for Prediction
+        user_length = st.session_state.length
+        user_length = max(0, min(user_length, 25))
+        subset_predictions = predictions[predictions['length'] <= user_length]
+        subset_predictions['absolute_error'] = (subset_predictions['cost_real_2021'] - subset_predictions['prediction_label']).abs()
+        subset_mae = subset_predictions['absolute_error'].mean()
+        formatted_subset_mae = "{:.0f}".format(subset_mae)
 
         # Format the prediction output
         predicted_value = prediction[0]
@@ -1338,5 +1345,7 @@ elif menu == 'Modelling':
             display_value = f"{predicted_value:.2f} Million USD"
 
         st.sidebar.markdown(f"<div style='text-align: center; font-size: 35px;'>Predicted Cost</div>", unsafe_allow_html=True)
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
+        st.sidebar.markdown(f"<div style='text-align: center; font-size: 30px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
+        st.sidebar.markdown(f"<div style='text-align: center; font-size: 15px; color: white;'>±${formatted_subset_mae}M USD</div>", unsafe_allow_html=True)
+
         ### END CODE
