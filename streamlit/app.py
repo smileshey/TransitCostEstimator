@@ -1345,8 +1345,12 @@ elif menu == 'Modelling':
         else:
             display_value = f"{predicted_value:.2f} Million USD"
 
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 35px;'>Predicted Cost</div>", unsafe_allow_html=True)
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 30px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 15px; color: white;'>±${formatted_subset_mae}M USD</div>", unsafe_allow_html=True)
+        st.sidebar.markdown(f"<div style='text-align: center; font-size: 30px;'>Predicted Cost</div>", unsafe_allow_html=True)
+        st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
+        st.sidebar.markdown(f"<div style='text-align: center; font-size: 12px; color: white;'>±${formatted_subset_mae}M USD (2021)</div>", unsafe_allow_html=True)
+        st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px; color: white;'>   </div>", unsafe_allow_html=True)
+
+        st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px; color: white;'> To build this project today</div>", unsafe_allow_html=True)
+
 
         ### END CODE
