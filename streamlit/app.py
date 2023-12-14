@@ -654,7 +654,7 @@ elif menu == 'Evaluating the Model':
     A prediction, in the machine learning sense, is less hand-wavy and ephemeral than the word sounds. In the process of creating a model, we train an algorithm with a bunch of data. We tell the algorithm which feature is the target (dependent variable), which features it should use to find patterns (independent variables), and the algorithm then learns from this data, identifying intricate relationships between the features. 
     The goal of the model is to find an equation that best connects the dependent variable with the independent variables. 
     
-    As an example let's devise fictitious and simplified version of the alogirthm used to create the model for this project. Let's say the dataset is only 3 points:
+    As an example let's devise fictitious and simplified version of the algorithm used to create the model for this project. Let's say the dataset is only 3 points:
 
     1. Length = 10, At Grade = 10, tunnel = 0, cost = 10
     2. Length = 10, At Grade = 0, tunnel = 10, cost = 20
@@ -672,7 +672,7 @@ elif menu == 'Evaluating the Model':
 
         cost = 1(5) + 2(10), which would return 25 cost units
     
-    The purpose of creating a model that can identify trends within a dataset is so that we can apply that model to new data (data that we haven't calculated the cost for) and make a prediction of the cost for that project. 
+    The purpose of creating a model that can identify trends within a dataset is so that we can apply that model to new data (data that we haven't calculated the cost for) and make a prediction of the cost for that new data. 
     
     Once trained, the model can take new, unseen data and make an informed guess or "prediction" about the target based on the patterns it 
     recognized during training. It's not a vague guess or intuition; it's a calculated output based on patterns present in the data    

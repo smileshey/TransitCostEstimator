@@ -46,7 +46,8 @@ Kuala Lumpur,Malaysia,0.024
 Hangzhou,China,0.0239
 Suzhou,China,0.0399
 Surat,India,0.0361
-New York City,United States,-0.0348
+New York City,United States,0.0348
+New York,United States,0.0348
 Dar es Salaam,Tanzania,0.0501
 Baghdad,Iraq,0.0265
 Hong Kong,Hong Kong,0.0054
@@ -55,7 +56,6 @@ Shenyang,China,0.0203
 Foshan,China,0.0134
 Dongguan,China,0.01
 Pune,India,0.0257
-Santiago,Chile,0.0068
 Haerbin,China,0.0207
 Madrid,Spain,0.0056
 Toronto,Canada,0.0093
@@ -68,7 +68,6 @@ Qingdao,China,0.0207
 Zhengzhou,China,0.0297
 Ji-nan Shandong,China,0.0253
 Barcelona,Spain,0.0051
-Abidjan,Ivory Coast,0.0309
 Yangon,Myanmar,0.0174
 Alexandria,Egypt,0.0191
 Saint Petersburg,Russia,0.0046
@@ -280,7 +279,6 @@ Matola,Mozambique,0.0309
 Adana,Turkey,0.0118
 Madurai,India,0.0197
 Sharjah,United Arab Emirates,0.0253
-Santa Cruz,Bolivia,0.02
 Palembang,Indonesia,0.0186
 Raipur,India,0.032
 Gaziantep,Turkey,0.0176
@@ -321,7 +319,7 @@ Suqian,China,0.0433
 Kananga,DR Congo,0.0449
 Hengyang,China,0.0265
 Tabriz,Iran,0.0102
-Phoenix,AZ,0.0082
+Phoenix,United States,0.0082
 Muscat,Oman,0.0171
 Anyang,China,0.0357
 Calgary,Canada,0.0175
@@ -623,7 +621,7 @@ Fuxin,China,0.0152
 Kuerle,China,0.0418
 Hufuf-Mubarraz,Saudi Arabia,0.014
 Quzhou,China,0.0419
-Indianapolis,IN,-0.006
+Indianapolis,United States,-0.006
 Cherthala,India,0.0401
 Libreville,Gabon,0.0151
 Tainan,Taiwan,0.0072
@@ -654,7 +652,6 @@ Bucheon,South Korea,-0.0011
 Heze,China,0.0141
 Kunshan,China,0.0345
 Barcelona-Puerto La Cruz,Venezuela,0.0128
-Newcastle upon Tyne,United Kingdom,0.0061
 Haicheng,China,0.0163
 Huludao,China,0.0191
 Kottayam,India,0.0491
@@ -770,3 +767,149 @@ Jeddah,Saudi Arabia,0.02
 Gothenburg,Sweden,0.01
 Malmo,Sweden,0.01
 Kyiv,Ukraine,0.002
+10th of Ramadan City,Egypt,0.01
+Abidjan,Côte d'Ivoire,0.025
+Albuquerque,United States,0.015
+Alger,Algeria,0.016
+Alicante,Spain,0.0057
+Angers,France,0.0047
+Atlanta,United States,0.0155
+Aubagne,France,0.0053
+Austin,United States,0.02
+Avignon,France,0.0064
+Baltimore,United States,-0.015
+Basel,Switzerland,0.0053
+Bergen,Norway,0.011
+Bielefeld,Germany,-0.001
+Bordeaux,France,0.0091
+Bremen,Germany,0.0015
+Brest,France,0.0066
+Brno,Czechia,0.0026
+Buffalo,United States,-0.0056
+Caen,France,-0.0044
+Cagliari,Italy,0.0021
+Calabar,Nigeria,0.0417
+Camden,United States,-0.0028
+Canberra,Australia,0.0107
+Chiba,Japan,0.0024
+Christchurch,New Zealand,0.0025
+Cincinnati,United States,-0.0038
+Clermont Ferrand,France,0.0043
+Clermont-Ferrand,France,0.0043
+Cleveland,United States,0.0017
+Constantine,Algeria,0.0185
+Crato,Brazil,0.0052
+Croydon,United Kingdom,0.075
+Cuenca,Ecuador,0.02
+Daejeon,South Korea,0.0064
+Denver,United States,0.0017
+Detroit,United States,-0.009
+Dijon,France,0.0063
+Edinburgh,United Kingdom,0.0098
+Egypt,Egypt,0.0156
+El Paso,United States,0.0113
+Florence,Italy,0.0014
+Freiburg,Germany,0.0194
+Galveston,United States,-0.0056
+Gdansk,Poland,0.0002
+Gold Coast,Australia,0.0213
+Granada,Spain,0.003
+Grenoble,France,0.0056
+Hartford,United States,-0.0032
+Hudson County,United States,0.0122
+Innsbruck,Austria,0.008
+Jaen,Spain,0.012
+Jerusalem,Israel,0.0136
+Kamakura,Japan,-0.0011
+Kansas City,United States,0.0009
+Kaohsiung,Taiwan,0.0013
+Kirkland,United States,-0.007
+Kitakyushu,Japan,-0.0024
+Kobe,Japan,-0.0016
+Kyoto,Japan,-0.00053
+Las Vegas,United States,0.0054
+Lausanne,Switzerland,0.012
+Le Havre,France,-0.0028
+Le Mans,France,-0.0023
+Leeds,United Kingdom,0.0094
+Liege,Belgium,0.0044
+Little Rock,United States,0.0114
+Lund,Sweden,0.0097
+Lusail,Qatar,0.04
+Luxembourg,Luxembourg,0.015
+Macau,China,0.0125
+Malacca,Malaysia,0.013
+Memphis,United States,0.0061
+Merseyside,United Kingdom,0.0027
+Milwaukee,United States,0.003
+Minneapolis,United States,0.0071
+Montpellier,France,0.0107
+Morgantown,United States,0.002
+Mostaganem,Algeria,0.002
+Mulhouse,France,-0.0059
+Murcia,Spain,0.005
+Naha,Japan,-0.002
+Nantes,France,0.01
+New Orleans,United States,0.008
+Newcastle,United Kingdom,0.005
+Nice,France,0.0015
+Norfolk,United States,0.00015
+Odense,Denmark,0.0082
+Okinawa,Japan,0.0045
+Oklahoma City,United States,0.0073
+Omaha,United States,0.0085
+Orleans,France,0.005
+Ouargla,Algeria,0.017
+Padua,Italy,0.0044
+Palma,Spain,0.0106
+Perugia,Italy,-0.0004
+Phoenix,United States,0.014
+Pisa,Italy,0.0029
+Pittsburgh,United States,0.0018
+Port Louis,Mauritius,-0.0021
+Portland,United States,0.016
+Quebec,Canada,0.017
+Reims,France,-0.0002
+Saarbrucken,Germany,0.0033
+Sacramento,United States,0.0014
+Saint-Etienne,France,0.0027
+Salt Lake City,United States,0.0092
+Samsun,Turkey,0.021
+San Bernardino,United States,0.006
+Santa Ana,United States,-0.0014
+Santa Clara,United States,0.007
+Santa Cruz,United States,0.0105
+Santiago,Dominican Republic,0.0067
+Sassari,Italy,-0.0036
+Serfaus,Austria,0.0022
+Setif,Algeria,0.0215
+Sevilla,Spain,-0.0014
+Sfax,Tunisia,0.00109
+Sheffield,United Kingdom,0.006
+Sidi Bel Abbes,Algeria,0.015
+St. Louis,United States,-0.005
+Strasbourg,France,0.0063
+Tacoma,United States,-0.0008
+Taichung,Taiwan,0.0018
+Tallinn,Estonia,0.009
+Tampa,United States,0.0109
+Tempe,United States,0.0182
+Tenerife,Spain,0.0314
+The Hague,Netherlands,0.0071
+Tours,France,0.0055
+Toyama,Japan,-0.0048
+Trenton,United States,0.006
+Triangle,United States,0.015
+Tucson,United States,0.0101
+Tyne-and-Wear,United Kingdom,0.0055
+Uijeongbu,South Korea,0.00001
+Ulm,Germany,0.0079
+Utsunomiya,Japan,-0.0017
+Valencia,Spain,0.0012
+Valenciennes,France,0.0029
+Venice,Italy,-0.0011
+Victoria,Canada,0.0107
+Vitoria,Spain,0.0135
+Waterloo,Canada,0.00141
+Zagreb,Croatia,-0.00015
+Zaragoza,Spain,0.0027
