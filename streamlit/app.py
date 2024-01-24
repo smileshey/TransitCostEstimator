@@ -43,9 +43,14 @@ model = get_model()
 menu = st.sidebar.radio(
     'Choose a Page',
     ('Introduction', 'The Data & Model', 'Evaluating the Model','Modelling')
+
 )
 
 if menu == 'Introduction':
+    st.sidebar.header("*_*_*_*_*_*_*_*_*_*_*_*_*_*")
+    st.sidebar.header("This App is currently being updated to v2 and probably won't work as intended. I've added additional data to the dataset and am in the process of resolving errors caused after committing my changes - January 2024")
+    st.sidebar.header("*_*_*_*_*_*_*_*_*_*_*_*_*_*")
+
     with open('pickles/df_engineered.pkl', 'rb') as f:
         df_engineered = pickle.load(f)
     st.title('Transit Cost Estimator')
@@ -189,6 +194,8 @@ elif menu == 'The Data & Model':
     ''')
     st.write('____________')
     st.subheader('The Data')
+
+    df_engineered
 
     fig = px.scatter_geo(df_engineered, lat='lat', lon='lng', color="country",
                         hover_name="country",
