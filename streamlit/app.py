@@ -36,17 +36,6 @@ def get_model():
 model = get_model()
 
 
-
-### Next Steps
-##XXX 1) Go through each section of the analysis and clean Jupyter notebook; Make github final
-### 1a) Provide final data dictionary that includes engineered features
-### 2) Write the Readme
-### 3) Change App title?
-### 4) Identify reddit communities to post results in/ post on social media
-###XXX 5) Adjust map on data tab that uses a earth background rather than transparent
-###   -> Dots on Japan don't show up very well on the green background. May occur elsewehere. Figure out if you can make the green transparent.
-### 6) Generate an error band given a length of track. It would be nice to be
-###    able to list the error under the predicted project cost
 ### Start of streamlit app
 
 
@@ -255,8 +244,8 @@ elif menu == 'The Data & Model':
     st.write('At the outset of this analysis I stated that building out a train network is akin to a dance where each party is of a different opinion regarding how to carry out the dance itself. This becomes more apparent when we look at the differences between project cost estimates within each individual country')
 
 ######## Plotting cost per country ######## 
-    df_engineered['average_costkm_country'] = df_engineered.groupby('country')['cost_km_2021'].transform('mean')
-    df_engineered['average_cost_country'] = df_engineered.groupby('country')['cost_real_2021'].transform('mean')
+    df_engineered['average_costkm_country'] = df_engineered.groupby('country')['cost_km_2023'].transform('mean')
+    df_engineered['average_cost_country'] = df_engineered.groupby('country')['cost_real_2023'].transform('mean')
     df_unique_countries = (df_engineered.drop_duplicates(subset='country')).sort_values(by='average_costkm_country', ascending=False)
     overall_avg = df_unique_countries['average_costkm_country'].mean()
 
@@ -288,7 +277,7 @@ elif menu == 'The Data & Model':
 ######## Plotting cost variation country ######## 
     fig = px.scatter(df_engineered.sort_values(by='country'), 
                     x='country',
-                    y='cost_km_2021',
+                    y='cost_km_2023',
                     color='length',
                     color_continuous_scale='viridis')
 
@@ -340,14 +329,14 @@ elif menu == 'The Data & Model':
     However, if we look at the total project duration, we should see some correlation between duration and cost (if this is true).
     ''')
     ######## Plotting cost variation country ######## 
-    avg_cost_by_duration = df_engineered.groupby('duration')['cost_km_2021'].mean().reset_index()
+    avg_cost_by_duration = df_engineered.groupby('duration')['cost_km_2023'].mean().reset_index()
     count_by_duration = df_engineered.groupby('duration').size().reset_index(name='count')
     merged_df = avg_cost_by_duration.merge(count_by_duration, on='duration')
 
     # Create the bar chart colored by the count
     fig = px.bar(merged_df,
                 x='duration',
-                y='cost_km_2021',
+                y='cost_km_2023',
                 color='count',
                 color_continuous_scale='viridis',
                 labels={'count': 'Number of Projects'} 
@@ -388,13 +377,13 @@ elif menu == 'The Data & Model':
     soil type probability for each city in the dataset. This will allow us to visualize if a specific soil type correlates with higher construction costs.
     ''')
     ######## Plotting cost variation country ######## 
-    avg_cost_by_duration = df_engineered.groupby('duration')['cost_km_2021'].mean().reset_index()
+    avg_cost_by_duration = df_engineered.groupby('duration')['cost_km_2023'].mean().reset_index()
     count_by_duration = df_engineered.groupby('duration').size().reset_index(name='count')
     merged_df = avg_cost_by_duration.merge(count_by_duration, on='duration')
 
     fig = px.scatter(df_streamlit,
          x="duration",
-         y='cost_km_2021',
+         y='cost_km_2023',
          color = 'soil_type',
          color_continuous_scale=px.colors.sequential.Viridis
          )
@@ -429,7 +418,7 @@ elif menu == 'The Data & Model':
     fig = px.scatter(df_streamlit,
          x="precipitation_type",
          y='temperature_category',
-         color = 'cost_km_2021',
+         color = 'cost_km_2023',
          color_continuous_scale=px.colors.sequential.Viridis
          )
 
@@ -549,7 +538,7 @@ elif menu == 'The Data & Model':
     ''')
 
     ##### ERROR BAND PLOT###########
-    predictions['error'] = predictions['cost_real_2021'] - predictions['prediction_label']
+    predictions['error'] = predictions['cost_real_2023'] - predictions['prediction_label']
     # Create bins
     bin_size = 11 
     bins = np.arange(0, predictions['length'].max() + bin_size, bin_size)
@@ -686,7 +675,7 @@ elif menu == 'Evaluating the Model':
 
     ''')
     ### Residuals Calculation
-    predictions['Residuals'] = predictions['cost_real_2021'] - predictions['prediction_label']
+    predictions['Residuals'] = predictions['cost_real_2023'] - predictions['prediction_label']
     mean_res = np.mean(predictions['Residuals'])
     std_res = np.std(predictions['Residuals'])
     predictions['Standardized_Residuals'] = (predictions['Residuals'] - mean_res) / std_res
@@ -1088,11 +1077,11 @@ elif menu == 'Modelling':
     st.write('---------------------------')
 
     subset_predictions = predictions[(predictions['length'] >= 0) & (predictions['length'] <= 20)]
-    subset_predictions['absolute_error'] = (subset_predictions['cost_real_2021'] - subset_predictions['prediction_label']).abs()
+    subset_predictions['absolute_error'] = (subset_predictions['cost_real_2023'] - subset_predictions['prediction_label']).abs()
     subset_mae = subset_predictions['absolute_error'].mean()    
     formatted_subset_mae = "{:.0f}".format(subset_mae)
 
-    # subset_predictions['error'] = subset_predictions['cost_real_2021'] - subset_predictions['prediction_label']
+    # subset_predictions['error'] = subset_predictions['cost_real_2023'] - subset_predictions['prediction_label']
     # subset_mean_error = abs(subset_predictions['error']).mean()
     # formatted_subset_mean_error = "{:.1f}".format(subset_mean_error)
 
@@ -1323,7 +1312,7 @@ elif menu == 'Modelling':
 
 # Put the button in the center column
     if col2.button('Make Prediction'):
-        model_feature_order = df_user.drop(columns = ['cost_real_2021']).columns
+        model_feature_order = df_user.drop(columns = ['cost_real_2023']).columns
         data_for_prediction = [input_values[key] for key in model_feature_order]
 
         # Convert the list to a DataFrame
@@ -1334,7 +1323,7 @@ elif menu == 'Modelling':
         user_length = st.session_state.length
         user_length = max(0, min(user_length, 25))
         subset_predictions = predictions[predictions['length'] <= user_length]
-        subset_predictions['absolute_error'] = (subset_predictions['cost_real_2021'] - subset_predictions['prediction_label']).abs()
+        subset_predictions['absolute_error'] = (subset_predictions['cost_real_2023'] - subset_predictions['prediction_label']).abs()
         subset_mae = subset_predictions['absolute_error'].mean()
         formatted_subset_mae = "{:.0f}".format(subset_mae)
 
