@@ -41,7 +41,6 @@ model = get_model()
 menu = st.sidebar.radio(
     'Choose a Page',
     ('Introduction', 'The Data & Model', 'Evaluating the Model','Modelling')
-
 )
 
 if menu == 'Introduction':
@@ -337,6 +336,7 @@ elif menu == 'The Data & Model':
     The duration of project is important in of itself, but it also can capture some relevant information about any delays in a project. Its difficult to identify, for 1000 projects, specific magnitudes of project delays.
     However, if we look at the total project duration, we should see some correlation between duration and cost (if this is true).
     ''')
+
     ######## Plotting cost variation country ######## 
     avg_cost_by_duration = df_engineered.groupby('duration')['cost_km_2023'].mean().reset_index()
     count_by_duration = df_engineered.groupby('duration').size().reset_index(name='count')
@@ -549,7 +549,7 @@ elif menu == 'The Data & Model':
     ##### ERROR BAND PLOT###########
     predictions['error'] = predictions['cost_real_2023'] - predictions['prediction_label']
     # Create bins
-    bin_size = 8
+    bin_size = 2
     bins = np.arange(0, predictions['length'].max() + bin_size, bin_size)
     predictions['length_bin'] = pd.cut(predictions['length'], bins, labels=bins[:-1] + bin_size/2, right=False)
 
@@ -602,6 +602,9 @@ elif menu == 'The Data & Model':
         yaxis_title='Prediction Error ($)',
         xaxis=dict(
             range=[0, 50]
+        ),
+        yaxis=dict(
+            range=[-2000, 1500]
         ),
         yaxis2=dict(
                 overlaying='y', 
@@ -1011,78 +1014,98 @@ elif menu == 'Modelling':
         ]
 
     ### Feature categories
-    feature_categories = {'region': ['Asia', 'Europe', 'Americas', 'Africa', 'Central America'],
-    'sub_region': ['Eastern Asia',
-    'Southern Europe',
+    feature_categories = {
+    'region': ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'],
+    'sub_region': ['Australia and New Zealand',
     'Central Asia',
-    'Western Europe',
-    'Southern Asia',
-    'Northern America',
-    'Latin America and the Caribbean',
+    'Eastern Asia',
     'Eastern Europe',
-    'Northern Europe',
+    'Latin America and the Caribbean',
     'Northern Africa',
-    'Western Asia',
+    'Northern America',
+    'Northern Europe',
     'South-eastern Asia',
-    'Caribbean'],
+    'Southern Asia',
+    'Southern Europe',
+    'Sub-Saharan Africa',
+    'Western Asia',
+    'Western Europe'],
     'soil_type': ['Clay Dominant',
-    'Fertile/Agricultural (Grasslands, Food Bearing, Pasture)',
-    'River Valleys/Deltas (River Sediments)',
-    'High Altitude/Wet (Mountain, Swampy)',
-    'Environment Dependent (Wetlands, Volcanic Ash, Mineral Rich)',
     'Cold Climates (Permafrost, Rock Outcrops)',
+    'Environment Dependent (Wetlands, Volcanic Ash, Mineral Rich)',
+    'Fertile/Agricultural (Grasslands, Food Bearing, Pasture)',
+    'High Altitude/Wet (Mountain, Swampy)',
+    'River Valleys/Deltas (River Sediments)',
     'Saline/Arid (Desert Soils, High Salt Content)'],
-    'gauge_width': ['standard', 'wide', 'monorail', 'narrow'],
-    'city_size': ['<250k (small)',
-    '250k-500k (medium-small)',
-    '500k-1M (medium)',
+    'gauge_width': ['non-standard', 'standard'],
+    'city_size': ['10M-15M (small Metropolis)',
     '1M-2M (medium-large)',
+    '250k-500k (medium-small)',
     '2M-5M (large)',
-    '5M-10M (very large)'
-    '10M-15M (small Metropolis)',
+    '500k-1M (medium)',
+    '5M-10M (very large)',
+    '<250k (small)',
     '>15M (Metropolis)'],
-    'train_type': ['subway',
-    'tram',
-    'elevated light rail',
-    'light rail',
-    'monorail'],
-    'country_income_class': ['low-income',
+    'train_type': ['APM',
+    'Light Rail',
+    'MRT',
+    'Monorail',
+    'Regional Rail',
+    'Tram'],
+    'country_income_class': ['high-income',
+    'low-income',
     'lower-middle income',
-    'upper-middle income',
-    'high-income'],
-    'elevation_class': ['Coastal', 'Mid-land', 'High-land'],
-    'precipitation_type': ['Very-Arid',
-    'Arid',
-    'Semi-Arid',
-    'Low-Moderate-Rainfall',
-    'Moderate-Rainfall',
-    'High-Moderate-Rainfall',
-    'High-Rainfall',
-    'Very-High-Rainfall'],
-    'temperature_category': ['Very Cold',
-    'Cold/Cool',
-    'Mild/Moderate',
-    'Warm/Hot',
-    'Very Hot or Extreme Heat'],
-    'affordability': ['Very Unaffordable',
-    'Unaffordable',
-    'Moderately Affordable',
-    'Affordable',
-    'Highly Affordable'],
-    'union_prevalence': ['Very Few/No Labor Unions',
+    'upper-middle income'],
+    'elevation_class': ['Coastal', 'High-land', 'Mid-land'],
+    'precipitation_type': ['High', 'Low', 'Moderate', 'Very High'],
+    'temperature_category': ['Cold/Cool', 'Mild/Moderate', 'Warm/Hot'],
+    'affordability': ['Affordable', 'Moderately Affordable', 'Unaffordable'],
+    'union_prevalence': ['Many Labor Unions',
+    'Most People are Part of a Labor Union',
     'Some Labor Unions',
-    'Many Labor Unions',
-    'Most People are Part of a Labor Union'],
-    'poverty_rate': ['Very Little Poverty',
-    'Little Poverty',
-    'Very Impoverished',
-    'Mostly Impoverished'],
-    'city_density_type': ['Not Dense','Somewhat Dense', 'Dense', 'Very Dense'],
-    'country_density_type': ['Not Dense',
+    'Very Few/No Labor Unions'],
+    'poverty_rate': ['High Poverty',
+    'Minimal Poverty',
+    'Moderate Poverty',
+    'Noticeable Poverty',
+    'Widespread Poverty'],
+    'city_density_type': ['Dense', 'Not Dense', 'Somewhat Dense', 'Very Dense'],
+    'country_density_type': ['Dense',
     'Marginally Dense',
-    'Dense',
+    'Not Dense',
     'Very Dense'],
-    'anglo?': ['yes', 'no']}
+    'anglo?': ['no', 'yes']
+    }
+
+    #### Sorting Features for better UI
+    feature_categories['region'].sort()
+    feature_categories['sub_region'].sort()
+    
+    gauge_width_order = ['standard', 'non-standard']
+    feature_categories['gauge_width'] = sorted(feature_categories['gauge_width'], key=lambda x: gauge_width_order.index(x))
+
+    city_size_order = ['<250k (small)', '250k-500k (medium-small)', '500k-1M (medium)', 
+                   '1M-2M (medium-large)', '2M-5M (large)', '5M-10M (very large)', 
+                   '10M-15M (small Metropolis)', '>15M (Metropolis)']
+    feature_categories['city_size'] = sorted(feature_categories['city_size'], key=lambda x: city_size_order.index(x))
+
+    precipitation_order = ['Low', 'Moderate', 'High', 'Very High']
+    feature_categories['precipitation_type'] = sorted(feature_categories['precipitation_type'], key=lambda x: precipitation_order.index(x))  
+
+    affordability_order = ['Unaffordable', 'Moderately Affordable', 'Affordable']
+    feature_categories['affordability'] = sorted(feature_categories['affordability'], key=lambda x: affordability_order.index(x))
+
+    poverty_order = ['Minimal Poverty', 'Noticeable Poverty', 'Moderate Poverty', 'High Poverty', 'Widespread Poverty']
+    feature_categories['poverty_rate'] = sorted(feature_categories['poverty_rate'], key=lambda x: poverty_order.index(x))
+
+    union_order = ['Very Few/No Labor Unions', 'Some Labor Unions', 'Many Labor Unions', 'Most People are Part of a Labor Union']
+    feature_categories['union_prevalence'] = sorted(feature_categories['union_prevalence'], key=lambda x: union_order.index(x))
+
+    city_density_order = ['Not Dense', 'Somewhat Dense', 'Dense', 'Very Dense']
+    feature_categories['city_density_type'] = sorted(feature_categories['city_density_type'], key=lambda x: city_density_order.index(x))
+
+    country_density_order = ['Not Dense', 'Marginally Dense', 'Dense', 'Very Dense']
+    feature_categories['country_density_type'] = sorted(feature_categories['country_density_type'], key=lambda x: country_density_order.index(x))
 
     ### Creating the user interface
     st.header('Generating Your Own Predictions')
@@ -1106,10 +1129,10 @@ elif menu == 'Modelling':
 
     # continuous features
     feature_ranges = {
-        'length': (1, 25),
-        'tunnel': (0, 25),
-        'elevated': (0, 25),
-        'at_grade': (0, 25),
+        'length': (1, 20),
+        'tunnel': (0, 20),
+        'elevated': (0, 20),
+        'at_grade': (0, 20),
         'stations': (0,25),
         'duration': (1, 25)
     }
@@ -1172,9 +1195,9 @@ elif menu == 'Modelling':
         elif cat_input_values['region'] == 'Americas':
             sub_region_choices = ['Northern America', 'Latin America and the Caribbean']
         elif cat_input_values['region'] == 'Africa':
-            sub_region_choices = ['Northern Africa']
-        elif cat_input_values['region'] == 'Central America':
-            sub_region_choices = ['Latin America and the Caribbean']
+            sub_region_choices = ['Northern Africa','Sub-Saharan Africa']
+        elif cat_input_values['region'] == 'Oceania':
+            sub_region_choices = ['Australia and New Zealand']
         else:
             sub_region_choices = feature_categories['sub_region']
 
@@ -1200,7 +1223,7 @@ elif menu == 'Modelling':
         st.subheader("3. Describe the Type of Climate the Project is in")
         cols = st.columns(1)
 
-        cat_input_values['precipitation_type'] = cols[0].selectbox('How much does it rain?', options=feature_categories['precipitation_type'])
+        cat_input_values['precipitation_type'] = cols[0].selectbox('How would you describe the precipitation in the region?', options=feature_categories['precipitation_type'])
         cat_input_values['temperature_category'] = cols[0].radio('How would you describe the climate there?', options=feature_categories['temperature_category'],horizontal = True)
         cat_input_values['elevation_class'] = cols[0].radio('Is the city high up or down by the coast?', options=feature_categories['elevation_class'],horizontal = True)
 
@@ -1348,7 +1371,7 @@ elif menu == 'Modelling':
 
         st.sidebar.markdown(f"<div style='text-align: center; font-size: 30px;'>Predicted Cost</div>", unsafe_allow_html=True)
         st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 12px;'>±${formatted_subset_mae}M USD (2021)</div>", unsafe_allow_html=True)
+        st.sidebar.markdown(f"<div style='text-align: center; font-size: 12px;'>±${formatted_subset_mae}M USD (2023)</div>", unsafe_allow_html=True)
         st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px;'>   </div>", unsafe_allow_html=True)
 
         st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px;'> To build this project today</div>", unsafe_allow_html=True)
