@@ -38,8 +38,6 @@ model = get_model()
 
 ### Start of streamlit app
 
-
-
 menu = st.sidebar.radio(
     'Choose a Page',
     ('Introduction', 'The Data & Model', 'Evaluating the Model','Modelling')
@@ -197,8 +195,12 @@ elif menu == 'The Data & Model':
 
     df_engineered
 
-    fig = px.scatter_geo(df_engineered, lat='lat', lon='lng', color="country",
+    fig = px.scatter_geo(df_engineered, 
+                        lat='lat', 
+                        lon='lng', 
+                        color="country",
                         hover_name="country",
+                        hover_data=['city','length'],
                         projection="natural earth")
 
     fig.update_geos(
@@ -547,7 +549,7 @@ elif menu == 'The Data & Model':
     ##### ERROR BAND PLOT###########
     predictions['error'] = predictions['cost_real_2023'] - predictions['prediction_label']
     # Create bins
-    bin_size = 11 
+    bin_size = 8
     bins = np.arange(0, predictions['length'].max() + bin_size, bin_size)
     predictions['length_bin'] = pd.cut(predictions['length'], bins, labels=bins[:-1] + bin_size/2, right=False)
 
@@ -598,6 +600,9 @@ elif menu == 'The Data & Model':
     fig.update_layout(
         xaxis_title='Train Line Length (km)',
         yaxis_title='Prediction Error ($)',
+        xaxis=dict(
+            range=[0, 50]
+        ),
         yaxis2=dict(
                 overlaying='y', 
                 side='right',
