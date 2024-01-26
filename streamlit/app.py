@@ -53,9 +53,10 @@ menu = st.sidebar.radio(
 if menu == 'Introduction':
     st.sidebar.header(" ")
     st.sidebar.header(" ")
-    st.sidebar.write("Click on the Project Cost Calculator to use the model yourself")
     st.sidebar.header(" ")
     st.sidebar.header(" ")
+    st.sidebar.write(":warning: Click on the Project Cost Calculator to use the model yourself")
+
 
     with open('pickles/df_engineered.pkl', 'rb') as f:
         df_engineered = pickle.load(f)

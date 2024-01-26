@@ -5,7 +5,7 @@ pandas-dq==1.28
 pandas-profiling==3.6.6
 plotly==5.16.1
 plotly-resampler==0.9.1
-streamlit==1.21.0
+streamlit==1.22.0
 ipython ==8.16.1
 pycaret == 3.0.4
 catboost == 1.2.2
