@@ -37,16 +37,25 @@ model = get_model()
 
 
 ### Start of streamlit app
-
 menu = st.sidebar.radio(
-    'Choose a Page',
-    ('Introduction', 'The Data & Model', 'Evaluating the Model','Modelling')
+    label='Choose a Page',
+    options=[
+        "Introduction", 
+        "The Data & Model", 
+        "Evaluating the Model", 
+        ":sparkles: **:rainbow[Project Cost Calculator]** :sparkles:"
+    ],
+    help='If you are looking for the calculator, use the modelling button below'
 )
 
+
+
 if menu == 'Introduction':
-    st.sidebar.header("*_*_*_*_*_*_*_*_*_*_*_*_*_*")
-    st.sidebar.header("This App is currently being updated to v2 and probably won't work as intended. I've added additional data to the dataset and am in the process of resolving errors caused after committing my changes - January 2024")
-    st.sidebar.header("*_*_*_*_*_*_*_*_*_*_*_*_*_*")
+    st.sidebar.header(" ")
+    st.sidebar.header(" ")
+    st.sidebar.write("Click on the Project Cost Calculator to use the model yourself")
+    st.sidebar.header(" ")
+    st.sidebar.header(" ")
 
     with open('pickles/df_engineered.pkl', 'rb') as f:
         df_engineered = pickle.load(f)
@@ -1002,7 +1011,7 @@ elif menu == 'Evaluating the Model':
     ''')
 
 
-elif menu == 'Modelling':
+elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
     ### Existing Features
     cont_feats = ['length','tunnel','elevated','at_grade','duration']
     cat_feats =  [
@@ -1378,3 +1387,11 @@ elif menu == 'Modelling':
 
 
         ### END CODE
+
+
+        #### TO DO LIST FROM REDDIT COMMENTS
+            # - Currency Converter
+            # - More clear UI for predictions (change name of model sidebar name, add link to predictions at top of first page)
+            # - Maybe highlight the model name in yellow to show to click there
+            #
+        ####
