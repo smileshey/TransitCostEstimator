@@ -27,6 +27,9 @@ df_streamlit = load_data('pickles/df_streamlit.pkl')
 df_plot_melted = load_data('pickles/df_plot_melted.pkl')
 predictions = load_data('pickles/predictions.pkl')
 combined_metrics = load_data('pickles/combined_metrics.pkl')
+importances = load_data('pickles/importances.pkl')
+feature_names = load_data('pickles/feature_names.pkl')
+
 
 ### Importing Model
 @st.cache_resource()
@@ -34,6 +37,20 @@ def get_model():
     return load_model('models/finalized_user_model')
 
 model = get_model()
+
+
+# Custom HTML and CSS for the buttons
+st.markdown("""
+<style>
+    div.stButton > button:first-child {
+        background-color: #00cc00; /* Green */
+        color: white;
+        font-size: 30px;
+        height: 3em;
+        width: 50%;
+        border-radius: 10px 10px 10px 10px;
+    }
+</style>""", unsafe_allow_html=True)
 
 
 ### Start of streamlit app
@@ -45,7 +62,7 @@ menu = st.sidebar.radio(
         "Evaluating the Model", 
         ":sparkles: **:rainbow[Project Cost Calculator]** :sparkles:"
     ],
-    help='If you are looking for the calculator, use the modelling button below'
+    help='If you are looking for the calculator, use the Cost Calculator button below'
 )
 
 
@@ -434,25 +451,32 @@ elif menu == 'The Data & Model':
     As you can imagine, it's more difficult to do manual labor when the weather is uncomfortable. In the searing heat you might need to take more frequent breaks and in the freezing cold, you might be bundled up so tight that you don't know where your gloves end and your hand starts. 
     Of course, this is an example of vernacular thinking, but it makes some sense at least in theory. Let's see if the data show that as well.
     ''')
-    fig = px.scatter(df_streamlit,
-         x="precipitation_type",
-         y='temperature_category',
-         color = 'cost_km_2023',
-         color_continuous_scale=px.colors.sequential.Viridis
-         )
+    fig = px.scatter_3d(df_streamlit,
+                        x="precipitation_type",
+                        y='temperature_category',
+                        z='cost_km_2023',  # Using cost as a 3rd dimension
+                        color='cost_km_2023',
+                        color_continuous_scale=px.colors.sequential.Viridis)
 
     fig.update_layout(
+        scene_camera=dict(
+            eye=dict(x=1.75, y=1.75, z=1.75)  # Adjust these values as needed
+        ),
+        coloraxis_colorbar=dict(
+            x=0.35,  # Adjust the x position
+            y=1,  # Adjust the y position
+            yanchor='top',
+            lenmode='pixels',
+            len=340,
+            thickness=10,
+            orientation = 'h'
+        ),
         paper_bgcolor='rgba(0,0,0,0)',
         geo_bgcolor='rgba(0,0,0,0)',
         margin=dict(t=0, b=0, l=0, r=0),
-        legend=dict(
-            x=0.5,
-            y=-.2,
-            orientation='h',
-            xanchor='center',
-            yanchor='top'
-        ))
-    st.plotly_chart(fig,use_container_width=True)
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
     ####### END Plotting cost variation country ######## 
 
     st.write('''
@@ -488,12 +512,42 @@ elif menu == 'The Data & Model':
     But which features are the most important for the model?
     ''')
 
-    with open("plots/importances_top10.html", "r") as f:
-        html_str = f.read()
-    st.components.v1.html(html_str, width=650, height=400)
+    sorted_idx = importances.argsort()[-10::]
+    feature_names_array = np.array(feature_names)
+    sorted_names = feature_names_array[sorted_idx]
+    greyish_white = '#D0D0D0'
+
+    fig = go.Figure(data=[
+        go.Bar(y=sorted_names, 
+            x=importances[sorted_idx], 
+            orientation='h', 
+            text=sorted_names,
+    #            textfont=dict(color=greyish_white),
+            textposition='outside',
+            marker={'color': importances[sorted_idx],
+                    'colorscale': 'Viridis_r'})
+    ])
+    fig.update_layout(
+        title='Feature Importances',
+        title_font=dict(color=greyish_white),
+        yaxis_title='Features',
+        yaxis_title_font=dict(color=greyish_white),  # Changes the y-axis title font color
+        xaxis_title='Importance',
+        xaxis_title_font=dict(color=greyish_white),  # Changes the x-axis title font color
+        yaxis_showticklabels=False,
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        xaxis=dict(
+            range=[0, 500]  # Set your desired maximum value here
+        )
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+
 
     st.write('''
-    Understandbly, the length components are very important to the model with overall track length being the most important. 
+    Understandably, the length components are very important to the model with overall track length being the most important. 
     Feature importances indicate the relative significance of each feature in predicting the target variable in a machine learning model. They help in understanding which features contribute most to the model's predictions, either positively or negatively. Importances are derived from the model's internal mechanics, such as how often a feature is used to split data in tree-based models. Evaluating feature importances aids in feature selection, model interpretability, and insights into the underlying data relationships.
 
     While feature importances rank the predictive power of features in a model, they don't specify the direction or nature of their impact. 
@@ -559,7 +613,7 @@ elif menu == 'The Data & Model':
     ##### ERROR BAND PLOT###########
     predictions['error'] = predictions['cost_real_2023'] - predictions['prediction_label']
     # Create bins
-    bin_size = 2
+    bin_size = 4
     bins = np.arange(0, predictions['length'].max() + bin_size, bin_size)
     predictions['length_bin'] = pd.cut(predictions['length'], bins, labels=bins[:-1] + bin_size/2, right=False)
 
@@ -987,20 +1041,22 @@ elif menu == 'Evaluating the Model':
 
     predictions_socio['soil_type'] = predictions_socio.apply(lambda row: reverse_one_hot(row, "soil_type"), axis=1)
 
-    fig = px.scatter(predictions_socio,color = 'soil_type', x='prediction_label', y='Standardized_Residuals', 
-                title="Residuals vs. Predictions by Soil Type",marginal_y="histogram")
+    fig = px.scatter(predictions_socio, color='soil_type', x='prediction_label', y='Standardized_Residuals', 
+                    title="Residuals vs. Predictions by Soil Type", marginal_y="histogram")
 
     fig.update_layout(
-    legend=dict(
-        orientation="h",
-        yanchor="top",
-        y=-.5,
-        xanchor="center",
-        x=0.5
-    ))
+        width=800,  # Set the width of the plot
+        height=600,  # Set the height of the plot
+        legend=dict(
+            orientation="h",
+            yanchor="top",
+            y=-.5,
+            xanchor="center",
+            x=0.5
+        )
+    )
+
     st.plotly_chart(fig, use_container_width=True)
-
-
 
     st.write('_________')
     st.subheader('Your Turn')
@@ -1261,6 +1317,12 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
 
     st.write('---------------------------')
 
+
+    st.markdown("<div style='text-align: left; font-size: 23px;color: orange'>"
+                "👈 Click the 'Make Prediction' button once you are finished"
+                "</div>", unsafe_allow_html=True)
+
+
     for idx, (feat, options) in enumerate(feature_categories.items()):
         
         if idx % 3 == 0:
@@ -1325,26 +1387,30 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
     else:
         union_prevalence_text = f"has {input_values['union_prevalence']}"
 
-    paragraph = (f"<span style='font-size: 13.5px;'>"
+
+
+
+    paragraph = (f"<span style='font-size: 12.5px;'>"
                 f"You selected a <b><span style='color:orange;'>{input_values['train_type']}</span></b> with a track length of "   
                 f"<span style='color:orange;'>{input_values['length']} km</span>, including {component_str} using a "
                 f"<b><span style='color:orange;'>{input_values['gauge_width']}</span></b> width track. "
                 f"The project duration is <span style='color:orange;'>{input_values['duration']} Years</span> and "
-                f"<span style='color:orange;'>{input_values['stations']}</span> stations will be built.<br><br> "
+                f"<span style='color:orange;'>{input_values['stations']}</span> stations will be built.<br><br> "  # Two line breaks after stations
                 f"The line will be located in a <b><span style='color:orange;'>{input_values['affordability']}</span></b> city within "
                 f"<b><span style='color:orange;'>{input_values['sub_region']}</span></b> that has a population of "
                 f"<b><span style='color:orange;'>{input_values['city_size']}</span></b> and is "
-                f"<b><span style='color:orange;'>{input_values['city_density_type']}</span></b>.<br><br> "
+                f"<b><span style='color:orange;'>{input_values['city_density_type']}</span></b>. "
+                f"This <b><span style='color:orange;'>{input_values['elevation_class']}</span></b> city experiences "
+                f"<b><span style='color:orange;'>{precipitation_str}</span></b> and the temperature is often "
+                f"<b><span style='color:orange;'>{temperature_str}</span></b>. The underlying soil is "
+                f"<b><span style='color:orange;'>{input_values['soil_type']}</span></b>.<br><br> "
                 f"The surrounding <b><span style='color:orange;'> {anglo_text} </span></b> country is "
                 f"<b><span style='color:orange;'>{input_values['country_density_type']}</span></b>, "
                 f"<b><span style='color:orange;'>{input_values['country_income_class']}</span></b>, "
                 f"has <b><span style='color:orange;'>{poverty_str}</span></b>,"
-                f"and <b><span style='color:orange;'>{union_prevalence_text}</span></b>. <br><br> "
-                f"This <b><span style='color:orange;'>{input_values['elevation_class']}</span></b> city experiences "
-                f"<b><span style='color:orange;'>{precipitation_str}</span></b> and the temperature is often "
-                f"<b><span style='color:orange;'>{temperature_str}</span></b>. The underlying soil is "
-                f"<b><span style='color:orange;'>{input_values['soil_type']}</span></b>."
+                f"and <b><span style='color:orange;'>{union_prevalence_text}</span></b>."
                 f"</span>")
+
 
     markdown_lines = [paragraph]
     # Join the lines with line breaks to form a multi-line markdown string
@@ -1352,39 +1418,41 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
     
     # Display the markdown content in the sidebar
     st.sidebar.markdown(markdown_content, unsafe_allow_html=True)
+    
     ### Predictions Button
     col1, col2, col3 = st.sidebar.columns([1,2,1])
+    with col2:
+        if st.button('Make Prediction', key="actualButton", help="Click to make a prediction",type='primary',use_container_width=False):
+            model_feature_order = df_user.drop(columns=['cost_real_2023']).columns
+            data_for_prediction = [input_values[key] for key in model_feature_order]
 
-# Put the button in the center column
-    if col2.button('Make Prediction'):
-        model_feature_order = df_user.drop(columns = ['cost_real_2023']).columns
-        data_for_prediction = [input_values[key] for key in model_feature_order]
+            # Convert the list to a DataFrame
+            df_for_prediction = pd.DataFrame([data_for_prediction], columns=model_feature_order)
+            
+            # Make predictions
+            prediction = model.predict(df_for_prediction)
+            
+            # Calculate Error for Prediction
+            user_length = st.session_state.length
+            user_length = max(0, min(user_length, 25))
+            subset_predictions = predictions[predictions['length'] <= user_length]
+            subset_predictions['absolute_error'] = (subset_predictions['cost_real_2023'] - subset_predictions['prediction_label']).abs()
+            subset_mae = subset_predictions['absolute_error'].mean()
+            formatted_subset_mae = "{:.0f}".format(subset_mae)
 
-        # Convert the list to a DataFrame
-        df_for_prediction = pd.DataFrame([data_for_prediction], columns=model_feature_order)
-        # Make predictions
-        prediction = model.predict(df_for_prediction)
-        # Calculate Error for Prediction
-        user_length = st.session_state.length
-        user_length = max(0, min(user_length, 25))
-        subset_predictions = predictions[predictions['length'] <= user_length]
-        subset_predictions['absolute_error'] = (subset_predictions['cost_real_2023'] - subset_predictions['prediction_label']).abs()
-        subset_mae = subset_predictions['absolute_error'].mean()
-        formatted_subset_mae = "{:.0f}".format(subset_mae)
+            # Format the prediction output
+            predicted_value = prediction[0]
+            if predicted_value >= 1000:  # Greater than or equal to 1 billion
+                display_value = f"{predicted_value/1000:.2f}B USD"
+            else:
+                display_value = f"{predicted_value:.2f} Million USD"
 
-        # Format the prediction output
-        predicted_value = prediction[0]
-        if predicted_value >= 1000:  # Greater than or equal to 1 billion
-            display_value = f"{predicted_value/1000:.2f}B USD"
-        else:
-            display_value = f"{predicted_value:.2f} Million USD"
-
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 30px;'>Predicted Cost</div>", unsafe_allow_html=True)
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 12px;'>±${formatted_subset_mae}M USD (2023)</div>", unsafe_allow_html=True)
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px;'>   </div>", unsafe_allow_html=True)
-
-        st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px;'> To build this project today</div>", unsafe_allow_html=True)
+            # Displaying the prediction and additional information in the sidebar
+            st.sidebar.markdown(f"<div style='text-align: center; font-size: 30px;'>Predicted Cost</div>", unsafe_allow_html=True)
+            st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
+            st.sidebar.markdown(f"<div style='text-align: center; font-size: 12px;'>±${formatted_subset_mae}M USD (2023)</div>", unsafe_allow_html=True)
+            st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px;'>   </div>", unsafe_allow_html=True)
+            st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px;'> To build this project today</div>", unsafe_allow_html=True)
 
 
         ### END CODE
