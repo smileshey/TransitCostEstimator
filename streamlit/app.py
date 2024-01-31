@@ -613,7 +613,7 @@ elif menu == 'The Data & Model':
     ##### ERROR BAND PLOT###########
     predictions['error'] = predictions['cost_real_2023'] - predictions['prediction_label']
     # Create bins
-    bin_size = 4
+    bin_size = 5
     bins = np.arange(0, predictions['length'].max() + bin_size, bin_size)
     predictions['length_bin'] = pd.cut(predictions['length'], bins, labels=bins[:-1] + bin_size/2, right=False)
 
@@ -1317,11 +1317,39 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
 
     st.write('---------------------------')
 
+    st.subheader("5. What Currency Would you Like the Results Reported in?")
+
+    currency_conversion_rates = {
+        'USD': 1,  # Base rate for conversion, U.S. dollar
+        'EUR': 0.92,  # Euro
+        'JPY': 147.46,  # Japanese yen
+        'GBP': 0.80,  # Pound sterling
+        'AUD': 1.52,  # Australian dollar
+        'CAD': 1.34,  # Canadian dollar
+        'CHF': 0.86,  # Swiss franc
+        'CNY': 7.1,  # Renminbi (Chinese yuan)
+        'HKD': 7.80,  # Hong Kong dollar
+        'NZD': 1.60,  # New Zealand dollar
+        'SEK': 10.40,  # Swedish krona
+        'KRW': 1330.00,  # South Korean won
+        'SGD': 1.35,  # Singapore dollar
+        'NOK': 10.50,  # Norwegian krone
+        'MXN': 19.00,  # Mexican peso
+        'INR': 79.85,  # Indian rupee
+        'RUB': 90.00,  # Russian ruble
+        'ZAR': 18.8,  # South African rand
+        'TRY': 30.37,  # Turkish lira
+        'BRL': 5.00,  # Brazilian real
+    }
+    selected_currency = st.selectbox('Choose the currency for the results:', options=list(currency_conversion_rates.keys()))
+
+
 
     st.markdown("<div style='text-align: left; font-size: 23px;color: orange'>"
                 "👈 Click the 'Make Prediction' button once you are finished"
                 "</div>", unsafe_allow_html=True)
 
+    st.write('---------------------------')
 
     for idx, (feat, options) in enumerate(feature_categories.items()):
         
@@ -1387,9 +1415,6 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
     else:
         union_prevalence_text = f"has {input_values['union_prevalence']}"
 
-
-
-
     paragraph = (f"<span style='font-size: 12.5px;'>"
                 f"You selected a <b><span style='color:orange;'>{input_values['train_type']}</span></b> with a track length of "   
                 f"<span style='color:orange;'>{input_values['length']} km</span>, including {component_str} using a "
@@ -1442,14 +1467,19 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
 
             # Format the prediction output
             predicted_value = prediction[0]
-            if predicted_value >= 1000:  # Greater than or equal to 1 billion
-                display_value = f"{predicted_value/1000:.2f}B USD"
-            else:
-                display_value = f"{predicted_value:.2f} Million USD"
+            conversion_rate = currency_conversion_rates[selected_currency]
+            predicted_value_in_selected_currency = predicted_value * conversion_rate
 
+            # Format the converted prediction for display
+            if predicted_value_in_selected_currency >= 1_000_000:  # Greater than or equal to 1 trillion in the selected currency
+                display_value_converted = f"{predicted_value_in_selected_currency/1_000_000:.2f}T {selected_currency}"
+            elif predicted_value_in_selected_currency >= 1000:  # Greater than or equal to 1 billion but less than 1 trillion in the selected currency
+                display_value_converted = f"{predicted_value_in_selected_currency/1000:.2f}B {selected_currency}"
+            else:  # Less than 1 billion in the selected currency
+                display_value_converted = f"{predicted_value_in_selected_currency:.2f} Million {selected_currency}"
             # Displaying the prediction and additional information in the sidebar
             st.sidebar.markdown(f"<div style='text-align: center; font-size: 30px;'>Predicted Cost</div>", unsafe_allow_html=True)
-            st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>${display_value}</div>", unsafe_allow_html=True)
+            st.sidebar.markdown(f"<div style='text-align: center; font-size: 25px; color: orange;'>{display_value_converted}</div>", unsafe_allow_html=True)
             st.sidebar.markdown(f"<div style='text-align: center; font-size: 12px;'>±${formatted_subset_mae}M USD (2023)</div>", unsafe_allow_html=True)
             st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px;'>   </div>", unsafe_allow_html=True)
             st.sidebar.markdown(f"<div style='text-align: center; font-size: 20px;'> To build this project today</div>", unsafe_allow_html=True)
@@ -1459,8 +1489,8 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
 
 
         #### TO DO LIST FROM REDDIT COMMENTS
-            # - Currency Converter
-            # - More clear UI for predictions (change name of model sidebar name, add link to predictions at top of first page)
-            # - Maybe highlight the model name in yellow to show to click there
+            # -  XXX Currency Converter
+            # - XXX More clear UI for predictions (change name of model sidebar name, add link to predictions at top of first page)
+            # - XXX Maybe highlight the model name in yellow to show to click there
             #
         ####
