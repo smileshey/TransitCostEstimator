@@ -820,7 +820,7 @@ elif menu == 'Evaluating the Model':
 
     # Create the histogram using plotly.graph_objects
     histogram = go.Histogram(
-        y=predictions['standardized_residuals'], 
+        y=predictions['Standardized_Residuals'], 
         name='Histogram',
         marker_color='lightseagreen',
         opacity=0.7,
@@ -860,7 +860,7 @@ elif menu == 'Evaluating the Model':
     ### Plot of standardized residuals
     scatter = go.Scatter(
     x=predictions['prediction_label'],
-    y=predictions['standardized_residuals'],
+    y=predictions['Standardized_Residuals'],
     mode='markers',
     marker=dict(
         color=predictions['length'],
