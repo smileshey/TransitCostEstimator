@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/f7a467f365224fd0b63f65319436b47a/artifacts
+end_time: 1710537852335
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: f7a467f365224fd0b63f65319436b47a
+run_name: Huber Regressor
+run_uuid: f7a467f365224fd0b63f65319436b47a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1710537852279
+status: 3
+tags: []
+user_id: ryan

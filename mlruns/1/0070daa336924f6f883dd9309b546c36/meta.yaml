@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/0070daa336924f6f883dd9309b546c36/artifacts
+end_time: 1710453130470
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: 0070daa336924f6f883dd9309b546c36
+run_name: Extra Trees Regressor
+run_uuid: 0070daa336924f6f883dd9309b546c36
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1710453130412
+status: 3
+tags: []
+user_id: ryan

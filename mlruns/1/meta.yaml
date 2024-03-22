@@ -1,0 +1,6 @@
+artifact_location: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1
+creation_time: 1707431296683
+experiment_id: '1'
+last_update_time: 1707431296683
+lifecycle_stage: active
+name: train_nonlog

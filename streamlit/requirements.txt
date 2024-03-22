@@ -12,3 +12,4 @@ catboost == 1.2.2
 lightgbm == 4.1.0
 requests == 2.31.0
 joblib == 1.2.0
+scipy == 1.10.1

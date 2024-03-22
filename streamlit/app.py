@@ -14,6 +14,10 @@ import matplotlib as plt
 import pickle
 from IPython.display import display, HTML
 
+from scipy.special import inv_boxcox
+from scipy.stats import boxcox
+
+
 ### Importing Data
 @st.cache_data()
 def load_data(file_name):
@@ -25,10 +29,11 @@ df_user = load_data('pickles/df_user.pkl')
 df_cleaned = load_data('pickles/df_cleaned.pkl')
 df_streamlit = load_data('pickles/df_streamlit.pkl')
 df_plot_melted = load_data('pickles/df_plot_melted.pkl')
-predictions = load_data('pickles/predictions.pkl')
+predictions = load_data('pickles/predictions_user.pkl')
 combined_metrics = load_data('pickles/combined_metrics.pkl')
 importances = load_data('pickles/importances.pkl')
 feature_names = load_data('pickles/feature_names.pkl')
+lambdas_dict = load_data('pickles/lambdas_dict.pkl')
 
 
 ### Importing Model
@@ -101,17 +106,31 @@ if menu == 'Introduction':
     
     The purpose of the general use model is to democratize transit cost analysis, allowing residents to understand and vouch for their community's needs without awaiting official estimates.
     ''')
+    st.write('__________')
+    st.subheader('Improvements Made in V2')
+    st.write('''     
+        In Fall of 2023, I submitted the first iteration of this app to several relevant communities. I receieved some feedback that warranted revisiting the app and improving some areas of the model that I deemed to be inadequate. Below are the major changes that were made between v1 and v2:
+        - Additional Data
+            - Between v1 and v2, I added an additional 800 datapoints. The v1 user model was trained on about ~900 data points, while the v2 is trained on ~1700 data points.
+            - With the new model, the accuracy improved significantly from an MAE of ~500M USD in v1 to ~430M USD in v2.
+        - Train Type Feature
+            - The most notable change in the feature set was the inclusion of a 'train_type' feature that indicates what type of transit system was built.
+            - v1 was inadequate in predicting the cost to build trams as it counted a subway station with the same weight as a tram station.
+            - The tedious process of populating the 'train_type' feature improved the model's tram cost prediction accuracy significantly.
+        - UI Improvements
+            - Several users indicated that the intended flow the app wasn't apparent and I spent some time making the interface more intentional.
+            - I added a currency and length unit conversion feature in the app, to accomodate all users.
+        ''')
 
     st.write('__________')
     st.subheader('Conclusion & Recommendations')
     st.caption('Conclusion')
     st.write('''     
     Both models created in this analysis are sufficiently accurate and easily understandable, which fulfills the goals set above.
-    The accuracy achieved by the user model, with a mean absolute error of 543.95M USD and an R-squared of .896, is sufficient for the purposes of creating a 
-    user focused model that can estimate the potential cost for a project in a given area. 
+    The accuracy achieved by the user model, with a mean absolute error of 430.35M USD and an R-squared of .88, is sufficient for the purposes of creating a user focused model that can estimate the potential cost for a project in a given area. 
     
-    Additionally, both models generalize well to new data
-    and didn't show a tendency to overfit as was expected to occur due to the size of the dataset. This model, while accurate, would improve given additional data and would need further analysis before it should be deployed in a production environment that influences financial decisions.
+    Additionally, both models generalize well to new data and didn't show a tendency to overfit as was expected to occur due to the size of the dataset. 
+    This model, while accurate, would improve given additional data and would need further analysis before it should be deployed in a production environment that influences financial decisions.
     ''')
 
     st.caption('Recommendations')
@@ -119,19 +138,17 @@ if menu == 'Introduction':
     While I'm content with the model's performance, there are several ways to improve the reliability of the model which would likely reduce the variance of the output and the accuracy of the model on unseen data:
 
     1) Dataset size
-        - The overall size of the dataset is very small, relative to what is needed to produce a (more) meaningful model that can reliably generate accurate predictions. If this model were to be used in a production setting, it would need to be trained on significantly more data.
-        - The dataset itself is somewhat Asia centric, which may skew the predictions for other locales. Increasing the size of the dataset would help in this regard.
+        - The overall size of the dataset is still small, relative to what is needed to produce a (more) meaningful model that can reliably generate accurate predictions. If this model were to be used in a production setting, it would need to be trained on significantly more data.
 
     2) Dataset accuracy
         - In many cases, the accuracy of the underlying data could be improved. This is less an issue of data collection, as often there were few sources to verify the details of a project.
-        - With additional resources and expertise, I would have spent more time at the outset creating tools to verify the data and to create means to handle highly variable components (inflation rate, PPP rates)
-        - There exists a better solution to handle data verification that I would like to explore further.
+        - The accuracy of the data is also largely a product of the types of data reported, which adds in an additional element of error. (i.e- including rolling stock, bike path improvements, street renovatations were likely often included in the final costs.)
+        - There exists a better solution to handle data verification.
         
     3) Expansion of existing features
         - In my attempts to engineer features from the existing data, it's possible that there are other combinations of engineered features that could have yielded better insight for the model. My attempts with feature engineering were not exhaustive.
         - I wasn't able to find a proxy that correlated strongly enough with land aquisition prices. I believe this is an important component that would help the model generalize better with fewer features.
         - Level of Service is also not represented in the dataset, as I wasn't able to reliably determine how often each train would run. This is an important aspect as it dictates many downstream design decisions that cost resources to implement. 
-        - Some features generated in the feature engineering process could be improved and would benefit from an accuracy check. If I were to revisit this analysis, I would look to find more trustworthy sources for several of the engineered features, as some features pertaining to socioeconomic factors were from crowdsourced datasets.
 
     4) Future Inflation Rates
         - One aspect of the data that is lacking is that the inflation rate for a future project is capped at 1. For instance, a project that takes place today will have an inflation rate of 1 and a project that takes place a year from now is also given an inflation rate of 1, even though there will be some inflation over the course of that year.
@@ -142,14 +159,14 @@ if menu == 'Introduction':
         - Many countries take on loans from other countries to fund these projects. With these loans, the country is likely spending more on the project than the initial estimate states. A complete analysis would incorporate this aspect, either by directly providing the loan terms or by using a binary 'financed?' distinction.
 
 
-    Overall the model is sufficient and functions best when the overall length of the project is less than 10km. With more data, this model would perform better on fringe cases and provide a more robust estimate for common projects in all locales.
+    Overall the model is sufficient and functions best when the overall length of the project is less than 15km. With more data, this model would perform better on fringe cases and provide a more robust estimate for common projects in all locales.
     ''')
     
     st.write('__________')
     st.subheader('Acknowledgments')
     st.write('''
-    This app uses a machine learning model that was trained on the data provided by The Transit Project. 
-    To learn more about the data, please go to their [webpage](https://transitcosts.com/about/) or view my [github repo](https://github.com/smileshey/TransitCostEstimator) to learn more about how the model was trained.
+    This app uses a machine learning model that was trained (largely) on the data provided by The Transit Project. 
+    To learn more about the data provided by the Transit Project, please go to their [webpage](https://transitcosts.com/about/) or view my [github repo](https://github.com/smileshey/TransitCostEstimator) to learn more about how the model was trained.
 
     In addition to The Transit Project, I used several resources to construct this analysis:
 
@@ -278,7 +295,9 @@ elif menu == 'The Data & Model':
     st.subheader('Visualizing the Problem')
     st.write('At the outset of this analysis I stated that building out a train network is akin to a dance where each party is of a different opinion regarding how to carry out the dance itself. This becomes more apparent when we look at the differences between project cost estimates within each individual country')
 
-######## Plotting cost per country ######## 
+######## Plotting cost per country ########
+    df_engineered = df_engineered[(df_engineered['country']!= 'BY') & (df_engineered['country']!= 'VE') & (df_engineered['country']!= 'AR') & (df_engineered['country']!= 'MY')] 
+    df_engineered = df_engineered[df_engineered['length']<= 50]
     df_engineered['average_costkm_country'] = df_engineered.groupby('country')['cost_km_2023'].transform('mean')
     df_engineered['average_cost_country'] = df_engineered.groupby('country')['cost_real_2023'].transform('mean')
     df_unique_countries = (df_engineered.drop_duplicates(subset='country')).sort_values(by='average_costkm_country', ascending=False)
@@ -354,10 +373,10 @@ elif menu == 'The Data & Model':
     st.write('_________')
 
 
-    st.subheader('Engineering Features')
+    st.subheader('Engineering New Features')
     st.caption('***Duration***')
     st.write('''
-    The first feature that was engineered is the duration of a project. It's also a great way to illustrate the act of feature engineering. I took two existing features 'start_year' and 'end_year' and created a new feature called 'duration.
+    The first feature that was engineered ("created") is the duration of a project. It's also a great way to illustrate the act of feature engineering. I took two existing features 'start_year' and 'end_year' and created a new feature called 'duration.
     Duration is, understandably important, and also more important for the prediction of the total cost of a transit project (in 2021 dollars) than either the start or end year of a project.
 
     The duration of project is important in of itself, but it also can capture some relevant information about any delays in a project. Its difficult to identify, for 1000 projects, specific magnitudes of project delays.
@@ -365,6 +384,7 @@ elif menu == 'The Data & Model':
     ''')
 
     ######## Plotting cost variation country ######## 
+    df_engineered.head(5)
     avg_cost_by_duration = df_engineered.groupby('duration')['cost_km_2023'].mean().reset_index()
     count_by_duration = df_engineered.groupby('duration').size().reset_index(name='count')
     merged_df = avg_cost_by_duration.merge(count_by_duration, on='duration')
@@ -456,7 +476,11 @@ elif menu == 'The Data & Model':
                         y='temperature_category',
                         z='cost_km_2023',  # Using cost as a 3rd dimension
                         color='cost_km_2023',
-                        color_continuous_scale=px.colors.sequential.Viridis)
+                        color_continuous_scale=px.colors.sequential.Viridis,
+                        category_orders={
+                            'precipitation_type': ['Low', 'Moderate', 'High', 'Very High'],
+                            'temperature_category': ['Cold/Cool', 'Mild/Moderate', 'Warm/Hot']
+                        })
 
     fig.update_layout(
         scene_camera=dict(
@@ -538,7 +562,7 @@ elif menu == 'The Data & Model':
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
         xaxis=dict(
-            range=[0, 500]  # Set your desired maximum value here
+            range=[0, 300]  # Set your desired maximum value here
         )
     )
 
@@ -611,90 +635,103 @@ elif menu == 'The Data & Model':
     ''')
 
     ##### ERROR BAND PLOT###########
-    predictions['error'] = predictions['cost_real_2023'] - predictions['prediction_label']
+    lambda_at_grade = lambdas_dict['at_grade_transformed']
+    lambda_elevated = lambdas_dict['elevated_transformed']
+    lambda_tunnel = lambdas_dict['tunnel_transformed']
+
+    predictions['length'] = (inv_boxcox(predictions['at_grade_transformed'], lambda_at_grade) + 
+                            inv_boxcox(predictions['elevated_transformed'], lambda_elevated) + 
+                            inv_boxcox(predictions['tunnel_transformed'], lambda_tunnel))    
+    predictions['error'] = predictions['cost_real_2023_transformed'] - predictions['prediction_label']
     # Create bins
-    bin_size = 5
+    bin_size = 10
     bins = np.arange(0, predictions['length'].max() + bin_size, bin_size)
-    predictions['length_bin'] = pd.cut(predictions['length'], bins, labels=bins[:-1] + bin_size/2, right=False)
+    predictions['length_bin'] = pd.cut(predictions['length'], bins, labels=bins[:-1] + bin_size/1, right=False)
 
     # Group by bins and calculate mean error and standard deviation for each bin
     bin_means = predictions.groupby('length_bin')['error'].mean()
     bin_stds = predictions.groupby('length_bin')['error'].std()
     bin_counts = predictions.groupby('length_bin').size()
 
+    predictions['percentage_error'] = ((predictions['prediction_label'] - predictions['cost_real_2023_transformed']) / predictions['cost_real_2023_transformed']) * 100
+
+    # Group by bins and calculate mean percentage error and its standard deviation for each bin
+    bin_means_percentage_error = predictions.groupby('length_bin')['percentage_error'].mean()
+    bin_stds_percentage_error = predictions.groupby('length_bin')['percentage_error'].std()
+
     fig = go.Figure([
         go.Scatter(
-            name='Mean Error',
-            x=bin_means.index,  # Binned train line lengths
-            y=bin_means.values,
+            name='Mean Percentage Error',
+            x=bin_means_percentage_error.index,  # Binned train line lengths
+            y=bin_means_percentage_error.values,
             mode='lines',
             line=dict(color='rgb(31, 119, 180)'),
-            ),
-            go.Scatter(
-                name='Upper Bound',
-                x=bin_means.index,
-                y=bin_means.values + bin_stds.values,
-                mode='lines',
-                marker=dict(color="#444"),
-                line=dict(width=0),
-                showlegend=False
-            ),
-            go.Scatter(
-                name='Lower Bound',
-                x=bin_means.index,
-                y=bin_means.values - bin_stds.values,
-                marker=dict(color="#444"),
-                line=dict(width=0),
-                mode='lines',
-                fillcolor='rgba(68, 68, 68, 0.3)',
-                fill='tonexty',
-                showlegend=False
-            )
-        ])
+        ),
+        go.Scatter(
+            name='Upper Bound',
+            x=bin_means_percentage_error.index,
+            y=bin_means_percentage_error.values + bin_stds_percentage_error.values,
+            mode='lines',
+            marker=dict(color="#444"),
+            line=dict(width=0),
+            showlegend=False
+        ),
+        go.Scatter(
+            name='Lower Bound',
+            x=bin_means_percentage_error.index,
+            y=bin_means_percentage_error.values - bin_stds_percentage_error.values,
+            marker=dict(color="#444"),
+            line=dict(width=0),
+            mode='lines',
+            fillcolor='rgba(68, 68, 68, 0.3)',
+            fill='tonexty',
+            showlegend=False
+        )
+    ])
+
     fig.add_trace(
-    go.Bar(
-        x=bin_counts.index,
-        y=bin_counts.values,
-        name='Count',
-        marker_color='rgba(255, 182, 193, 0.1)',  # You can change this color as per your preference
-        yaxis='y2'
-    )
+        go.Bar(
+            x=bin_counts.index,
+            y=bin_counts.values,
+            name='Count',
+            marker_color='rgba(255, 182, 193, 0.1)',  # You can change this color as per your preference
+            yaxis='y2'
+        )
     )
 
     fig.update_layout(
         xaxis_title='Train Line Length (km)',
-        yaxis_title='Prediction Error ($)',
-        xaxis=dict(
-            range=[0, 50]
-        ),
+        yaxis_title='Prediction Error (%)',
         yaxis=dict(
-            range=[-2000, 1500]
+            range=[-50, 50]  # Adjust the range as per the actual percentage errors in your data
         ),
         yaxis2=dict(
                 overlaying='y', 
                 side='right',
-                position=1, # Adjust as needed
+                position=1,  # Adjust as needed
                 range=[0, max(bin_counts.values)/.3],  # Adjust range to half the maximum count or as desired
                 showticklabels=False  # To hide the tick labels of y2 axis
             ),
-        title='Prediction Error by Train Line Length',
+        title='Percentage Prediction Error by Train Line Length',
         hovermode="x"
     )
 
-    # Add a horizontal line at y=0
+    # Add a horizontal line at y=0 to indicate the baseline (no error)
     fig.add_shape(
         type='line',
         line=dict(dash='dash'),
-        x0=min(bin_means.index),
-        x1=max(bin_means.index),
+        x0=min(bin_means_percentage_error.index),
+        x1=max(bin_means_percentage_error.index),
         y0=0,
         y1=0
     )
 
     st.plotly_chart(fig, use_container_width=True)
+
+ 
     ##### END ERROR BAND PLOT###########
     st.write('''
-    The error band plot above shows how the model's predictions change as the length of the line increases. From the 800+ datapoints in the dataset, we set aside ~140 datapoints to use as a measuring stick for the model.
+    The error band plot above shows how the model's predictions change as the length of the line increases. From the 1700+ datapoints in the dataset, we set aside ~300 datapoints to use as a measuring stick for the model.
     These datapoints are represented in the above plot and show the mean error (blue) as a function of the total length. 
     
     We can see that the blue line stays relatively consistent until the length of the project reaches about 20km. After which, two things occur:
@@ -754,7 +791,14 @@ elif menu == 'Evaluating the Model':
 
     ''')
     ### Residuals Calculation
-    predictions['Residuals'] = predictions['cost_real_2023'] - predictions['prediction_label']
+    lambda_at_grade = lambdas_dict['at_grade_transformed']
+    lambda_elevated = lambdas_dict['elevated_transformed']
+    lambda_tunnel = lambdas_dict['tunnel_transformed']
+
+    predictions['length'] = (inv_boxcox(predictions['at_grade_transformed'], lambda_at_grade) + 
+                            inv_boxcox(predictions['elevated_transformed'], lambda_elevated) + 
+                            inv_boxcox(predictions['tunnel_transformed'], lambda_tunnel)) 
+    predictions['Residuals'] = predictions['cost_real_2023_transformed'] - predictions['prediction_label']
     mean_res = np.mean(predictions['Residuals'])
     std_res = np.std(predictions['Residuals'])
     predictions['Standardized_Residuals'] = (predictions['Residuals'] - mean_res) / std_res
@@ -762,7 +806,7 @@ elif menu == 'Evaluating the Model':
     ### Plot of Residuals
     scatter = go.Scatter(
         x=predictions['prediction_label'],
-        y=predictions['Residuals'],
+        y=predictions['standardized_residuals'],
         mode='markers',
         marker=dict(
             color=predictions['length'],
@@ -776,7 +820,7 @@ elif menu == 'Evaluating the Model':
 
     # Create the histogram using plotly.graph_objects
     histogram = go.Histogram(
-        y=predictions['Residuals'], 
+        y=predictions['standardized_residuals'], 
         name='Histogram',
         marker_color='lightseagreen',
         opacity=0.7,
@@ -784,14 +828,10 @@ elif menu == 'Evaluating the Model':
         yaxis='y',
         nbinsy=40
     )
-
-    # Combine scatter and histogram into one figure
     fig = go.Figure([scatter, histogram])
-
-    # Update layout to show both scatter and histogram
     fig.update_layout(
-        yaxis=dict(title='Residuals', side="left", showticklabels=False),
-        yaxis2=dict(title='Residuals', side="left", showticklabels=True),
+        yaxis=dict(title='Standardized Residuals', side="left", showticklabels=False),
+        yaxis2=dict(title='Standardized Residuals', side="left", showticklabels=True),
         xaxis=dict(domain=[0, 0.85],title='Prediction Label'),
         xaxis2=dict(domain=[0.85, 1], showticklabels=False),
         barmode='overlay',
@@ -820,7 +860,7 @@ elif menu == 'Evaluating the Model':
     ### Plot of standardized residuals
     scatter = go.Scatter(
     x=predictions['prediction_label'],
-    y=predictions['Standardized_Residuals'],
+    y=predictions['standardized_residuals'],
     mode='markers',
     marker=dict(
         color=predictions['length'],
@@ -833,7 +873,7 @@ elif menu == 'Evaluating the Model':
     )
 
     histogram = go.Histogram(
-        y=predictions['Residuals'], 
+        y=predictions['standardized_residuals'], 
         name='Histogram',
         marker_color='lightseagreen',
         opacity=0.7,
@@ -865,7 +905,10 @@ elif menu == 'Evaluating the Model':
     Since 'length' was the most important feature for the model, let's see how it performed on different lengths of track.
     ''')
     #### Predictions from model
-    bins = [0, 6.1, 13.33, 27.32, float('inf')]
+    q1 = predictions['length'].quantile(0.25)
+    q2 = predictions['length'].quantile(0.5)
+    q3 = predictions['length'].quantile(0.75)
+    bins = [0, q1, q2, q3, float('inf')]
     labels = ["short", "medium", "medium-long", "long"]
     predictions['length_category'] = pd.cut(predictions['length'], bins=bins, labels=labels, right=False)
     
@@ -917,23 +960,24 @@ elif menu == 'Evaluating the Model':
     st.write('''
     The plot above shows the density of the predictions, as they pertain to the length of the track used for the project (km). 
     Using the [interquartile ranges](https://www.scribbr.com/statistics/interquartile-range/#:~:text=The%20interquartile%20range%20(IQR)%20contains,half%20of%20a%20data%20set.) for the length feature, I've created 4 bins:
-    - Short (<6km or <25th quartile)
-    - Medium (6-13km or 25-50th quartile)
-    - Medium-Long (13-27km or 50-75th quartile)
-    - Long (>27km or >75th quartile)
+    - Short (<10km | <25th quartile)
+    - Medium (<17km | 25-50th quartile)
+    - Medium-Long (<29km | -50-75th quartile)
+    - Long (>29km | >75th quartile)
 
     The density plot tells us how dense the predictions are for each length category. The X-axis are the residuals and the y-axis represents the density. Since a residual of 0 indicates that the model correctly predicted the cost of the project, this type of distribution would be the ideal, but not always realistic, outcome for the model.
     
-    From this plot we can see that the residuals, for each length category, are centered around 0 and [somewhat normally distributed](https://www.mathsisfun.com/data/standard-normal-distribution.html)(Minus the Medium-Long group). However the distribution for the shortest length category is much more dense around 0. This implies that the model is much better at predicting the cost of a project when the project is under 6km in length. 
+    From this plot we can see that the residuals, for each length category, are centered around 0 and [somewhat normally distributed](https://www.mathsisfun.com/data/standard-normal-distribution.html) (Minus the 'Long' group). However the distribution for the shortest length category is much more dense around 0. This implies that the model is much better at predicting the cost of a project when the project is under 10km in length. 
     
     In the previously discussed SHAP plot, we showed that length and tunnel length were the most important features. Let's repeat this for the tunnel length.
     ''')
     ### dist plot for length of tunnel
     bins = [0, 1, 90, float('inf')]
     labels = ["no tunnel", "mixed", "subway"]
+    lambda_tunnel = lambdas_dict['tunnel_transformed']
+    predictions['tunnel']= inv_boxcox(predictions['tunnel_transformed'], lambda_tunnel)-1
     predictions['tunnel_per'] = (predictions['tunnel']/predictions['length'])*100
     predictions['tunnel_category'] = pd.cut(predictions['tunnel_per'], bins=bins, labels=labels, right=False)
-    print(predictions['tunnel_category'].value_counts())
 
     all_projects = predictions['Standardized_Residuals']
     no_tunnel_projects = predictions[predictions['tunnel_category'] == 'no tunnel']['Standardized_Residuals']
@@ -994,37 +1038,7 @@ elif menu == 'Evaluating the Model':
     Since we've shown that the assumptions for a machine learning model were met within this analysis, let's evaluate the auxillary features that weren't discussed above. 
     Features like climate, soil type, and socioeconomic conditions weren't as important to the model as the length components, but they still added value. Let's plot the standardized residuals to show how the model performs with each auxillary feature set.
     ''')
-    #### There's something incorrect about the predictions df after todays changes
-    st.caption('Location')
-
-
     predictions_socio = predictions
-    ### Sub Region
-    def reverse_one_hot(row):
-        for col in row.index:
-            if col.startswith("sub_region_") and row[col] == 1:
-                return col.split('_')[-1] # Return the value after the last underscore, you can adjust this based on your needs
-
-    predictions_socio['subregion'] = predictions_socio.apply(reverse_one_hot, axis=1)    
-    fig = px.scatter(predictions_socio, 
-                    x='prediction_label', 
-                    y='Standardized_Residuals', 
-                    color='subregion',
-                    title="Residuals vs. Predictions by Sub Region",
-                    marginal_y="histogram")
-    st.plotly_chart(fig, use_container_width=True)
-
-    st.write('''
-    Again, it's important that the residuals for these auxillary features are randomly scattered around 0. In both plots, above and below, there isn't a discernible trend in the standardized residuals that would imply that the features are autocorrelated with the target variable.
-    ''')
-
-    ### City Size
-    def reverse_one_hot(row, prefix):
-        for col in row.index:
-            if col.startswith(prefix) and row[col] == 1:
-                return col.split('_')[-1]
-
-    predictions_socio['city_size'] = predictions_socio.apply(lambda row: reverse_one_hot(row, "city_size"), axis=1)
 
     fig = px.scatter(
         predictions_socio,
@@ -1036,13 +1050,29 @@ elif menu == 'Evaluating the Model':
     st.plotly_chart(fig, use_container_width=True)
 
     st.write('''
-    Lastly, the soil type parameter standardized residuals provide a similar result as the two previous plots.
+    The first plot shows the standardized residuals of the model, aggregated by city population. 
+    The resulting plot is slightly skewed to the upside, however not significantly enough to consider this a pattern given that the overall residuals trend is more normally distributed. 
+    
+    We can continue this analysis by aggregating the residuals by region & train types.
     ''')
 
-    predictions_socio['soil_type'] = predictions_socio.apply(lambda row: reverse_one_hot(row, "soil_type"), axis=1)
+    fig = px.box(predictions_socio, x='region', y='standardized_residuals', color='train_type',
+                title='Distribution of Standardized Residuals by Sub-region',
+                labels={'standardized_residuals': 'Standardized Residuals', 'sub_region': 'Sub-region', 'train_type': 'Train Type'})
 
-    fig = px.scatter(predictions_socio, color='soil_type', x='prediction_label', y='Standardized_Residuals', 
-                    title="Residuals vs. Predictions by Soil Type", marginal_y="histogram")
+    fig.update_layout(xaxis_title='Sub-region',
+                    yaxis_title='Standardized Residuals')
+
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.write('''
+    Once again the residuals, as aggregated by both region and train type, are roughly centered on zero. This is positive for the integrity of the model as it shows the model has limited bias.
+    
+    Lastly, the soil type parameter standardized residuals provide a similar result as the previous plot.
+    ''')
+
+    fig = px.scatter(predictions_socio, color='soil_type', x='prediction_label', y='standardized_residuals', 
+                    title="Standardized Residuals vs. Predictions by Soil Type", marginal_y="histogram")
 
     fig.update_layout(
         width=800,  # Set the width of the plot
@@ -1070,20 +1100,21 @@ elif menu == 'Evaluating the Model':
 
 elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
     ### Existing Features
-    cont_feats = ['length','tunnel','elevated','at_grade','duration']
-    cat_feats =  [
-        "region", "sub_region", "soil_type", "gauge_width", 
-        "city_size", "train_type", 
-        "country_income_class", "elevation_class", "precipitation_type", 
-        "temperature_category", "affordability", "union_prevalence",
-        "poverty_rate", "city_density_type", "country_density_type","anglo?"
-        ]
+    cont_feats = ['end_year','at_grade_transformed','tunnel_transformed',
+              'elevated_transformed', 'duration_transformed','stations_transformed',
+              'tunnel_MRT_interaction','tunnel_asia_interaction','at_grade_MRT_interaction','at_grade_asia_interaction','stations_Streetcar_interaction',
+              'stations_LightRail_interaction', 'stations_MRT_interaction','stations_tunnel_interaction',
+              'stations_atgrade_interaction','stations_elevated_interaction','duration_tunnel_interaction',
+              'duration_atgrade_interaction', 'duration_elevated_interaction',
+              'extension_tunnel_interaction', 'extension_atgrade_interaction','extension_elevated_interaction']
+
+    cat_feats = ['region', 'sub_region', 'train_type', 'soil_type', 'city_size',
+            'country_income_class', 'precipitation_type','elevation_class',
+             'poverty_rate','temperature_category', 'city_density_type','project_type']
 
     ### Feature categories
-    feature_categories = {
-    'region': ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'],
+    feature_categories = {'region': ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'],
     'sub_region': ['Australia and New Zealand',
-    'Central Asia',
     'Eastern Asia',
     'Eastern Europe',
     'Latin America and the Caribbean',
@@ -1093,7 +1124,6 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
     'South-eastern Asia',
     'Southern Asia',
     'Southern Europe',
-    'Sub-Saharan Africa',
     'Western Asia',
     'Western Europe'],
     'soil_type': ['Clay Dominant',
@@ -1103,86 +1133,57 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
     'High Altitude/Wet (Mountain, Swampy)',
     'River Valleys/Deltas (River Sediments)',
     'Saline/Arid (Desert Soils, High Salt Content)'],
-    'gauge_width': ['non-standard', 'standard'],
-    'city_size': ['10M-15M (small Metropolis)',
-    '1M-2M (medium-large)',
-    '250k-500k (medium-small)',
-    '2M-5M (large)',
-    '500k-1M (medium)',
-    '5M-10M (very large)',
-    '<250k (small)',
-    '>15M (Metropolis)'],
-    'train_type': ['APM',
-    'Light Rail',
-    'MRT',
-    'Monorail',
-    'Regional Rail',
-    'Tram'],
-    'country_income_class': ['high-income',
-    'low-income',
-    'lower-middle income',
-    'upper-middle income'],
+    'city_size': ['Large (5M-15M)',
+    'Medium (1M-5M)',
+    'Metropolis (>15M)',
+    'Small (<1M)'],
+    'train_type': ['Light Rail', 'MRT', 'Monorail/APM', 'Streetcar'],
+    'country_income_class': ['high-income', 'low-income', 'middle-income'],
     'elevation_class': ['Coastal', 'High-land', 'Mid-land'],
-    'precipitation_type': ['High', 'Low', 'Moderate', 'Very High'],
-    'temperature_category': ['Cold/Cool', 'Mild/Moderate', 'Warm/Hot'],
-    'affordability': ['Affordable', 'Moderately Affordable', 'Unaffordable'],
-    'union_prevalence': ['Many Labor Unions',
-    'Most People are Part of a Labor Union',
-    'Some Labor Unions',
-    'Very Few/No Labor Unions'],
-    'poverty_rate': ['High Poverty',
-    'Minimal Poverty',
-    'Moderate Poverty',
-    'Noticeable Poverty',
-    'Widespread Poverty'],
-    'city_density_type': ['Dense', 'Not Dense', 'Somewhat Dense', 'Very Dense'],
-    'country_density_type': ['Dense',
-    'Marginally Dense',
-    'Not Dense',
-    'Very Dense'],
-    'anglo?': ['no', 'yes']
-    }
+    'precipitation_type': ['High', 'Low', 'Moderate'],
+    'temperature_category': ['Cold', 'Hot', 'Mild'],
+    'poverty_rate': ['High Poverty', 'Low Poverty', 'Moderate Poverty'],
+    'city_density_type': ['High Density', 'Low Density', 'Medium Density'],
+    'project_type': ['Extension', 'New']}
 
     #### Sorting Features for better UI
-    feature_categories['region'].sort()
-    feature_categories['sub_region'].sort()
+    # feature_categories['region'].sort()
+    # feature_categories['sub_region'].sort()
     
-    gauge_width_order = ['standard', 'non-standard']
-    feature_categories['gauge_width'] = sorted(feature_categories['gauge_width'], key=lambda x: gauge_width_order.index(x))
+    # gauge_width_order = ['standard', 'non-standard']
+    # feature_categories['gauge_width'] = sorted(feature_categories['gauge_width'], key=lambda x: gauge_width_order.index(x))
 
-    city_size_order = ['<250k (small)', '250k-500k (medium-small)', '500k-1M (medium)', 
-                   '1M-2M (medium-large)', '2M-5M (large)', '5M-10M (very large)', 
-                   '10M-15M (small Metropolis)', '>15M (Metropolis)']
+    city_size_order = ['Small (<1M)','Medium (1M-5M)','Large (5M-15M)','Metropolis (>15M)']
     feature_categories['city_size'] = sorted(feature_categories['city_size'], key=lambda x: city_size_order.index(x))
 
     precipitation_order = ['Low', 'Moderate', 'High', 'Very High']
     feature_categories['precipitation_type'] = sorted(feature_categories['precipitation_type'], key=lambda x: precipitation_order.index(x))  
 
-    affordability_order = ['Unaffordable', 'Moderately Affordable', 'Affordable']
-    feature_categories['affordability'] = sorted(feature_categories['affordability'], key=lambda x: affordability_order.index(x))
-
-    poverty_order = ['Minimal Poverty', 'Noticeable Poverty', 'Moderate Poverty', 'High Poverty', 'Widespread Poverty']
+    poverty_order = ['High Poverty', 'Moderate Poverty','Low Poverty']
     feature_categories['poverty_rate'] = sorted(feature_categories['poverty_rate'], key=lambda x: poverty_order.index(x))
 
-    union_order = ['Very Few/No Labor Unions', 'Some Labor Unions', 'Many Labor Unions', 'Most People are Part of a Labor Union']
-    feature_categories['union_prevalence'] = sorted(feature_categories['union_prevalence'], key=lambda x: union_order.index(x))
-
-    city_density_order = ['Not Dense', 'Somewhat Dense', 'Dense', 'Very Dense']
+    city_density_order = ['High Density', 'Medium Density','Low Density']
     feature_categories['city_density_type'] = sorted(feature_categories['city_density_type'], key=lambda x: city_density_order.index(x))
 
-    country_density_order = ['Not Dense', 'Marginally Dense', 'Dense', 'Very Dense']
-    feature_categories['country_density_type'] = sorted(feature_categories['country_density_type'], key=lambda x: country_density_order.index(x))
+    # country_density_order = ['High Density', 'Medium Density','Low Density']
+    # feature_categories['country_density_type'] = sorted(feature_categories['country_density_type'], key=lambda x: country_density_order.index(x))
 
     ### Creating the user interface
     st.header('Generating Your Own Predictions')
     st.write('---------------------------')
+    lambda_at_grade = lambdas_dict['at_grade_transformed']
+    lambda_elevated = lambdas_dict['elevated_transformed']
+    lambda_tunnel = lambdas_dict['tunnel_transformed']
 
+    predictions['length'] = (inv_boxcox(predictions['at_grade_transformed'], lambda_at_grade) + 
+                            inv_boxcox(predictions['elevated_transformed'], lambda_elevated) + 
+                            inv_boxcox(predictions['tunnel_transformed'], lambda_tunnel))
     subset_predictions = predictions[(predictions['length'] >= 0) & (predictions['length'] <= 20)]
-    subset_predictions['absolute_error'] = (subset_predictions['cost_real_2023'] - subset_predictions['prediction_label']).abs()
+    subset_predictions['absolute_error'] = (subset_predictions['cost_real_2023_transformed'] - subset_predictions['prediction_label']).abs()
     subset_mae = subset_predictions['absolute_error'].mean()    
     formatted_subset_mae = "{:.0f}".format(subset_mae)
 
-    # subset_predictions['error'] = subset_predictions['cost_real_2023'] - subset_predictions['prediction_label']
+    # subset_predictions['error'] = subset_predictions['cost_real_2023_transformed'] - subset_predictions['prediction_label']
     # subset_mean_error = abs(subset_predictions['error']).mean()
     # formatted_subset_mean_error = "{:.1f}".format(subset_mean_error)
 
@@ -1192,132 +1193,17 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
     The model’s Mean Absolute Error (MAE) is ±$470M USD across all lengths. A more precise error adjusted for your project's length will appear beneath the predicted value in the sidebar
     ''')
     st.write('---------------------------')
+    st.subheader("0. Choose Your Units")
 
     # continuous features
-    feature_ranges = {
-        'length': (1, 20),
-        'tunnel': (0, 20),
-        'elevated': (0, 20),
-        'at_grade': (0, 20),
-        'stations': (0,25),
-        'duration': (1, 25)
+    feature_ranges_km = {
+        'length': (.5, 20.0),  # Specify as floats
+        'tunnel': (0.0, 20.0),  # Specify as floats
+        'elevated': (0.0, 20.0),  # Specify as floats
+        'at_grade': (0.0, 20.0),  # Specify as floats
+        'stations': (0.0, 25.0),  # Specify as floats, if you want to allow tenths for stations as well
+        'duration': (1.0, 25.0)  # Specify as floats
     }
-    cont_input_values = {}
-    cat_input_values = {}
-    st.subheader("1. Describe the Type of Railway Being Constructed")
-
-    # Single column for 'length' slider
-    length_col = st.container()
-
-    with length_col:
-        if 'length' not in st.session_state:
-            st.session_state.length = max(feature_ranges['length'][0], 1)  # Ensure at least 1km to prevent 0
-        st.session_state.length = st.slider('Select Total Length', min_value=feature_ranges['length'][0], max_value=feature_ranges['length'][1], format="%d km")
-    cont_input_values = {'length': st.session_state.length}  # Initialize with length
-
-    if st.session_state.length > 0:
-        st.write("Of the Total Length, What Portion of the Track is Underground, At Grade, or Elevated?")
-        st.session_state.length_set = True
-
-        if st.session_state.length_set:
-            cols = st.columns(3)
-            cont_input_values['tunnel'] = cols[0].slider('Underground Track Length', min_value=0, max_value=st.session_state.length, format="%d km")
-            available_length = st.session_state.length - cont_input_values['tunnel']
-
-            if available_length > 0:
-                cont_input_values['at_grade'] = cols[1].slider('Street Level Track Length', min_value=0, max_value=available_length, format="%d km")
-                available_length -= cont_input_values['at_grade']
-            else:
-                cont_input_values['at_grade'] = 0
-
-            if available_length > 0:
-                cont_input_values['elevated'] = cols[2].slider('Elevated Track Length', min_value=0, max_value=available_length, format="%d km")
-            else:
-                cont_input_values['elevated'] = 0
-
-        if 'gauge_width' in feature_categories and 'train_type' in feature_categories:
-            cols = st.columns(1)
-            cat_input_values['train_type'] = cols[0].radio('What kind of train is it?', options=feature_categories['train_type'], horizontal=True)
-            cat_input_values['gauge_width'] = cols[0].radio('How wide are the train tracks?', options=feature_categories['gauge_width'], horizontal=True)
-            del feature_categories['gauge_width']
-            del feature_categories['train_type']
-
-        cols = st.columns(2)
-        cont_input_values['duration'] = cols[0].slider('How Long will the Project take to Build?', min_value=1, max_value=25, format="%d Years")
-        cont_input_values['stations'] = cols[1].slider('How Many Stations Will be Built?', min_value=0, max_value=25, format="%d stations")
-        st.write('---------------------------')
-
-    if 'region' in feature_categories and 'sub_region' in feature_categories and 'city_size' in feature_categories and 'soil_type' in feature_categories:
-        st.subheader("2. Describe the Project Area")
-        cols = st.columns(2)
-
-        cat_input_values['region'] = cols[0].selectbox('What Region is the Project in?', options=feature_categories['region'])
-        
-        # Define subregion choices based on the selected region
-        if cat_input_values['region'] == 'Asia':
-            sub_region_choices = ['Eastern Asia', 'Central Asia', 'Southern Asia', 'Western Asia', 'South-eastern Asia']
-        elif cat_input_values['region'] == 'Europe':
-            sub_region_choices = ['Southern Europe', 'Western Europe', 'Eastern Europe', 'Northern Europe']
-        elif cat_input_values['region'] == 'Americas':
-            sub_region_choices = ['Northern America', 'Latin America and the Caribbean']
-        elif cat_input_values['region'] == 'Africa':
-            sub_region_choices = ['Northern Africa','Sub-Saharan Africa']
-        elif cat_input_values['region'] == 'Oceania':
-            sub_region_choices = ['Australia and New Zealand']
-        else:
-            sub_region_choices = feature_categories['sub_region']
-
-        cat_input_values['sub_region'] = cols[1].selectbox('What Sub-Region is the Project in?', options=sub_region_choices)
-        cat_input_values['city_size'] = cols[0].selectbox('What\'s the population of the city?', options=feature_categories['city_size'])
-        cat_input_values['soil_type'] = cols[1].selectbox('What kind of soil is this city built on?', options=feature_categories['soil_type'])
-
-        del feature_categories['region']
-        del feature_categories['sub_region']
-        del feature_categories['city_size']
-        del feature_categories['soil_type']
-
-    if 'country_density_type' in feature_categories and 'city_density_type' in feature_categories and 'elevation_class' in feature_categories:
-        cols = st.columns(1)
-        cat_input_values['country_density_type'] = cols[0].radio('How Densely Populated is the Country?', options=feature_categories['country_density_type'],horizontal = True)
-        cat_input_values['city_density_type'] = cols[0].radio('How Densely Populated is the City?', options=feature_categories['city_density_type'],horizontal = True)
-
-        del feature_categories['country_density_type']
-        del feature_categories['city_density_type']
-    st.write('---------------------------')
-
-    if 'precipitation_type' in feature_categories and 'temperature_category' in feature_categories and 'elevation_class' in feature_categories:
-        st.subheader("3. Describe the Type of Climate the Project is in")
-        cols = st.columns(1)
-
-        cat_input_values['precipitation_type'] = cols[0].selectbox('How would you describe the precipitation in the region?', options=feature_categories['precipitation_type'])
-        cat_input_values['temperature_category'] = cols[0].radio('How would you describe the climate there?', options=feature_categories['temperature_category'],horizontal = True)
-        cat_input_values['elevation_class'] = cols[0].radio('Is the city high up or down by the coast?', options=feature_categories['elevation_class'],horizontal = True)
-
-        # Removing them from the dictionary to avoid duplication in the following loop
-        del feature_categories['precipitation_type']
-        del feature_categories['temperature_category']
-        del feature_categories['elevation_class']
-
-    st.write('---------------------------')
-
-    if 'country_income_class' in feature_categories and 'affordability' in feature_categories and 'poverty_rate' in feature_categories and 'union_prevalence' in feature_categories and 'anglo?' in feature_categories:
-        st.subheader("4. Describe the Socioeconomic Conditions of the Project Area")
-        
-        cat_input_values['country_income_class'] = st.radio('How Wealthy is the Country?', options=feature_categories['country_income_class'],horizontal = True)
-        cat_input_values['affordability'] = st.selectbox('Is the City Affordable for the Average Person?', options=feature_categories['affordability'])
-        cat_input_values['poverty_rate'] = st.selectbox('How much Poverty is Prevalent in the Country', options=feature_categories['poverty_rate'])
-        cat_input_values['union_prevalence'] = st.radio('Are Labor Unions Prevalent?', options=feature_categories['union_prevalence'],horizontal = True)
-        cat_input_values['anglo?'] = st.radio('Is the Population Predominantly Anglosaxon?', options=feature_categories['anglo?'],horizontal = True)
-
-        del feature_categories['country_income_class']
-        del feature_categories['affordability']
-        del feature_categories['anglo?']
-        del feature_categories['union_prevalence']
-        del feature_categories['poverty_rate']
-
-    st.write('---------------------------')
-
-    st.subheader("5. What Currency Would you Like the Results Reported in?")
 
     currency_conversion_rates = {
         'USD': 1,  # Base rate for conversion, U.S. dollar
@@ -1341,15 +1227,163 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
         'TRY': 30.37,  # Turkish lira
         'BRL': 5.00,  # Brazilian real
     }
-    selected_currency = st.selectbox('Choose the currency for the results:', options=list(currency_conversion_rates.keys()))
+
+    cont_input_values = {}
+    cat_input_values = {}
+
+    def convert_ranges_to_miles(feature_ranges_km):
+        feature_ranges_miles = {}
+        for key, value in feature_ranges_km.items():
+            feature_ranges_miles[key] = (value[0] * 0.621371, value[1] * 0.621371 if key == 'length' else value[1])
+        return feature_ranges_miles
+
+    col1, col2 = st.columns(2)
+
+    # Place unit selection radio button in the first column
+    with col1:
+        unit = st.selectbox("Length Unit:", ('Kilometers', 'Miles'))
+
+    # Place currency selection selectbox in the second column
+    with col2:
+        selected_currency = st.selectbox('Choose the currency for the results:', options=list(currency_conversion_rates.keys()))
 
 
+    # Update feature ranges based on the selected unit
+    feature_ranges = feature_ranges_km if unit == 'Kilometers' else convert_ranges_to_miles(feature_ranges_km)
+    def miles_to_km(value_in_miles):
+        return value_in_miles * 1.60934
+    st.write('---------------------------')
+
+    st.subheader("1. Describe the Type of Railway Being Constructed")
+    # Single column for 'length' slider
+    length_col = st.container()
+
+    with length_col:
+        if 'length' not in st.session_state:
+            st.session_state.length = max(feature_ranges['length'][0], .5)  # Ensure at least 1 unit to prevent 0, as float
+        # Correct the step type mismatch error by making min_value and max_value floats and allowing for unit selection
+        slider_format = "%.1f " + unit
+        st.session_state.length = st.slider('Select Total Length', min_value=float(feature_ranges['length'][0]), max_value=float(feature_ranges['length'][1]), step=0.1, format=slider_format)
+        # Convert length from miles to kilometers if necessary
+        cont_input_values = {'length': miles_to_km(st.session_state.length) if unit == 'Miles' else st.session_state.length}
+
+
+    slider_format = "%.1f km" if unit == 'Kilometers' else "%.1f mi"
+    if st.session_state.length > 0.0:
+        st.write("Of the Total Length, What Portion of the Track is Underground, At Grade, or Elevated?")
+        st.session_state.length_set = True
+
+    if st.session_state.length_set:
+        cols = st.columns(3)
+        # Add step=0.1 to all sliders to allow for tenths of a kilometer increments
+        cont_input_values['tunnel'] = cols[0].slider('Underground Track Length', min_value=0.0, max_value=st.session_state.length, step=0.1, format=slider_format)
+        available_length = st.session_state.length - cont_input_values['tunnel']
+
+        if available_length > 0:
+            cont_input_values['at_grade'] = cols[1].slider('Street Level Track Length', min_value=0.0, max_value=available_length, step=0.1, format=slider_format)
+            available_length -= cont_input_values['at_grade']
+        else:
+            cont_input_values['at_grade'] = 0
+
+        if available_length > 0:
+            cont_input_values['elevated'] = cols[2].slider('Elevated Track Length', min_value=0.0, max_value=available_length, step=0.1, format=slider_format)
+        else:
+            cont_input_values['elevated'] = 0
+
+
+        if 'train_type' in feature_categories:
+            cols = st.columns(1)
+            cat_input_values['train_type'] = cols[0].radio('What kind of train is it?', options=feature_categories['train_type'], horizontal=True)
+            del feature_categories['train_type']
+
+        if 'project_type' in feature_categories:
+            project_type_question = 'Is This Project an Extension of an Existing Line?'
+            project_type_options = ['No', 'Yes']
+
+            user_response = st.radio(project_type_question, project_type_options, horizontal=True)
+            project_type_mapping = {'Yes': 'Extension', 'No': 'New'}
+
+            cat_input_values['project_type'] = project_type_mapping[user_response]
+            del feature_categories['project_type']
+
+        cols = st.columns(2)
+        cont_input_values['duration'] = cols[0].slider('How Long will the Project take to Build?', min_value=1, max_value=25, format="%d Years")
+        cont_input_values['stations'] = cols[1].slider('How Many Stations Will be Built?', min_value=0, max_value=25, format="%d stations")
+        cont_input_values['start_year'] = 2023
+        cont_input_values['end_year'] = cont_input_values['start_year'] + cont_input_values['duration']
+        st.write('---------------------------')
+
+    st.subheader("2. Describe the Project Area")
+    cols = st.columns(2)
+        
+    # Streamlit dropdown for region selection
+    if 'region' in feature_categories and 'sub_region' in feature_categories and 'city_size' in feature_categories and 'soil_type' in feature_categories:
+            cols = st.columns(2)
+
+            cat_input_values['region'] = cols[0].selectbox('What Region is the Project in?', options=feature_categories['region'])
+            
+            # Define subregion choices based on the selected region
+            if cat_input_values['region'] == 'Asia':
+                sub_region_choices = ['Eastern Asia', 'Central Asia', 'Southern Asia', 'Western Asia', 'South-eastern Asia']
+            elif cat_input_values['region'] == 'Europe':
+                sub_region_choices = ['Southern Europe', 'Western Europe', 'Eastern Europe', 'Northern Europe']
+            elif cat_input_values['region'] == 'Americas':
+                sub_region_choices = ['Northern America', 'Latin America and the Caribbean']
+            elif cat_input_values['region'] == 'Africa':
+                sub_region_choices = ['Northern Africa','Sub-Saharan Africa']
+            elif cat_input_values['region'] == 'Oceania':
+                sub_region_choices = ['Australia and New Zealand']
+            else:
+                sub_region_choices = feature_categories['sub_region']
+
+            cat_input_values['sub_region'] = cols[1].selectbox('What Sub-Region is the Project in?', options=sub_region_choices)
+            cat_input_values['city_size'] = cols[0].selectbox('What\'s the population of the city?', options=feature_categories['city_size'])
+            cat_input_values['soil_type'] = cols[1].selectbox('What kind of soil is this city built on?', options=feature_categories['soil_type'])
+
+            del feature_categories['region']
+            del feature_categories['sub_region']
+            del feature_categories['city_size']
+            del feature_categories['soil_type']
+
+
+    if 'city_density_type' in feature_categories:
+        cols = st.columns(1)
+        cat_input_values['city_density_type'] = cols[0].radio('How Densely Populated is the City?', options=feature_categories['city_density_type'],horizontal = True)
+        del feature_categories['city_density_type']
+    
+    st.write('---------------------------')
+
+    if 'precipitation_type' in feature_categories and 'temperature_category' in feature_categories and 'elevation_class' in feature_categories:
+        st.subheader("3. Describe the Type of Climate the Project is in")
+        cols = st.columns(1)
+
+        cat_input_values['precipitation_type'] = cols[0].selectbox('How would you describe the precipitation in the region?', options=feature_categories['precipitation_type'])
+        cat_input_values['temperature_category'] = cols[0].radio('How would you describe the climate there?', options=feature_categories['temperature_category'],horizontal = True)
+        cat_input_values['elevation_class'] = cols[0].radio('What\'s the elevation like at the project site?', options=feature_categories['elevation_class'],horizontal = True)
+
+        # Removing them from the dictionary to avoid duplication in the following loop
+        del feature_categories['precipitation_type']
+        del feature_categories['temperature_category']
+        del feature_categories['elevation_class']
+
+
+    st.write('---------------------------')
+    st.subheader("4. Describe the Socioeconomic Conditions of the Project Area")
+
+    if 'country_income_class' in feature_categories and 'poverty_rate' in feature_categories:
+        cat_input_values['poverty_rate'] = st.radio('How much poverty is present in this country?', options=feature_categories['poverty_rate'],horizontal = True)
+        cat_input_values['country_income_class'] = st.radio('How Wealthy is the Country?', options=feature_categories['country_income_class'],horizontal = True)
+
+        del feature_categories['country_income_class']
+        del feature_categories['poverty_rate']
+
+
+    st.write('---------------------------')
 
     st.markdown("<div style='text-align: left; font-size: 23px;color: orange'>"
                 "👈 Click the 'Make Prediction' button once you are finished"
                 "</div>", unsafe_allow_html=True)
 
-    st.write('---------------------------')
 
     for idx, (feat, options) in enumerate(feature_categories.items()):
         
@@ -1357,23 +1391,23 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
             cols = st.columns(3)
         cat_input_values[feat] = cols[idx % 3].radio(f'Select {feat}', options=options)
 
-    input_values = {**cont_input_values, **cat_input_values}
-
     # Start the summary in the sidebar
     st.sidebar.header("Summary of Your Selections:")
+    input_values = {**cont_input_values, **cat_input_values}
+
     markdown_lines = []
 
     # Iterate over the input values and append styled markdown to the list
-    paragraph_keys = ["train_type", "length", "tunnel", "elevated", "at_grade", "duration", "stations", "affordability", "sub_region", "city_density", "city_size"]
+    paragraph_keys = ["train_type", "length", "tunnel", "elevated", "at_grade", "duration", "stations", "sub_region", "city_density", "city_size",'elevation_class']
 
     components = []
 
     if float(input_values['tunnel']) > 0:
-        components.append(f"<span style='color:orange;'>{input_values['tunnel']} km</span> of tunneled length")
+        components.append(f"<span style='color:orange;'>{round(float(input_values['tunnel']), 1)} km</span> of tunneled track")
     if float(input_values['elevated']) > 0:
-        components.append(f"<span style='color:orange;'>{input_values['elevated']} km</span> of elevated length")
+        components.append(f"<span style='color:orange;'>{round(float(input_values['elevated']), 1)} km</span> of elevated track")
     if float(input_values['at_grade']) > 0:
-        components.append(f"<span style='color:orange;'>{input_values['at_grade']} km</span> of at-grade length")
+        components.append(f"<span style='color:orange;'>{round(float(input_values['at_grade']), 1)} km</span> of at-grade track")
 
     # Format the components list with appropriate conjunctions
     if len(components) == 0:
@@ -1383,12 +1417,17 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
     elif len(components) == 2:
         component_str = f"{components[0]} and {components[1]}"
     else:
-        component_str = f"{components[0]}, {components[1]}, and {components[2]}"
+        component_str = ', '.join(components[:-1]) + f", and {components[-1]}"
 
     if input_values['temperature_category'] == 'Very Hot or Extreme Heat':
         temperature_str = "Very Hot"
     else:
         temperature_str = input_values['temperature_category']
+
+    if input_values['project_type'] == 'Extension':
+        project_str = "an Extension of an existing "
+    else:
+        project_str = 'a New '
 
     # Simplify precipitation type
     if input_values['precipitation_type'] == 'Arid':
@@ -1407,33 +1446,20 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
         poverty_str = "Abundant poverty"
     else:
         poverty_str = input_values['poverty_rate']
-    
-    anglo_text = "Anglo" if input_values['anglo?'] == 'yes' else ""
-    # Check the 'union_prevalence' key's value and modify the union_prevalence text accordingly
-    if input_values['union_prevalence'] == 'Most People are Part of a Labor Union':
-        union_prevalence_text = "Most People are Part of a Labor Union"
-    else:
-        union_prevalence_text = f"has {input_values['union_prevalence']}"
 
     paragraph = (f"<span style='font-size: 12.5px;'>"
-                f"You selected a <b><span style='color:orange;'>{input_values['train_type']}</span></b> with a track length of "   
-                f"<span style='color:orange;'>{input_values['length']} km</span>, including {component_str} using a "
-                f"<b><span style='color:orange;'>{input_values['gauge_width']}</span></b> width track. "
+                f"You selected a <b> <span style='color:orange;'>{project_str}</span></b><b><span style='color:orange;'>{input_values['train_type']} line </span></b> with a track length of "   
+                f"<span style='color:orange;'>{input_values['length']} km</span>, including {component_str}. "
                 f"The project duration is <span style='color:orange;'>{input_values['duration']} Years</span> and "
                 f"<span style='color:orange;'>{input_values['stations']}</span> stations will be built.<br><br> "  # Two line breaks after stations
-                f"The line will be located in a <b><span style='color:orange;'>{input_values['affordability']}</span></b> city within "
-                f"<b><span style='color:orange;'>{input_values['sub_region']}</span></b> that has a population of "
+                f"The line will be located in a city within  <b><span style='color:orange;'>{input_values['sub_region']}</span></b> that has a population of "
                 f"<b><span style='color:orange;'>{input_values['city_size']}</span></b> and is "
                 f"<b><span style='color:orange;'>{input_values['city_density_type']}</span></b>. "
-                f"This <b><span style='color:orange;'>{input_values['elevation_class']}</span></b> city experiences "
+                f"This <span style='color:orange;'>{input_values['elevation_class']} </span>city experiences "
                 f"<b><span style='color:orange;'>{precipitation_str}</span></b> and the temperature is often "
                 f"<b><span style='color:orange;'>{temperature_str}</span></b>. The underlying soil is "
                 f"<b><span style='color:orange;'>{input_values['soil_type']}</span></b>.<br><br> "
-                f"The surrounding <b><span style='color:orange;'> {anglo_text} </span></b> country is "
-                f"<b><span style='color:orange;'>{input_values['country_density_type']}</span></b>, "
-                f"<b><span style='color:orange;'>{input_values['country_income_class']}</span></b>, "
-                f"has <b><span style='color:orange;'>{poverty_str}</span></b>,"
-                f"and <b><span style='color:orange;'>{union_prevalence_text}</span></b>."
+                f"The surrounding country is typically <b><span style='color:orange;'>{input_values['country_income_class']}</span> and has <span style='color:orange;'>{input_values['poverty_rate']}</span></b>. "
                 f"</span>")
 
 
@@ -1443,30 +1469,96 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
     
     # Display the markdown content in the sidebar
     st.sidebar.markdown(markdown_content, unsafe_allow_html=True)
+
+    ### Creating Logged versions of the user inputted features
+    features_to_transform = ['tunnel', 'at_grade', 'elevated', 'duration', 'stations']
+    for feature in features_to_transform:
+        original_feature_name = feature  # This is the user input feature name
+        transformed_feature_name = f'{feature}_transformed'  # This is the transformed feature name used in your model
+        if original_feature_name in cont_input_values and transformed_feature_name in lambdas_dict:
+            lambda_value = lambdas_dict[transformed_feature_name]
+            # Apply the Box-Cox transformation to the user input
+            cont_input_values[transformed_feature_name] = boxcox(cont_input_values[original_feature_name] + 1, lambda_value)
+            del cont_input_values[original_feature_name]  # Optionally remove the original feature key if not needed anymore
+    
+
+    # for term in interaction_terms:
+    #     cont_input_values[term] = 0
+
+    # cont_input_values['tunnel_MRT_interaction'] = 0
+    # cont_input_values['at_grade_MRT_interaction'] = 0
+    # cont_input_values['tunnel_asia_interaction'] = 0
+    # cont_input_values['at_grade_asia_interaction'] = 0
+
+
+    cont_feats = ['end_year','at_grade_transformed','tunnel_transformed',
+              'elevated_transformed', 'duration_transformed','stations_transformed',
+              'tunnel_MRT_interaction','tunnel_asia_interaction','at_grade_MRT_interaction','at_grade_asia_interaction','stations_Streetcar_interaction',
+              'stations_LightRail_interaction', 'stations_MRT_interaction','stations_tunnel_interaction',
+              'stations_atgrade_interaction','stations_elevated_interaction','duration_tunnel_interaction',
+              'duration_atgrade_interaction', 'duration_elevated_interaction',
+              'extension_tunnel_interaction', 'extension_atgrade_interaction','extension_elevated_interaction']
+
+    interaction_terms = [feat for feat in cont_feats if '_interaction' in feat]
+    for term in interaction_terms:
+        cont_input_values[term] = 0
+   
+   
+    #### Generating values for interaction terms
+    if 'train_type' in cat_input_values and cat_input_values['train_type'] == 'MRT':
+        cont_input_values['tunnel_MRT_interaction'] = cont_input_values.get('tunnel_transformed', 0)
+        cont_input_values['at_grade_MRT_interaction'] = cont_input_values.get('at_grade_transformed', 0)
+        cont_input_values['stations_MRT_interaction'] = cont_input_values.get('stations_transformed', 0)
+
+    if 'train_type' in cat_input_values and cat_input_values['train_type'] == 'Light Rail':
+        cont_input_values['stations_LightRail_interaction'] = cont_input_values.get('stations_transformed', 0)
+    if 'train_type' in cat_input_values and cat_input_values['train_type'] == 'Streetcar':
+            cont_input_values['stations_Streetcar_interaction'] = cont_input_values.get('stations_transformed', 0)
+    if 'train_type' in cat_input_values and cat_input_values['train_type'] == 'Monorail/APM':
+            cont_input_values['stations_Monorail_interaction'] = cont_input_values.get('stations_transformed', 0)
+
+    if 'region' in cat_input_values and cat_input_values['region'] == 'Asia':
+        cont_input_values['tunnel_asia_interaction'] = cont_input_values.get('tunnel_transformed', 0)
+        cont_input_values['at_grade_asia_interaction'] = cont_input_values.get('at_grade_transformed', 0)
+    
+    if 'project_type' in cat_input_values and cat_input_values['project_type'] == 'Extension':
+        cont_input_values['extension_tunnel_interaction'] = cont_input_values.get('tunnel_transformed', 0)
+        cont_input_values['extension_atgrade_interaction'] = cont_input_values.get('at_grade_transformed', 0)
+        cont_input_values['extension_elevated_interaction'] = cont_input_values.get('elevated_transformed', 0)
+
+
+    cont_input_values['duration_tunnel_interaction'] = cont_input_values['duration_transformed'] * cont_input_values['tunnel_transformed']
+    cont_input_values['duration_atgrade_interaction'] = cont_input_values['duration_transformed'] * cont_input_values['at_grade_transformed']
+    cont_input_values['duration_elevated_interaction'] = cont_input_values['duration_transformed'] * cont_input_values['elevated_transformed']
     
     ### Predictions Button
     col1, col2, col3 = st.sidebar.columns([1,2,1])
     with col2:
+        # Make Predictions
         if st.button('Make Prediction', key="actualButton", help="Click to make a prediction",type='primary',use_container_width=False):
-            model_feature_order = df_user.drop(columns=['cost_real_2023']).columns
+            input_values = {**cont_input_values, **cat_input_values}
+            input_values.pop('length', None)
+            model_feature_order = df_user.drop(columns=['cost_real_2023_transformed']).columns
+        
             data_for_prediction = [input_values[key] for key in model_feature_order]
-
-            # Convert the list to a DataFrame
-            df_for_prediction = pd.DataFrame([data_for_prediction], columns=model_feature_order)
             
-            # Make predictions
+            # Convert the list to a DataFrame & make predictions
+            df_for_prediction = pd.DataFrame([data_for_prediction], columns=model_feature_order)
             prediction = model.predict(df_for_prediction)
+        
             
             # Calculate Error for Prediction
             user_length = st.session_state.length
             user_length = max(0, min(user_length, 25))
             subset_predictions = predictions[predictions['length'] <= user_length]
-            subset_predictions['absolute_error'] = (subset_predictions['cost_real_2023'] - subset_predictions['prediction_label']).abs()
+            subset_predictions['absolute_error'] = (subset_predictions['cost_real_2023_transformed'] - subset_predictions['prediction_label']).abs()
             subset_mae = subset_predictions['absolute_error'].mean()
             formatted_subset_mae = "{:.0f}".format(subset_mae)
 
             # Format the prediction output
-            predicted_value = prediction[0]
+            lambda_prediction = lambdas_dict['cost_real_2023_transformed']
+            predicted_transformed_value = model.predict(df_for_prediction)
+            predicted_value = inv_boxcox(predicted_transformed_value[0], lambda_prediction)
             conversion_rate = currency_conversion_rates[selected_currency]
             predicted_value_in_selected_currency = predicted_value * conversion_rate
 
@@ -1492,5 +1584,6 @@ elif menu == ':sparkles: **:rainbow[Project Cost Calculator]** :sparkles:':
             # -  XXX Currency Converter
             # - XXX More clear UI for predictions (change name of model sidebar name, add link to predictions at top of first page)
             # - XXX Maybe highlight the model name in yellow to show to click there
-            #
+            # - global average line on bar plot 2nd section not labelled
+            # - summary of model results includes many user models results
         ####

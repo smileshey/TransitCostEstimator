@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/6ed9255666d94f049b511d7bc7c7e710/artifacts
+end_time: 1708363460702
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: 6ed9255666d94f049b511d7bc7c7e710
+run_name: Lasso Least Angle Regression
+run_uuid: 6ed9255666d94f049b511d7bc7c7e710
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708363460670
+status: 3
+tags: []
+user_id: ryan

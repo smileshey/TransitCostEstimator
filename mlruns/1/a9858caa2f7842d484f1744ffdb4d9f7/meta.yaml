@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/a9858caa2f7842d484f1744ffdb4d9f7/artifacts
+end_time: 1709857922828
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: a9858caa2f7842d484f1744ffdb4d9f7
+run_name: K Neighbors Regressor
+run_uuid: a9858caa2f7842d484f1744ffdb4d9f7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1709857922790
+status: 3
+tags: []
+user_id: ryan

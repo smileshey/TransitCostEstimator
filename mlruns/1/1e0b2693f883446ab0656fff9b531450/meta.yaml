@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/1e0b2693f883446ab0656fff9b531450/artifacts
+end_time: 1708033232520
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: 1e0b2693f883446ab0656fff9b531450
+run_name: Light Gradient Boosting Machine
+run_uuid: 1e0b2693f883446ab0656fff9b531450
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708033232488
+status: 3
+tags: []
+user_id: ryan

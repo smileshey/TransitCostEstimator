@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/c6f396e64fa44faeaa0c8d69cc0b2e6b/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: c6f396e64fa44faeaa0c8d69cc0b2e6b
+run_name: Session Initialized ec90
+run_uuid: c6f396e64fa44faeaa0c8d69cc0b2e6b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1710175832710
+status: 1
+tags: []
+user_id: ryan

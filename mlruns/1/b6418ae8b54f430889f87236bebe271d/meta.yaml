@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/b6418ae8b54f430889f87236bebe271d/artifacts
+deleted_time: 1707432476285
+end_time: 1707431956743
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: deleted
+run_id: b6418ae8b54f430889f87236bebe271d
+run_name: Passive Aggressive Regressor
+run_uuid: b6418ae8b54f430889f87236bebe271d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707431956717
+status: 3
+tags: []
+user_id: ryan

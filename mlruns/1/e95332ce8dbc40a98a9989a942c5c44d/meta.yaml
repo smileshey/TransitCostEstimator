@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/e95332ce8dbc40a98a9989a942c5c44d/artifacts
+end_time: 1710437076692
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: e95332ce8dbc40a98a9989a942c5c44d
+run_name: AdaBoost Regressor
+run_uuid: e95332ce8dbc40a98a9989a942c5c44d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1710437076636
+status: 3
+tags: []
+user_id: ryan

@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/6b63cf0d9e3b4bac93c054d55aee4d0b/artifacts
+end_time: 1708561870957
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: 6b63cf0d9e3b4bac93c054d55aee4d0b
+run_name: Random Forest Regressor
+run_uuid: 6b63cf0d9e3b4bac93c054d55aee4d0b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708561870918
+status: 3
+tags: []
+user_id: ryan

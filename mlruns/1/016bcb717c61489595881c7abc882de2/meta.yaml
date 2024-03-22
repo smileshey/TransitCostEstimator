@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/016bcb717c61489595881c7abc882de2/artifacts
+deleted_time: 1707432476305
+end_time: 1707431583570
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: deleted
+run_id: 016bcb717c61489595881c7abc882de2
+run_name: Orthogonal Matching Pursuit
+run_uuid: 016bcb717c61489595881c7abc882de2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707431583546
+status: 3
+tags: []
+user_id: ryan

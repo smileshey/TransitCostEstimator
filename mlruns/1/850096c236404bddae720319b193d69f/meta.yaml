@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/850096c236404bddae720319b193d69f/artifacts
+end_time: 1710438668340
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: 850096c236404bddae720319b193d69f
+run_name: Ridge Regression
+run_uuid: 850096c236404bddae720319b193d69f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1710438668288
+status: 3
+tags: []
+user_id: ryan

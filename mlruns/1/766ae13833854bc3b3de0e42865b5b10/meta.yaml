@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/766ae13833854bc3b3de0e42865b5b10/artifacts
+end_time: 1710454439814
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: 766ae13833854bc3b3de0e42865b5b10
+run_name: Bayesian Ridge
+run_uuid: 766ae13833854bc3b3de0e42865b5b10
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1710454439755
+status: 3
+tags: []
+user_id: ryan

@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/ffc73028e678461296a323cb1638342d/artifacts
+end_time: 1710436402465
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: ffc73028e678461296a323cb1638342d
+run_name: Extreme Gradient Boosting
+run_uuid: ffc73028e678461296a323cb1638342d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1710436402202
+status: 3
+tags: []
+user_id: ryan

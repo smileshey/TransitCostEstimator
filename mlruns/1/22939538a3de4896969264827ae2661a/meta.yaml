@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/22939538a3de4896969264827ae2661a/artifacts
+end_time: 1710289879450
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: 22939538a3de4896969264827ae2661a
+run_name: Decision Tree Regressor
+run_uuid: 22939538a3de4896969264827ae2661a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1710289879406
+status: 3
+tags: []
+user_id: ryan

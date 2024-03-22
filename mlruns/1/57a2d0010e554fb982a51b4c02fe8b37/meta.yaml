@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/57a2d0010e554fb982a51b4c02fe8b37/artifacts
+end_time: 1708621935612
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: 57a2d0010e554fb982a51b4c02fe8b37
+run_name: Elastic Net
+run_uuid: 57a2d0010e554fb982a51b4c02fe8b37
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708621935577
+status: 3
+tags: []
+user_id: ryan

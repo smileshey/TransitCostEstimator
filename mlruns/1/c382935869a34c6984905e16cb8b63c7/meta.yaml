@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/c382935869a34c6984905e16cb8b63c7/artifacts
+end_time: 1707778760636
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: c382935869a34c6984905e16cb8b63c7
+run_name: Gradient Boosting Regressor
+run_uuid: c382935869a34c6984905e16cb8b63c7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707778760606
+status: 3
+tags: []
+user_id: ryan

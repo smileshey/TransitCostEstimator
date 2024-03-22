@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/c478676e8c6742cc94cb787798a818c2/artifacts
+deleted_time: 1707432476310
+end_time: 1707431583176
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: deleted
+run_id: c478676e8c6742cc94cb787798a818c2
+run_name: Dummy Regressor
+run_uuid: c478676e8c6742cc94cb787798a818c2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707431583152
+status: 3
+tags: []
+user_id: ryan

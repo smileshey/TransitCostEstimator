@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ryan/GA/Portfolio/TransitCostEstimator/mlruns/1/b7da43c14c974bea8867ece4b00092c1/artifacts
+end_time: 1707433896280
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+run_id: b7da43c14c974bea8867ece4b00092c1
+run_name: CatBoost Regressor
+run_uuid: b7da43c14c974bea8867ece4b00092c1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707433896256
+status: 3
+tags: []
+user_id: ryan

@@ -1,0 +1,8 @@
+channels:
+- conda-forge
+dependencies:
+- pip<=23.3.2
+- pip:
+  - mlflow
+  - pycaret==3.2.0
+name: train_nonlog-env
