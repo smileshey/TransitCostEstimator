@@ -806,7 +806,7 @@ elif menu == 'Evaluating the Model':
     ### Plot of Residuals
     scatter = go.Scatter(
         x=predictions['prediction_label'],
-        y=predictions['standardized_residuals'],
+        y=predictions['Standardized_Residuals'],
         mode='markers',
         marker=dict(
             color=predictions['length'],
@@ -873,7 +873,7 @@ elif menu == 'Evaluating the Model':
     )
 
     histogram = go.Histogram(
-        y=predictions['standardized_residuals'], 
+        y=predictions['Standardized_Residuals'], 
         name='Histogram',
         marker_color='lightseagreen',
         opacity=0.7,
@@ -1056,7 +1056,7 @@ elif menu == 'Evaluating the Model':
     We can continue this analysis by aggregating the residuals by region & train types.
     ''')
 
-    fig = px.box(predictions_socio, x='region', y='standardized_residuals', color='train_type',
+    fig = px.box(predictions_socio, x='region', y='Standardized_Residuals', color='train_type',
                 title='Distribution of Standardized Residuals by Sub-region',
                 labels={'standardized_residuals': 'Standardized Residuals', 'sub_region': 'Sub-region', 'train_type': 'Train Type'})
 
@@ -1071,7 +1071,7 @@ elif menu == 'Evaluating the Model':
     Lastly, the soil type parameter standardized residuals provide a similar result as the previous plot.
     ''')
 
-    fig = px.scatter(predictions_socio, color='soil_type', x='prediction_label', y='standardized_residuals', 
+    fig = px.scatter(predictions_socio, color='soil_type', x='prediction_label', y='Standardized_Residuals', 
                     title="Standardized Residuals vs. Predictions by Soil Type", marginal_y="histogram")
 
     fig.update_layout(
